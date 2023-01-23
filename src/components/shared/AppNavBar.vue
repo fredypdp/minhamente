@@ -6,7 +6,7 @@
                     <h1 class="logo"><a href="" class="text-decoration-none text-reset">MinhaMente</a></h1>
                 </div>
                 <div class="pesquisa-area">
-                    <form action="" class="pesquisa-form">
+                    <form class="pesquisa-form">
                         <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar">
                         <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
@@ -19,19 +19,17 @@
                 </div>
             </div>
             <div class="pesquisa-mobile-area">
-                <form action="" class="pesquisa-form pesquisa-mobile">
-                    <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" >
+                <form class="pesquisa-form pesquisa-mobile">
+                    <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar">
                     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
         </header>
-        <div class="nav-menu" v-if="mostrarMenu" @click="mostrarMenu = false">
+        <div class="nav-menu" v-show="mostrarMenu" @click="mostrarMenu = false">
             <div class="perfil-nav">
                 <ul>
                     <a href=""><li>Conta</li></a>
-                    <a href=""><li>Apontamentos</li></a>
-                    <a href=""><li>Assuntos</li></a>
-                    <a href=""><li>Usuarios</li></a>
+                    <a href=""><li>Painel</li></a>
                     <a href=""><li>Saír</li></a>
                 </ul>
             </div>                
@@ -48,7 +46,6 @@ export default {
     methods: {
         abrirMenu: function (){
             this.mostrarMenu = !this.mostrarMenu
-            console.log(this.mostrarMenu);
         }
     }
 }
@@ -79,6 +76,7 @@ header {
 .logo {
     font-size: 24px;
     font-weight: 700;
+    text-align: left;
 }
 
 .pesquisa-mobile-area {
@@ -96,12 +94,14 @@ header {
     flex-direction: row;
 }
 
-input::-webkit-search-cancel-button {
-    display: none;
+.pesquisa-input::-webkit-search-cancel-button {
+    /* display: none; */
+    border: 1px solid black;
+    margin-left: 15px;
 }
 
 .pesquisa-input {
-    width: 90%;
+    width: 100%;
     color:  black;
     font-size: 16px;
     padding: 5px 30px;
@@ -113,6 +113,10 @@ input::-webkit-search-cancel-button {
 .pesquisa-input::placeholder {
     color: #ccc;
     font-size: 16px;
+}
+
+.pesquisa-input:focus {
+    outline: 2px solid var(--azul);
 }
 
 .pesquisa-form button {
@@ -164,15 +168,17 @@ input::-webkit-search-cancel-button {
     width: 100vw;
     height: 100vh;
     z-index: 2000;
-    position: fixed;
+    top: 0;
+    position: absolute;
     background-color: #cccccc00;
 }
 
 .perfil-nav {
     top: 50px;
     right: 50px;
-    position: fixed;
     padding: 10px;
+    position: fixed;
+    min-width: 150px;
     border-radius: 5px;
     background-color: #eaeaea;
 }
@@ -190,17 +196,15 @@ input::-webkit-search-cancel-button {
 }
 
 .perfil-nav ul li {
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
     padding: 5px;
     border-radius: 5px;
-    margin: 10px 0px;
+    margin: 5px 0px;
 }
 
 .perfil-nav ul li:hover {
     background-color: #B5B5B5;
-}
-
-.perfil-nav ul li {
-    font-size: 16px;
-    color: black;
 }
 </style>
