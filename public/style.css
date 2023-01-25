@@ -13,3 +13,7 @@
     --amarelo: #FFE11F;
     --azul: #1651B8;
 }
+
+.container {
+    padding: 100px 90px;
+}
