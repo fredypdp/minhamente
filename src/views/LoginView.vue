@@ -194,4 +194,15 @@ export default {
     .cadastro-botoes button:hover {
         background-color: #129b35;
     }
+
+@media (max-width: 390px) {
+    .entrar-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-area {
+        margin-bottom: 30px;
+    }
+}
 </style>

@@ -1,4 +1,5 @@
 <template>
+    <AppNavBar/>
     <div class="container">
         <div class="publicar-container">
         <form method="post" class="publicar-area criar-assunto-area">
@@ -13,8 +14,11 @@
 </template>
 
 <script>
+import AppNavBar from "@/components/shared/AppNavBar.vue";
 export default {
-
+    components: {
+        AppNavBar
+    }
 }
 </script>
 

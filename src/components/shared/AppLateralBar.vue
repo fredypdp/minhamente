@@ -46,4 +46,10 @@ aside {
     background-color: white;
     box-shadow: 2px 3px 7px black;
 }
+
+@media (max-width: 390px) {
+aside {
+    display: none;
+}
+}
 </style>

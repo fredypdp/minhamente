@@ -11,7 +11,7 @@
                     <BotaoSelecionar/>
                     <BotaoMiniatura/>
                 </div>
-                <button class="botao-publicar">Publicar</button>
+                <button class="botao-publicar" type="submit">Publicar</button>
             </div>
         </form>
     </section>

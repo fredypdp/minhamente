@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import PerfilView from '../views/PerfilView.vue'
 import ApontamentoView from '../views/ApontamentoView.vue'
-import ApontamentoPublicarView from '../views/adm/apontamentos/ApontamentoPublicarView.vue'
+import ApontamentoPublicarView from '../views/adm/apontamentos/PainelApontamentoPublicarView.vue'
 
 const routes = [
   {
@@ -30,6 +30,10 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: "/:pathmatch(.*)*",
+    redirect: "/"
   }
 ]
 

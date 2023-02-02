@@ -6,17 +6,22 @@
             <div class="apontamento-conteudo" ></div>
 
             <div style="display: inline;">
-                <button class="botao-apagar" type="submit">Deletar</button>
+                <BotaoApagar/>
                 <input type="hidden" name="id" id="id" value="">
-                <a href="" class="botao-editar">Editar</a>
+                <BotaoEditar/>
             </div>
         </div>
     </section>
 </template>
 
 <script>
+import BotaoApagar from "@/components/shared/BotaoApagar.vue";
+import BotaoEditar from "@/components/shared/BotaoEditar.vue";
 export default {
-
+    components:{
+        BotaoApagar,
+        BotaoEditar
+    }
 }
 </script>
 
@@ -60,40 +65,9 @@ section {
     color: black;
 }
 
-.botao-apagar {
-    width: 90px;
-    height: 30px;
-    color: white;
-    font-size: 15px;
-    font-weight: 700;
-    padding: 5px 15px;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    background-color: red;
-}
-
-.botao-apagar:hover {
-    background-color: rgb(185, 0, 0);
-}
-
-.botao-editar {
-    width: 90px;
-    height: 30px;
-    color: white;
-    font-size: 15px;
-    font-weight: 700;
-    padding: 5px 15px;
-    margin-left: 30px;
-    cursor: pointer;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--azul);
-}
-
-.botao-editar:hover {
-    background-color: #124194;
+@media (max-width: 390px) {
+    section {
+        margin: 0px;
+    }
 }
 </style>

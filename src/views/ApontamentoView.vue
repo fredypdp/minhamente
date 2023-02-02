@@ -22,4 +22,10 @@ export default {
 .apontamento-container {
     display: flex;
 }
+
+@media (max-width: 390px) {
+    .apontamento-container {
+        justify-content: center;
+    }
+}
 </style>

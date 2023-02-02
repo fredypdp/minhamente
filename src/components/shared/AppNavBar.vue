@@ -207,4 +207,66 @@ header {
 .perfil-nav ul li:hover {
     background-color: #B5B5B5;
 }
+
+@media (max-width: 390px) {
+    
+    header {
+        height: auto;
+        padding: 10px 10px;
+    }
+
+    .pesquisa-area {
+        display: none;
+    }
+
+    .pesquisa-form {
+        min-width: 100%;
+    }
+
+    .pesquisa-mobile-area {
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .assuntos-arrow-left {
+        left: 20px;
+    }
+
+    .assuntos-arrow-right {
+        right: 20px;
+    }
+
+    .assuntos-arrows i {
+        font-size: 30px;
+    }
+
+    .assuntos-bar-area {
+        padding: 10px 15px;
+    }
+    
+    .assuntos-bar-area a {
+        margin: 0px 5px;
+    }
+
+    .container {
+        padding: 25px;
+    }
+
+    .assunto-page-titulo {
+        font-size: 20px;
+    }
+    
+    .assunto-page-titulo-bar{
+        width: 60%;
+    }
+
+    .perfil-nav {
+        top: 50px;
+        right: 10px;
+        position: absolute;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #eaeaea;
+    }
+}
 </style>

@@ -200,4 +200,75 @@ export default {
 .cartao-usuario button:hover {
     background-color: rgb(185, 0, 0);
 }
+
+@media (max-width: 390px) {
+    .perfil-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .editar {
+        width: 100%;
+    }
+
+    .editar-botoes {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .editar-botoes label {
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+        height: 30px;
+        padding: 6px 50px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: var(--azul);
+    }
+
+    .editar-botoes button {
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        text-align: center;
+        width: 100%;
+        height: 30px;
+        padding: 6px 50px;
+        border: none;
+        border-radius: 5px;
+        background-color: var(--verde);
+    }
+
+    .cartao-usuario {
+        display: none;
+    }
+    
+    .cartao-usuario-mobile{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        box-shadow: 2px 2px 10px black;
+    }
+
+    .cartao-usuario-mobile button {
+        font-size: 15px;
+        font-weight: 700;
+        width: 170px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        background-color: red;
+    }
+
+    .cartao-usuario-mobile button:hover {
+        background-color: rgb(185, 0, 0);
+    }
+}
 </style>
