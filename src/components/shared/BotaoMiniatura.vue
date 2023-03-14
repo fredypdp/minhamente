@@ -1,40 +1,64 @@
 <template>
     <div>
-        <label for="miniatura">Miniatura</label>
-        <input type="file" name="miniatura" id="miniatura" accept="image/png, image/jpeg" required>
+        <label for="miniatura" class="miniatura-label">Miniatura</label>
+        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg" @change="ShowMiniatura" ref="miniatura" required>
+        <img :src="miniaturaPreview" class="miniatura-preview" draggable="false" v-if="miniaturaPreview">
     </div>
 </template>
 
 <script>
 export default {
-
+    props: {
+        miniatura: {
+            type: String,
+        }
+    },
+    data(){
+        return {
+            miniaturaPreview: this.miniatura
+        }
+    },
+    methods: {
+        ShowMiniatura(){
+            const img = this.$refs.miniatura.files[0]
+            this.$emit("avatar", img)
+            this.miniaturaPreview = URL.createObjectURL(img);
+        }
+    }
 }
 </script>
 
 <style scoped>
-.botoes input[name = "miniatura"] {
+div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.miniatura-input {
     display: none;
 }
 
-.botoes label[for="miniatura"] {
-    display: flex;
-    width: 150px;
-    max-width: 150px;
-    height: 30px;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    justify-content: center;
+.miniatura-label {
     outline: none;
+    color: black;
     cursor: pointer;
-    padding: 5px 0px;
+    font-size: 15px;
+    max-height: 30px;
+    font-weight: 700;
+    padding: 5px 15px;
     border-radius: 5px;
-    margin-left: 20px;
+    text-align: center;
     background-color: var(--amarelo);
 }
 
-.botoes label[for="miniatura"]:hover {
-    background-color: #d3ba1c;
+.miniatura-label:hover {
+    background-color: var(--amarelo-escuro);
+}
+
+.miniatura-preview {
+    width: 300px;
+    height: 150px;
+    margin-left: 10px;
+    border-radius: 5px;
 }
 </style>

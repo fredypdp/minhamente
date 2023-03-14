@@ -1,10 +1,10 @@
 <template>
     <div>
         <AppNavBar/>
-        <div class="container">
+        <div class="container-box">
             <div class="publicar-container">
                 <AppLateralBar/>
-                <AppApontamentoPublicar/>
+                <ApontamentoPublicar/>
             </div>
         </div>
     </div>
@@ -13,12 +13,12 @@
 <script>
 import AppNavBar from "@/components/shared/AppNavBar.vue";
 import AppLateralBar from "@/components/shared/AppLateralBar.vue";
-import AppApontamentoPublicar from "@/components/AppApontamentoPublicar.vue";
+import ApontamentoPublicar from "@/components/ApontamentoPublicar.vue";
 export default {
     components: {
         AppNavBar,
         AppLateralBar,
-        AppApontamentoPublicar
+        ApontamentoPublicar
     }
 }
 </script>

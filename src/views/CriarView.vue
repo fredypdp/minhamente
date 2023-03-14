@@ -1,14 +1,14 @@
 <template>
     <div class="page-container">
-        <ContaLogin/>
+        <ContaCriar/>
     </div>
 </template>
 
 <script>
-import ContaLogin from "@/components/ContaLogin.vue";
+import ContaCriar from "@/components/ContaCriar.vue";
 export default {
     components: {
-        ContaLogin
+        ContaCriar
     }
 }
 </script>

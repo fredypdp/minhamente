@@ -1,14 +1,29 @@
 <template>
-    <aside>
-        <LateralBarAssunto v-for="assunto in DezAssuntos" :key="assunto.id" :assunto="assunto"/>
-    </aside>
+    <div class="assuntos-bar">
+        <carousel :items-to-show="7.5" :itemsToScroll="3">
+            <slide v-for="assunto in assuntos" :key="assunto.id">
+                <HomeAssunto :assunto="assunto"/>
+            </slide>
+            
+            <template #addons>
+                <navigation />
+            </template>
+        </carousel>
+    </div>
 </template>
 
 <script>
-import LateralBarAssunto from "@/components/LateralBarAssunto.vue";
+import HomeAssunto from "@/components/HomeAssunto.vue";
+// If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
+// Documentação : https://ismail9k.github.io/vue3-carousel/getting-started.html
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
 export default {
     components: {
-        LateralBarAssunto
+        HomeAssunto,
+        Carousel,
+        Slide,
+        Navigation
     },
     data(){
         return {
@@ -30,29 +45,16 @@ export default {
                 {id: 15,icone: "fa-solid fa-sun",nome: "Assunto 15"},
             ]
         }
-    },
-    computed: {
-        DezAssuntos(){
-            let assuntos = this.assuntos
-            return assuntos.slice(0, 10)
-        }
     }
 }
 </script>
 
 <style scoped>
-aside {
-    width: 200px;
-    height: fit-content;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: white;
-    box-shadow: 2px 3px 7px black;
-}
-
-@media (max-width: 390px) {
-aside {
-    display: none;
-}
+.assuntos-bar {
+    padding: 10px 0px;
+    /* height: 140px; */
+    margin-top: 50px;
+    align-items: center;
+    background-color: var(--amarelo);
 }
 </style>

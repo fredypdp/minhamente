@@ -3,7 +3,7 @@
         <header>
             <div class="header-area">
                 <div class="logo-area">
-                    <h1 class="logo"><a href="" class="text-decoration-none text-reset">MinhaMente</a></h1>
+                    <h1 class="logo"><router-link :to="{name: 'home'}">MinhaMente</router-link></h1>
                 </div>
                 <div class="pesquisa-area">
                     <form class="pesquisa-form">
@@ -13,9 +13,8 @@
                 </div>
                 <div class="perfil-area">
                     <a href=""><i class="fa-solid fa-arrow-up-from-bracket publicar"></i></a>
-                    <img src="" draggable="false" class="perfil-icon" @click="abrirMenu()">
+                    <MenuDropdown/>
                     <a href="" class="login">Entrar</a>
-                    <div class="perfil-icon" style="display: none;"></div>
                 </div>
             </div>
             <div class="pesquisa-mobile-area">
@@ -25,23 +24,20 @@
                 </form>
             </div>
         </header>
-        <div class="nav-menu" v-show="mostrarMenu" @click="mostrarMenu = false">
-            <div class="perfil-nav">
-                <ul>
-                    <a href=""><li>Conta</li></a>
-                    <a href=""><li>Painel</li></a>
-                    <a href=""><li>Saír</li></a>
-                </ul>
-            </div>                
-        </div>
     </div>
 </template>
 <script>
+
+import MenuDropdown from "../shared/MenuDropdown.vue";
+
 export default {
     data(){
        return {
             mostrarMenu: false
         }
+    },
+    components: {
+        MenuDropdown
     },
     methods: {
         abrirMenu: function (){
@@ -74,6 +70,8 @@ header {
 }
 
 .logo {
+    outline: none;
+    color: white;
     font-size: 24px;
     font-weight: 700;
     text-align: left;
@@ -140,6 +138,7 @@ header {
 }
 
 .login {
+    color: white;
     display: flex;
     font-size: 20px;
     font-weight: 500;
@@ -150,65 +149,22 @@ header {
 }
 
 .publicar {
+    color: white;
     font-size: 24px;
     cursor: pointer;
 }
 
-.perfil-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    margin-left: 25px;
-    border-radius: 100%;
-    background-color: var(--azul);
-}
-
 .nav-menu {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     z-index: 2000;
     top: 0;
     position: absolute;
     background-color: #cccccc00;
 }
 
-.perfil-nav {
-    top: 50px;
-    right: 50px;
-    padding: 10px;
-    position: fixed;
-    min-width: 150px;
-    border-radius: 5px;
-    background-color: #eaeaea;
-}
-
-.perfil-nav a {
-    text-decoration: none;
-}
-
-.perfil-nav ul {
-    padding-left: 0px;
-}
-
-.perfil-active {
-    display: flex;
-}
-
-.perfil-nav ul li {
-    font-size: 16px;
-    font-weight: 500;
-    color: black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px 0px;
-}
-
-.perfil-nav ul li:hover {
-    background-color: #B5B5B5;
-}
-
-@media (max-width: 390px) {
+@media (max-width: 1024px) {
     
     header {
         height: auto;

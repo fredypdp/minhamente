@@ -1,10 +1,10 @@
 <template>
     <div>
         <AppNavBar/>
-        <div class="container">
-            <div class="publicar-container">
+        <div class="container-box">
+            <div class="editar-container">
                 <AppLateralBar/>
-                <AppApontamentoEditar/>
+                <ApontamentoEditar/>
             </div>
         </div>
     </div>
@@ -13,18 +13,18 @@
 <script>
 import AppNavBar from "@/components/shared/AppNavBar.vue";
 import AppLateralBar from "@/components/shared/AppLateralBar.vue";
-import AppApontamentoEditar from "@/components/AppApontamentoEditar.vue";
+import ApontamentoEditar from "@/components/ApontamentoEditar.vue";
 export default {
     components: {
         AppNavBar,
         AppLateralBar,
-        AppApontamentoEditar
+        ApontamentoEditar
     }
 }
 </script>
 
 <style scoped>
-.publicar-container {
+.editar-container {
     display: flex;
 }
 </style>

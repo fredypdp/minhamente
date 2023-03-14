@@ -1,19 +1,24 @@
 <template>
-    <div class="container">
-        <div class="apontamento-container">
-            <AppLateralBar/>
-            <AppApontamentoLer/>
+    <div>
+        <AppNavBar/>
+        <div class="container-box">
+            <div class="apontamento-container">
+                <AppLateralBar/>
+                <ApontamentoLer/>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import AppNavBar from '@/components/shared/AppNavBar.vue'
+import ApontamentoLer from "@/components/ApontamentoLer.vue";
 import AppLateralBar from "@/components/shared/AppLateralBar.vue";
-import AppApontamentoLer from "@/components/AppApontamentoLer.vue";
 export default {
     components: {
+        AppNavBar,
         AppLateralBar,
-        AppApontamentoLer
+        ApontamentoLer,
     }
 }
 </script>
@@ -21,6 +26,7 @@ export default {
 <style scoped>
 .apontamento-container {
     display: flex;
+    margin-top: 30px;
 }
 
 @media (max-width: 390px) {

@@ -1,5 +1,5 @@
 <template>
-    <button class="botao-apagar">Deletar</button>
+    <button class="botao-publicar" type="submit">Publicar</button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style scoped>
-.botao-apagar {
+.botao-publicar {
     outline: none;
     color: white;
     cursor: pointer;
@@ -18,10 +18,10 @@ export default {
     padding: 5px 15px;
     border-radius: 5px;
     text-align: center;
-    background-color: red;
+    background-color: var(--verde);
 }
 
-.botao-apagar:hover {
-    background-color: rgb(185, 0, 0);
+.botao-publicar:hover {
+    background-color: var(--verde-escuro);
 }
 </style>

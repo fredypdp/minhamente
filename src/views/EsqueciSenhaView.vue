@@ -1,14 +1,17 @@
 <template>
     <div class="page-container">
-        <div class="mudar-senha-area">
-            <form class="mudar-senha-form">
-                <label for="login-email" class="mudar-senha-label">Nova Senha:</label>
-                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite a sua nova senha" class="mudar-senha-input" required>
+        <div class="esqueci-senha-area">
+            <form class="esqueci-senha-form">
+                <label for="login-email" class="esqueci-senha-label">Seu email:</label>
+                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite o seu email" class="esqueci-senha-input" required>
                 <input type="hidden" name="token" id="token" value="">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Senha alterada com sucesso</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="senha-erro">A senha precisa ter no mínimo 8 caracteres</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="token-erro">Token inválido ou inexistente!</span>
-                <button type="submit" class="botao-mudar-senha">
+                <div class="links-form">
+                    <router-link :to="{name: 'login'}"><span>Fazer login</span></router-link>
+                </div>
+                <button type="submit" class="botao-esqueci-senha">
                     <div role="status" v-if="loading">
                         <svg aria-hidden="true" class="inline w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -16,7 +19,7 @@
                         </svg>
                         <span class="sr-only">Loading...</span>
                     </div>
-                    <span v-else>Mudar senha</span>
+                    <span v-else>Enviar</span>
                 </button>
             </form>
         </div>
@@ -38,7 +41,7 @@ export default {
     padding: 50px;
 }
 
-.mudar-senha-area {
+.esqueci-senha-area {
     margin: auto;
     display: flex;
     padding: 20px;
@@ -50,19 +53,19 @@ export default {
     box-shadow: 2px 2px 5px black;
 }
 
-.mudar-senha-form {
+.esqueci-senha-form {
     width: 100%;
     text-align: left;
 }
 
-.mudar-senha-label {
+.esqueci-senha-label {
     color: black;
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
-.mudar-senha-input {
+.esqueci-senha-input {
     width: 100%;
     padding: 5px;
     color: black;
@@ -73,7 +76,15 @@ export default {
     margin-bottom: 20px;
 }
 
-.botao-mudar-senha {
+.links-form span {
+    color: blue;
+}
+
+.links-form span:hover {
+    text-decoration: underline;
+}
+
+.botao-esqueci-senha {
     width: 100%;
     padding: 5px;
     border: none;
@@ -82,11 +93,12 @@ export default {
     cursor: pointer;
     font-size: 18px;
     font-weight: 700;
+    margin-top: 10px;
     border-radius: 5px;
     background-color: var(--verde);
 }
 
-.botao-mudar-senha:hover {
+.botao-esqueci-senha:hover {
     background-color: #129b35;
 }
 </style>

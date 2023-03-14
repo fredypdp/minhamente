@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: white;
     list-style: none;
     text-decoration: none;
     font-family: 'Work Sans', sans-serif;
@@ -10,10 +9,15 @@
 
 :root {
     --verde: #16b83e;
+    --verde-escuro: #129b35;
     --amarelo: #FFE11F;
+    --amarelo-escuro: #d3ba1c;
     --azul: #1651B8;
+    --azul-escuro: #124194;
 }
 
-.container {
-    padding: 100px 90px;
+.container-box {
+    padding-top: 4%;
+    padding-left: 3%;
+    padding-right: 3%;
 }

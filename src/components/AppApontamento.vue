@@ -1,13 +1,18 @@
 <template>
-    <div class="apontamento">
-        <a href="">
-            <img :src="apontamento.miniatura" class="apontamento-miniatura">
-        </a>
-        
-        <span class="apontamento-titulo">
-            <a href="">{{ apontamento.titulo }}</a>
-        </span>
-    </div>
+    <slot>
+        <div class="apontamento">
+                <div class="miniatura-area">
+                    <router-link to="">
+                        <img :src="apontamento.miniatura" class="apontamento-miniatura">
+                    </router-link>
+                </div>
+                <div class="titulo-area">
+                    <router-link to="">
+                        <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
+                    </router-link>
+                </div>
+        </div>
+    </slot>
 </template>
 
 <script>
@@ -23,8 +28,7 @@ export default {
 
 <style scoped>
 .apontamento {
-    max-width: 300px;
-    max-height: 230px;
+    max-width: 340px;
     margin: 0px 7.5px;
     margin-bottom: 30px;
     display: flex;
@@ -32,24 +36,26 @@ export default {
 }
 
 .apontamento-miniatura {
-    width: 300px;
-    height: 170px;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     background-color: var(--azul);
 }
 
-.apontamento a:last-child {
+.titulo-area {
     margin-top: 5px;
 }
 
-.apontamento .apontamento-titulo {
+.titulo-area * {
     overflow: hidden;
-    white-space: nowrap;
-    text-align: justify;
+    text-align: left;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
 }
 
-.apontamento-titulo a {
+.apontamento-titulo {
     color: black;
     font-size: 20px;
     font-weight: 500;
