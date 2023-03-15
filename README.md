@@ -1,16 +1,16 @@
-# minhamente
+# MinhaMente
 
-## Project setup
+## Inicialização do projeto
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compila e faz hot-reloads para desenvolvimento
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compila e minifica para produção
 ```
 npm run build
 ```
@@ -20,5 +20,11 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
+### Personalizar configuração
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Integrações
+
+### TinyMCE - https://www.tiny.cloud/docs/tinymce/6/vue-ref/
+### Multiselect - https://github.com/vueform/multiselect#readme
+### Vue3-Carousel - https://ismail9k.github.io/vue3-carousel/
