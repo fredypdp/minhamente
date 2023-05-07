@@ -1,8 +1,9 @@
 <template>
     <div class="assuntos-bar">
-        <carousel :items-to-show="7.5" :itemsToScroll="3">
-            <slide v-for="assunto in assuntos" :key="assunto.id">
-                <HomeAssunto :assunto="assunto"/>
+        <carousel v-bind="settings" :breakpoints="breakpoints">
+            <slide v-for="(assunto, index) in assuntos" :key="assunto.id">
+                <HomeTodosAssuntos v-if="index == 0"/>
+                <HomeAssunto :assunto="assunto" v-else/>
             </slide>
             
             <template #addons>
@@ -14,19 +15,62 @@
 
 <script>
 import HomeAssunto from "@/components/HomeAssunto.vue";
+import HomeTodosAssuntos from "@/components/HomeTodosAssuntos.vue";
 // If you are using PurgeCSS, make sure to whitelist the carousel CSS classes
 // Documentação : https://ismail9k.github.io/vue3-carousel/getting-started.html
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 export default {
     components: {
-        HomeAssunto,
-        Carousel,
         Slide,
-        Navigation
+        Carousel,
+        Navigation,
+        HomeAssunto,
+        HomeTodosAssuntos
     },
     data(){
         return {
+            settings: {
+                itemsToScroll: 3
+            },
+            breakpoints: {
+                // 1500px pra cima
+                1500: {
+                    itemsToShow: 7.5,
+                },
+                // 1235px pra cima
+                1235: {
+                    itemsToShow: 5.5,
+                },
+                // 1100px pra cima
+                1100: {
+                    itemsToShow: 10.5,
+                },
+                // 924px pra cima
+                924: {
+                    itemsToShow: 8.5,
+                },
+                // 700px pra cima
+                700: {
+                    itemsToShow: 6.5,
+                },
+                // 600px pra cima
+                600: {
+                    itemsToShow: 5.5,
+                },
+                // 480px pra cima
+                480: {
+                    itemsToShow: 4.5,
+                },
+                // 370px pra cima
+                370: {
+                    itemsToShow: 3.5,
+                },
+                // 200px pra cima
+                200: {
+                    itemsToShow: 2.5,
+                },
+            },
             assuntos: [
                 {id: 1,icone: "fa-solid fa-sun",nome: "Assunto 1"},
                 {id: 2,icone: "fa-solid fa-sun",nome: "Assunto 2"},

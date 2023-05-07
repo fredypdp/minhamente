@@ -1,10 +1,9 @@
 <template>
     <div class="page-container">
         <div class="mudar-senha-area">
-            <form class="mudar-senha-form">
+            <form class="mudar-senha-form" @submit.prevent="mudarSenha">
                 <label for="login-email" class="mudar-senha-label">Nova Senha:</label>
-                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite a sua nova senha" class="mudar-senha-input" required>
-                <input type="hidden" name="token" id="token" value="">
+                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite a sua nova senha" class="mudar-senha-input" v-model="senha">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Senha alterada com sucesso</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="senha-erro">A senha precisa ter no mínimo 8 caracteres</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="token-erro">Token inválido ou inexistente!</span>
@@ -18,22 +17,82 @@
                     </div>
                     <span v-else>Mudar senha</span>
                 </button>
+                <span id="response-erro">{{ responseErro }}</span>
             </form>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+import { LoginStore } from "@/stores/LoginStore.js";
 export default {
     data(){
         return {
-            loading: false
+            loading: false,
+            senha: undefined,
+            responseErro: undefined,
+        }
+    },
+    methods: {
+        async mudarSenha() {
+            this.loading = true
+            
+            let config = {
+                method: 'post',
+                url: `https://apiminhamente.onrender.com/mudarsenha/${this.$route.params.token}`,
+                data: {
+                    senha: this.senha
+                }
+            };
+
+            try {
+                let usuario = await axios(config)
+
+                // Terminando a sessão no servidor
+                if(LoginStore().usuario != undefined) {
+                    await axios({
+                        method: 'post',
+                        url: 'https://apiminhamente.onrender.com/logout',
+                        headers: {
+                            'authorization': `Bearer ${LoginStore().token}`
+                        }
+                    })
+    
+                    localStorage.removeItem("token")
+                    localStorage.removeItem("usuario")
+                    localStorage.removeItem("_links")
+                }
+                
+                // Fazendo login
+                let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: usuario.data.usuario.email, senha: this.senha})
+                                
+                localStorage.setItem("token", JSON.stringify(data.token))
+                localStorage.setItem("usuario", JSON.stringify(data.usuario))
+                localStorage.setItem("_links", JSON.stringify(data._links))
+
+                this.loading = false
+                this.$router.push({name: "home"})
+            } catch (erro) {
+                this.loading = false
+                
+                this.responseErro = erro.response.data.erro
+                document.getElementById("response-erro").style.display = "flex"
+    
+                console.log(erro);
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+#response-erro {
+    display: none;
+    color: red;
+    margin-top: 5px;
+}
+
 .page-container {
     padding: 50px;
 }

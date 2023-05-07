@@ -10,8 +10,8 @@
                 <section class="painel-menu">
                     <div class="painel-menu-items">
                         <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelUsuarios'}" exact>
-                                <span class="painel-menu-item-titulo">Usuários</span>
+                            <router-link :to="{name: 'PainelApontamentos'}" exact>
+                                <span class="painel-menu-item-titulo">Apontamentos</span>
                             </router-link>
                         </div>
                         <div class="painel-menu-item">
@@ -25,8 +25,8 @@
                             </router-link>
                         </div>
                         <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelApontamentos'}" exact>
-                                <span class="painel-menu-item-titulo">Apontamentos</span>
+                            <router-link :to="{name: 'PainelUsuarios'}" exact>
+                                <span class="painel-menu-item-titulo">Usuários</span>
                             </router-link>
                         </div>
                     </div>
@@ -40,11 +40,13 @@
 </template>
 
 <script>
+import { LoginStore } from "@/stores/LoginStore.js";
 import AppNavBar from "@/components/shared/AppNavBar.vue";
 export default {
     data(){
         return {
-            PaginaAtual: ""
+            PaginaAtual: "",
+            LoginStore: LoginStore(),
         }
     },
     components: {
@@ -55,6 +57,14 @@ export default {
     },
     beforeRouteUpdate(to, from, next){
         this.PaginaAtual = to.name
+        next()
+    },
+    beforeRouteEnter(to, from, next){
+        if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
+            next({name: "home"})
+            return
+        }
+        
         next()
     },
     computed: {

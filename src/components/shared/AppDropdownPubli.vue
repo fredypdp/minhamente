@@ -7,7 +7,7 @@
     </button>
     <div class="dropdown" v-show="isOpen">
         <span @click="maisRecente">Mais recente</span>
-        <span @click="maisAntiga">Mais antiga</span>
+        <span @click="maisAntigo">Mais antigo</span>
     </div>
 </div>
 </template>
@@ -67,8 +67,8 @@ export default {
             this.close();
         },
         
-        maisAntiga(){
-            this.$emit("maisAntiga")
+        maisAntigo(){
+            this.$emit("maisAntigo")
             this.close();
         }
     }
@@ -107,15 +107,18 @@ div {
     margin-top: 5px;
     border-radius: 3px;
     position: absolute;
+    align-items: center;
     flex-direction: column;
     border: 1px solid #ccc;
     background-color: white;
 }
 
 .dropdown span {
+    width: 100%;
     padding: 5px 0px;
     color: black;
     font-weight: bold;
+    text-align: center;
 }
 
 .dropdown span:hover {

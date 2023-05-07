@@ -10,11 +10,11 @@
         </div>
         <div class="apontamentos-filtros">
             <Multiselect
-                v-model="selecionados"
+                v-model="TemasSelecionados"
                 mode="tags"
                 :close-on-select="false"
                 :searchable="true"
-                :options="options"
+                :options="temas"
                 placeholder="Temas"
                 noOptionsText="Sem temas"
                 noResultsText="Sem resultados"
@@ -54,7 +54,9 @@ export default {
         {id: 6,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
         {id: 7,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
         {id: 8,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"}
-      ]
+      ],
+      TemasSelecionados: [],
+      temas: []
     }
   }
 }
@@ -67,7 +69,7 @@ export default {
 
 .assunto-page-titulo {
     color: var(--azul);
-    font-size: 24px;
+    font-size: clamp(0.5rem, 1.5rem, 2rem);;
     font-weight: 500;
     text-align: justify;
 }
@@ -83,6 +85,7 @@ export default {
 
 .home-apontamentos-top {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
@@ -94,5 +97,26 @@ export default {
 
 .multiselect {
     margin-right: 10px;
+}
+
+@media (max-width: 1235px) {
+  .home-apontamentos-top {
+    flex-direction: column;
+  }
+
+  .apontamentos-filtros {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.multiselect {
+  max-width: 80%;
+  margin: 0px;
+  margin-bottom: 5px;
+}
 }
 </style>

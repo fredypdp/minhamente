@@ -1,5 +1,5 @@
 <template>
-<div class="apontamentos" :style="{'flex-direction': column}">
+<div class="apontamentos" :style="{'flex-direction': Column}">
     <AppApontamento v-for="apontamento in apontamentos" :key="apontamento.id" :apontamento="apontamento">
         <slot :apontamento="apontamento"></slot>
     </AppApontamento>
@@ -10,7 +10,7 @@
 import AppApontamento from "@/components/AppApontamento.vue";
 export default {
     props: {
-        flexColumn: Boolean,
+        FlexColumn: Boolean,
         apontamentos: {
             type: Array,
             required: true
@@ -31,7 +31,7 @@ export default {
     },
     computed: {
         column(){
-            return this.flexColumn ? "column" : "row"
+            return this.FlexColumn ? "column" : "row"
         }
     }
 }

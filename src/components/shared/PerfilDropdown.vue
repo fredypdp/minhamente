@@ -1,22 +1,25 @@
 <template>
 <div>
-    <div @click="toggle">
-        <img src="" draggable="false" class="perfil-icon">
+    <div class="perfil-avatar-area" @click="toggle">
+        <img :src="LoginStore.usuario.avatar" draggable="false" class="perfil-avatar">
     </div>
     <div class="perfil-nav" v-show="isOpen">
         <ul>
-            <li><router-link :to="{name: 'perfil'}"><span>Minha Conta</span></router-link></li>
-            <li><router-link :to="{name: 'painel'}"><span>Painel</span></router-link></li>
-            <li><router-link :to="{name: ''}"><span>Saír</span></router-link></li>
+            <li @click="MinhaConta"><span>Minha Conta</span></li>
+            <li @click="Painel" v-if="LoginStore.usuario.role == 0"><span>Painel</span></li>
+            <li @click="logout"><span>Saír</span></li>
         </ul>
     </div>
 </div>
 </template>
 
 <script>
+import axios from "axios";
+import { LoginStore } from "@/stores/LoginStore.js";
 export default {
     data(){
         return {
+            LoginStore: LoginStore(),
             isOpen: false
         }
     },
@@ -42,6 +45,38 @@ export default {
     },
 
     methods: {
+        MinhaConta(){
+            this.$router.push({name: "perfil"})
+            this.close();
+        },
+        Painel(){
+            this.$router.push({name: "painel"})
+            this.close();
+        },
+        async logout(){
+            this.close();
+
+            let config = {
+                method: 'post',
+                url: 'https://apiminhamente.onrender.com/logout',
+                headers: {
+                    'authorization': `Bearer ${LoginStore().token}`
+                }
+            };
+            
+            try {
+                await axios(config)
+
+                localStorage.removeItem("token")
+                localStorage.removeItem("usuario")
+                localStorage.removeItem("_links")
+
+                this.$router.go(0)
+            } catch (erro) {
+                console.log(erro);
+            }
+
+        },
         toggle(){
             this.isOpen = !this.isOpen
         },
@@ -57,7 +92,6 @@ export default {
         },
         
         rootCloseListener(vm) {
-            console.log("oi");
             if (vm !== this) {
                 this.close();
             }
@@ -67,18 +101,24 @@ export default {
 </script>
 
 <style scoped>
-.perfil-icon {
-    width: 30px;
-    height: 30px;
+.perfil-avatar-area {
+    width: 32px;
+    height: 32px;
+}
+
+.perfil-avatar {
+    width: 100%;
+    height: 100%;
+    min-width: 32px;
+    min-height: 32px;
     cursor: pointer;
-    margin-left: 25px;
     border-radius: 100%;
     background-color: var(--azul);
 }
 
 .perfil-nav {
     top: 50px;
-    right: 6.4%;
+    right: 4%;
     position: fixed;
     min-width: 150px;
     border-radius: 5px;
@@ -95,36 +135,33 @@ export default {
 
 .perfil-nav ul li {
     width: 100%;
-    height: 30px;
+    height: 35px;
+    cursor: pointer;
     font-size: 16px;
     font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .perfil-nav ul li:hover {
     background-color: #B5B5B5;
 }
 
-.perfil-nav ul li a {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
 .perfil-nav ul li span {
     color: black;
 }
 
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
 
-    /* .perfil-nav {
+    .perfil-nav {
         top: 50px;
         right: 10px;
         position: absolute;
         padding: 10px;
         border-radius: 5px;
         background-color: #eaeaea;
-    } */
-}
+    }
+} */
 </style>

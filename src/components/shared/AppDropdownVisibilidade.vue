@@ -1,13 +1,13 @@
 <template>
 <div>
     <button class="dropdown-button" @click="toggle">
-        <span>Ordenar por:</span>
+        <span>Visibilidade</span>
         <i class="fa-solid fa-angle-up" v-if="isOpen"></i>
         <i class="fa-solid fa-angle-down" v-if="!isOpen"></i>
     </button>
     <div class="dropdown" v-show="isOpen">
-        <span @click="maisRecente">Edição mais recente</span>
-        <span @click="maisAntigo">Edição mais antiga</span>
+        <span @click="publico">Público</span>
+        <span @click="privado">Privado</span>
     </div>
 </div>
 </template>
@@ -62,13 +62,13 @@ export default {
             }
         },
 
-        maisRecente(){
-            this.$emit("maisRecente")
+        publico(){
+            this.$emit("publico")
             this.close();
         },
         
-        maisAntigo(){
-            this.$emit("maisAntigo")
+        privado(){
+            this.$emit("privado")
             this.close();
         }
     }

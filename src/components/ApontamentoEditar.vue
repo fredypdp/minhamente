@@ -19,29 +19,34 @@
             <span style="display: none;color: red; margin-bottom: 5px;" id="editar-erro">Verifique se todos os campos foram preenchidos</span>
             <div class="botoes-area">
                 <div class="botoes">
-                    <div class="multi-select-area">
-                        <Multiselect
-                            v-model="apontamento.AssuntosSelecionados"
-                            mode="tags"
-                            :close-on-select="false"
-                            :searchable="true"
-                            :options="assuntosLista"
-                            placeholder="Selecionar assunto"
-                            noOptionsText="Sem assuntos"
-                            noResultsText="Sem resultados"
-                        />
-                        <Multiselect
-                            v-model="apontamento.TemasSelecionados"
-                            mode="tags"
-                            :close-on-select="false"
-                            :searchable="true"
-                            :options="temasLista"
-                            placeholder="Selecionar tema"
-                            noOptionsText="Sem temas"
-                            noResultsText="Sem resultados"
-                        />
+                    <div class="botoes-top">
+                        <div class="multi-select-area">
+                            <Multiselect
+                                v-model="apontamento.AssuntosSelecionados"
+                                mode="tags"
+                                :close-on-select="false"
+                                :searchable="true"
+                                :options="assuntosLista"
+                                placeholder="Selecionar assunto"
+                                noOptionsText="Sem assuntos"
+                                noResultsText="Sem resultados"
+                            />
+                            <Multiselect
+                                v-model="apontamento.TemasSelecionados"
+                                mode="tags"
+                                :close-on-select="false"
+                                :searchable="true"
+                                :options="temasLista"
+                                placeholder="Selecionar tema"
+                                noOptionsText="Sem temas"
+                                noResultsText="Sem resultados"
+                            />
+                        </div>
                     </div>
-                    <BotaoMiniatura/>
+                    <div class="botoes-bottom">
+                        <AppDropdownVisibilidade/>
+                        <BotaoMiniatura/>
+                    </div>
                 </div>
                 <div>
                     <BotaoEditar/>
@@ -52,16 +57,18 @@
 </template>
 
 <script>
+import Editor from '@tinymce/tinymce-vue';
+import Multiselect from '@vueform/multiselect'
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
 import BotaoMiniatura from "@/components/shared/BotaoMiniatura.vue";
-import Multiselect from '@vueform/multiselect' // https://github.com/vueform/multiselect#readme
-import Editor from '@tinymce/tinymce-vue';
+import AppDropdownVisibilidade from "@/components/shared/AppDropdownVisibilidade.vue";
 export default {
     components: {
         Editor,
         Multiselect,
         BotaoEditar,
         BotaoMiniatura,
+        AppDropdownVisibilidade,
     },
     data(){
         return {
@@ -87,6 +94,7 @@ section {
     width: 85%;
     max-width: 900px;
     margin-left: 60px;
+    padding-bottom: 50px;
 }
 
 .editar-area {
@@ -127,18 +135,30 @@ section {
 }
 
 .botoes {
-    flex: 1;
+    width: 80%;
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+}
+
+.botoes-top {
+    margin-bottom: 10px;
 }
 
 .multi-select-area {
-    min-width: 300px;
+    width: 100%;
     display: flex;
-    margin-right: 10px;
 }
 
-.multiselect:last-child {
+.multi-select-area .multiselect:last-child {
     margin-left: 10px;
+}
+
+.botoes-bottom {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.botoes-bottom div:first-child {
+    margin-right: 10px;
 }
 </style>

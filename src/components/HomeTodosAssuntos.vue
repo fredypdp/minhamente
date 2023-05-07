@@ -2,13 +2,12 @@
 <div>
     <div class="assunto-area">
         <div class="assunto">
-            <i :class="assunto.icone"></i>
-            <span>{{assunto.nome}}</span>
+            <span>Todos</span>
         </div>
     </div>
     <div class="assunto-mobile-area">
         <div class="assunto-mobile">
-            <span>{{assunto.nome}}</span>
+            <span>Todos</span>
         </div>
     </div>
 </div>
@@ -27,11 +26,8 @@ export default {
 
 <style scoped>
 .assunto-area {
-    /* width: 100%; */
-    /* height: 100%; */
     width: 190px;
     height: 100px;
-    margin-left: 5px;
     margin-right: 5px;
 }
 
@@ -43,18 +39,12 @@ export default {
     padding: 15px 20px;
     border-radius: 10px;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
     background-color: var(--azul);
-    justify-content: space-between;
 }
 
 .assunto:hover {
     background-color: var(--azul-escuro);
-}
-
-.assunto i {
-    color: white;
-    font-size: 30px;
 }
 
 .assunto span {
@@ -75,7 +65,6 @@ export default {
 .assunto-mobile-area {
     display: none;
     max-width: 200px;
-    margin-left: 5px;
     margin-right: 5px;
  }
  .assunto-mobile {

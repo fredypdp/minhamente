@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '@/views/HomeView.vue'
 import PesquisaView from '@/views/PesquisaView.vue'
 // Conta
 import LoginView from '@/views/LoginView.vue'
-import CriarView from '@/views/CriarView.vue'
+import CriarContaView from '@/views/CriarContaView.vue'
 import NovaSenhaView from '@/views/NovaSenhaView.vue'
 import DeletarContaView from '@/views/DeletarContaView.vue'
 import EsqueciSenhaView from '@/views/EsqueciSenhaView.vue'
 // Perfil
 import PerfilView from '@/views/PerfilView.vue'
-import PainelView from '@/views/adm/PainelView'
+import PainelView from '@/views/adm/PainelView.vue'
 // Apontamento
 import ApontamentoView from '@/views/ApontamentoView.vue'
 import ApontamentoPublicarView from '@/views/adm/apontamentos/ApontamentoPublicarView.vue'
@@ -49,9 +50,13 @@ const routes = [
     ]
   },
   {
-  path: "/apontamento", // Adm
-  children: [
-      {path: "ler", name: "ApontamentoLer", component: ApontamentoView},
+    path: "/ler/:id", // Adm
+    name: "ApontamentoLer",
+    component: ApontamentoView,
+  },
+  {
+    path: "/apontamento", // Adm
+    children: [
       {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView},
       {path: "editar/:apontamento", name: "ApontamentoEditar", component: ApontamentoEditarView},
     ]
@@ -74,7 +79,7 @@ const routes = [
   path: "/auth",
   children: [
       {path: "login", name: "login", component: LoginView},
-      {path: "criarconta", name: "CriarConta", component: CriarView},
+      {path: "criarconta", name: "CriarConta", component: CriarContaView},
       {path: "novasenha/:token", name: "NovaSenha", component: NovaSenhaView},
       {path: "esquecisenha", name: "EsqueciSenha", component: EsqueciSenhaView},
       {path: "deletarconta/:token", name: "DeletarConta", component: DeletarContaView},
@@ -82,6 +87,9 @@ const routes = [
       {path: "/login", redirect: {name: "login"}},
       {path: "/signup", redirect: {name: "CriarConta"}},
       {path: "/criarconta", redirect: {name: "CriarConta"}},
+      {path: "/novasenha/:token", redirect: {name: "NovaSenha"}},
+      {path: "/esquecisenha", redirect: {name: "EsqueciSenha"}},
+      {path: "/deletarconta/:token", redirect: {name: "DeletarConta"}},
     ]
   },
   {
@@ -96,7 +104,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   linkActiveClass: "active-link",
   routes
 })

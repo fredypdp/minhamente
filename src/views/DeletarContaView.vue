@@ -1,20 +1,39 @@
 <template>
-    <div style="display: flex;align-items: center; justify-content: center;height: 100vh;">
-        1
-        <div class="login-area">
-            <form class="login-form">
-                <input type="hidden" name="token" id="token" value="">
-            </form>
-        </div>
+    <div>
+        <span>{{ erro }}</span>
     </div>
 </template>
 
 <script>
+import axios from "axios"
+import { LoginStore } from "@/stores/LoginStore.js";
 export default {
-    
+    data(){
+        return {
+            erro: undefined
+        }
+    },
+    async beforeRouteEnter(to, from, next) {
+        let config = {
+            method: 'delete',
+            url: `https://apiminhamente.onrender.com/deletarconta/${to.params.token}`,
+            headers: {
+                'authorization': `Bearer ${LoginStore().token}`
+            }
+        };
+
+        try {
+            await axios(config)
+
+            localStorage.removeItem("token")
+            localStorage.removeItem("usuario")
+            localStorage.removeItem("_links")
+
+            next({name: "home"})
+        } catch (erro) {
+            console.log(erro)
+            this.erro = erro.response.data.erro
+        }
+    }
 }
 </script>
-
-<style scoped>
-
-</style>

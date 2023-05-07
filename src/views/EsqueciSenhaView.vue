@@ -1,9 +1,9 @@
 <template>
     <div class="page-container">
         <div class="esqueci-senha-area">
-            <form class="esqueci-senha-form">
+            <form class="esqueci-senha-form" @submit.prevent="esqueciSenha">
                 <label for="login-email" class="esqueci-senha-label">Seu email:</label>
-                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite o seu email" class="esqueci-senha-input" required>
+                <input type="email" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite o seu email" class="esqueci-senha-input" v-model="email">
                 <input type="hidden" name="token" id="token" value="">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Senha alterada com sucesso</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="senha-erro">A senha precisa ter no mínimo 8 caracteres</span>
@@ -11,6 +11,8 @@
                 <div class="links-form">
                     <router-link :to="{name: 'login'}"><span>Fazer login</span></router-link>
                 </div>
+                <span id="sucessoEsqueciSenha">{{ sucessoEsqueciSenha }}</span>
+                <span id="erroEsqueciSenha">{{ erroEsqueciSenha }}</span>
                 <button type="submit" class="botao-esqueci-senha">
                     <div role="status" v-if="loading">
                         <svg aria-hidden="true" class="inline w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,20 +29,57 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data(){
         return {
-            loading: false
+            loading: false,
+            email: undefined,
+            erroEsqueciSenha: undefined,
+            sucessoEsqueciSenha: undefined,
+        }
+    },
+    methods: {
+        async esqueciSenha() {
+            this.loading = true
+
+            try {
+                let config = {
+                    method: 'post',
+                    url: `https://apiminhamente.onrender.com/recuperarsenha/${this.email}`
+                };
+
+               let sucesso = await axios(config)
+               this.sucessoEsqueciSenha = sucesso.data
+               document.getElementById("sucessoEsqueciSenha").style.display = "flex"
+               this.loading = false
+            } catch (erro) {
+                this.erroEsqueciSenha = erro.response.data.erro
+                document.getElementById("erroEsqueciSenha").style.display = "flex"
+                
+                this.loading = false
+                console.log(erro);
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+#sucessoEsqueciSenha {
+    display: none;
+    color: green;
+    margin-top: 5px;
+}
+
+#erroEsqueciSenha {
+    display: none;
+    color: red;
+    margin-top: 5px;
+}
 .page-container {
     padding: 50px;
 }
-
 .esqueci-senha-area {
     margin: auto;
     display: flex;
