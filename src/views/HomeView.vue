@@ -22,18 +22,28 @@
             <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
         </div>
       </div>
-      <ApontamentosList :apontamentos="apontamentos"/>
+      <ApontamentosList :apontamentos="ApontamentosMostrar"/>
+      <div class="paginas-area" v-if="apontamentosTotal > 0">
+        <vue-awesome-paginate
+        :total-items="apontamentosTotal"
+        v-model="currentPage"
+        :items-per-page="ItensPorPagina"
+        :max-pages-shown="5"
+        :on-click="paginar"
+        :hide-prev-next="true"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import Multiselect from '@vueform/multiselect'
 import AppNavBar from '@/components/shared/AppNavBar.vue'
 import HomeAssuntosBar from '@/components/HomeAssuntosBar.vue'
 import ApontamentosList from '@/components/shared/ApontamentosList.vue'
 import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
-import Multiselect from '@vueform/multiselect' // https://github.com/vueform/multiselect#readme
 export default {
   name: 'HomeView',
   components: {
@@ -45,6 +55,10 @@ export default {
   },
   data(){
     return {
+      PaginaAtual: 1,
+      ItensPorPagina: 20,
+      currentPage: 1,
+      // apontamentosTotal: this.apontamentos.length,
       apontamentos: [
         {id: 1,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
         {id: 2,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
@@ -58,7 +72,22 @@ export default {
       TemasSelecionados: [],
       temas: []
     }
-  }
+  },
+  computed: {
+    apontamentosTotal() {
+      return this.apontamentos.length
+    },
+    ApontamentosMostrar() {
+      let inicio = (this.PaginaAtual - 1) * this.ItensPorPagina
+      let fim = inicio + this.ItensPorPagina
+      return this.apontamentos.slice(inicio, fim)
+    },
+  },
+  methods: {
+    paginar(pagina){
+      this.paginaAtual = pagina
+    }
+  },
 }
 </script>
 <style scoped>
@@ -97,6 +126,41 @@ export default {
 
 .multiselect {
     margin-right: 10px;
+}
+
+.paginas-area {
+    padding: 5px;
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.pagination-container {
+    column-gap: 10px;
+    align-items: center;
+}
+
+::v-deep .paginate-buttons {
+    width: 35px;
+    height: 35px;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-size: 1.6rem;
+    border-radius: 5px;
+    background-color: var(--azul);
+}
+
+::v-deep .paginate-buttons:hover {
+    background-color: var(--azul-escuro);
+}
+::v-deep .active-page {
+    background-color: #e5e5e5;
+}
+
+
+::v-deep .active-page:hover {
+    background-color: #f5f5f5;
 }
 
 @media (max-width: 1235px) {
