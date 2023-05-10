@@ -220,8 +220,7 @@ export default {
 
             try {
                 let usuarios = await axios(config)
-                this.usuarios = []
-                this.usuarios.push(usuarios.data.usuario)
+                this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
                 this.loading = false
@@ -246,8 +245,7 @@ export default {
 
             try {
                 let usuarios = await axios(config)
-                this.usuarios = []
-                this.usuarios.push(usuarios.data.usuario)
+                this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
                 this.loading = false

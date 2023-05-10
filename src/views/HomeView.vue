@@ -87,17 +87,23 @@ export default {
       this.paginaAtual = pagina
     },
     PubliMaisRecente() {
-      this.apontamentos.sort((a, b) => {
-        if(a.created_at > b.created_at){
-          return -1
-        }
+      this.apontamentos.sort((primeiro, ultimo) => {
+          let a = new Date(primeiro.created_at)
+          let b = new Date(ultimo.created_at)
+          
+          if(a < b){
+              return -1
+          }
       });
     },
     PubliMaisAntiga() {
-      this.apontamentos.sort((a, b) => {
-        if(a.created_at < b.created_at){
-          return 1
-        }
+      this.apontamentos.sort((primeiro, ultimo) => {
+          let a = new Date(primeiro.created_at)
+          let b = new Date(ultimo.created_at)
+          
+          if(a < b){
+              return -1
+          }
       });
     },
   },
