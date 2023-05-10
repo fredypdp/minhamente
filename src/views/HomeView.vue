@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="HomeView">
     <AppNavBar/>
     <HomeAssuntosBar/>
     <div class="container-box">
@@ -58,7 +58,6 @@ export default {
       PaginaAtual: 1,
       ItensPorPagina: 20,
       currentPage: 1,
-      // apontamentosTotal: this.apontamentos.length,
       apontamentos: [
         {id: 1,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
         {id: 2,titulo: "Matou, matou, menino matou o preá",miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"},
@@ -86,11 +85,30 @@ export default {
   methods: {
     paginar(pagina){
       this.paginaAtual = pagina
-    }
+    },
+    PubliMaisRecente() {
+      this.apontamentos.sort((a, b) => {
+        if(a.created_at > b.created_at){
+          return -1
+        }
+      });
+    },
+    PubliMaisAntiga() {
+      this.apontamentos.sort((a, b) => {
+        if(a.created_at < b.created_at){
+          return 1
+        }
+      });
+    },
   },
 }
 </script>
 <style scoped>
+
+#HomeView .contaner-box {
+  padding-bottom: 30px;
+}
+
 .assuntos-page-titulo-area {
     display: flex;
     flex-direction: column;
@@ -145,7 +163,7 @@ export default {
     height: 35px;
     border: none;
     cursor: pointer;
-    color: black;
+    color: white;
     font-size: 1.6rem;
     border-radius: 5px;
     background-color: var(--azul);
@@ -155,12 +173,12 @@ export default {
     background-color: var(--azul-escuro);
 }
 ::v-deep .active-page {
-    background-color: #e5e5e5;
+    background-color: #333;
 }
 
 
 ::v-deep .active-page:hover {
-    background-color: #f5f5f5;
+    background-color: #777;
 }
 
 @media (max-width: 1235px) {
