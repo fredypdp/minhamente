@@ -2,7 +2,7 @@
     <section>
         <form class="publicar-area">
             <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Título do apontamento" autocomplete="off" autofocus required>
+            <input type="text" name="titulo" id="titulo" placeholder="Título do apontamento" autocomplete="off" autofocus>
             <label for="apontamento-conteudo">Conteúdo:</label>
             <div class="apontamento-conteudo-area">
                 <Editor
@@ -92,7 +92,7 @@ section {
     width: 85%;
     max-width: 900px;
     margin-left: 60px;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 }
 
 .publicar-area {
@@ -153,7 +153,6 @@ section {
 
 .botoes-bottom {
     display: flex;
-    flex-wrap: wrap;
 }
 
 .botoes-bottom div:first-child {

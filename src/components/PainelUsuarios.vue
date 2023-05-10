@@ -50,6 +50,13 @@
                         </td>
                         <td class="p-2 font-bold text-lg text-black">-</td>
                     </tr>
+                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="usuariosTotal == 0 && loaging">
+                        <td colspan="8">
+                            <div class="flex justify-center items-center">
+                                <span class="text-black text-base texto-limite">Nenhum usuário encontrado</span>
+                            </div>
+                        </td>
+                    </tr>
                     <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="loading">
                         <td colspan="8">
                             <div class="spin-area">
@@ -253,7 +260,7 @@ export default {
                 console.log(erro);
             }
         },
-        async usuarioPeloSobreNome(sobrenome) {
+        async usuarioPeloSobrenome(sobrenome) {
             this.loading = true
             if (sobrenome.target.value.trim().length == 0 || sobrenome.target.value == undefined) {
                 this.loading = false
