@@ -179,12 +179,12 @@ export default {
     background-color: var(--azul-escuro);
 }
 ::v-deep .active-page {
-    background-color: #333;
+    background-color: var(--verde);
 }
 
 
 ::v-deep .active-page:hover {
-    background-color: #777;
+    background-color: var(--verde-escuro);
 }
 
 @media (max-width: 1235px) {
