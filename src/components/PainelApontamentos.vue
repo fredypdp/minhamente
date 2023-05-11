@@ -30,7 +30,7 @@
                     </td>
                     <td class="p-2">
                         <div class="flex justify-center items-center">
-                            <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
+                            <AppDataCriacao @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
                         </div>
                     </td>
                     <td class="p-2">
@@ -77,12 +77,12 @@
 import Multiselect from '@vueform/multiselect'
 import PainelApontamento from "@/components/PainelApontamento.vue";
 import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
-import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
+import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 export default {
     components: {
         Multiselect,
         AppDropdownEdit,
-        AppDropdownPubli,
+        AppDataCriacao,
         PainelApontamento,
     },
     data() {

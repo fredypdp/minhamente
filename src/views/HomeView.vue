@@ -19,7 +19,7 @@
                 noOptionsText="Sem temas"
                 noResultsText="Sem resultados"
             />
-            <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
+            <AppDataCriacao @ordenar="ordenar"/>
         </div>
       </div>
       <ApontamentosList :apontamentos="ApontamentosMostrar"/>
@@ -42,16 +42,16 @@
 import Multiselect from '@vueform/multiselect'
 import AppNavBar from '@/components/shared/AppNavBar.vue'
 import HomeAssuntosBar from '@/components/HomeAssuntosBar.vue'
+import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 import ApontamentosList from '@/components/shared/ApontamentosList.vue'
-import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
 export default {
   name: 'HomeView',
   components: {
     AppNavBar,
     Multiselect,
+    AppDataCriacao,
     HomeAssuntosBar,
     ApontamentosList,
-    AppDropdownPubli,
   },
   data(){
     return {

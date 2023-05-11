@@ -29,12 +29,8 @@ export default {
 </script>
 
 <style scoped>
-div {
-    max-width: 150px;
-}
-
 .dropdown-button {
-    /* width: 150px; */
+    width: 140px;
     display: flex;
     outline: none;
     padding: 4px 12px;
@@ -52,6 +48,5 @@ div {
 .dropdown-button i {
     color: black;
     font-size: 20px;
-    margin-left: 10px;
 }
 </style>

@@ -40,7 +40,7 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDataCriacao @ordenar="ordenar" @maisRecente="PubliMaisRecente" @maisAntigo="PubliMaisAntiga"/>
+                                <AppDataCriacao @ordenar="ordenar"/>
                             </div>
                         </td>
                         <td class="p-2">
@@ -338,7 +338,6 @@ export default {
                 }
             };
 
-            console.log(role)
             try {
                 let usuarios = await axios(config)
                 this.usuarios = []

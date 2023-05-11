@@ -4,7 +4,7 @@
     <div class="container-box">
       <div class="pesquisa-area">
           <div class="pesquisa-filtros">
-              <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
+              <AppDataCriacao @maisRecente="PubliMaisRecente" @maisAntiga="PubliMaisAntiga"/>
           </div>
           <div class="apontamentos">
               <AppApontamento v-for="apontamento in apontamentos" :key="apontamento.id" :apontamento="apontamento">
@@ -34,13 +34,13 @@
 // @ is an alias to /src
 import AppNavBar from '@/components/shared/AppNavBar.vue'
 import ApontamentosList from '@/components/shared/ApontamentosList.vue';
-import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
+import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 
 export default {
   name: 'HomeView',
   components: {
     AppNavBar,
-    AppDropdownPubli,
+    AppDataCriacao,
     ApontamentosList,
   },
   data(){

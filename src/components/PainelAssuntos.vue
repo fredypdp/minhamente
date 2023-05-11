@@ -20,7 +20,7 @@
                     <td class="p-2 font-bold text-lg text-black">-</td>
                     <td class="p-2">
                         <div class="flex justify-center items-center">
-                            <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntigo="PubliMaisAntigo"/>
+                            <AppDataCriacao @maisRecente="PubliMaisRecente" @maisAntigo="PubliMaisAntigo"/>
                         </div>
                     </td>
                     <td class="p-2">
@@ -76,11 +76,11 @@
 </template>
 
 <script>
-import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
+import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
 export default {
     components: {
-        AppDropdownPubli,
+        AppDataCriacao,
         AppDropdownEdit
     },
     methods: {
