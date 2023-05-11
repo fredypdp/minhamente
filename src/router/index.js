@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { LoginStore } from "@/stores/LoginStore.js";
 
 import HomeView from '@/views/HomeView.vue'
 import PesquisaView from '@/views/PesquisaView.vue'
@@ -47,10 +48,18 @@ const routes = [
       {path: "usuarios", name: "PainelUsuarios", component: PainelUsuarios},
       {path: "apontamentos", name: "PainelApontamentos", component: PainelApontamentos},
       {path: "", name: "painel", component: PainelApontamentos}
-    ]
+    ],
+    beforeEnter(to, from, next) {
+      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
+        next({name: "home"})
+        return
+      }
+      
+      next()
+    },
   },
   {
-    path: "/ler/:id", // Adm
+    path: "/ler/:id",
     name: "ApontamentoLer",
     component: ApontamentoView,
   },
@@ -59,38 +68,62 @@ const routes = [
     children: [
       {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView},
       {path: "editar/:apontamento", name: "ApontamentoEditar", component: ApontamentoEditarView},
-    ]
+    ],
+    beforeEnter(to, from, next) {
+      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
+        next({name: "home"})
+        return
+      }
+      
+      next()
+    },
   },
   {
-  path: "/assunto", // Adm
-  children: [
+    path: "/assunto", // Adm
+    children: [
       {path: "criar", name: "AssuntoCriar", component: AssuntoCriarView},
       {path: "editar/:assunto", name: "AssuntoEditar", component: AssuntoEditarView},
-    ]
+    ],
+    beforeEnter(to, from, next) {
+      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
+        next({name: "home"})
+        return
+      }
+      
+      next()
+    },
   },
   {
-  path: "/tema", // Adm
-  children: [
-      {path: "criar", name: "TemaCriar", component: TemaCriarView},
-      {path: "editar/:tema", name: "TemaEditar", component: TemaEditarView},
-    ]
+    path: "/tema", // Adm
+    children: [
+        {path: "criar", name: "TemaCriar", component: TemaCriarView},
+        {path: "editar/:tema", name: "TemaEditar", component: TemaEditarView},
+    ],
+    beforeEnter(to, from, next) {
+      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
+        next({name: "home"})
+        return
+      }
+      
+      next()
+    },
   },
   {
-  path: "/auth",
-  children: [
-      {path: "login", name: "login", component: LoginView},
-      {path: "criarconta", name: "CriarConta", component: CriarContaView},
-      {path: "novasenha/:token", name: "NovaSenha", component: NovaSenhaView},
-      {path: "esquecisenha", name: "EsqueciSenha", component: EsqueciSenhaView},
-      {path: "deletarconta/:token", name: "DeletarConta", component: DeletarContaView},
-      // Redirecionamentos
-      {path: "/login", redirect: {name: "login"}},
-      {path: "/signup", redirect: {name: "CriarConta"}},
-      {path: "/criarconta", redirect: {name: "CriarConta"}},
-      {path: "/novasenha/:token", redirect: {name: "NovaSenha"}},
-      {path: "/esquecisenha", redirect: {name: "EsqueciSenha"}},
-      {path: "/deletarconta/:token", redirect: {name: "DeletarConta"}},
-    ]
+    path: "/auth",
+    children: [
+        {path: "login", name: "login", component: LoginView},
+        {path: "criarconta", name: "CriarConta", component: CriarContaView},
+        {path: "novasenha/:token", name: "NovaSenha", component: NovaSenhaView},
+        {path: "esquecisenha", name: "EsqueciSenha", component: EsqueciSenhaView},
+        {path: "deletarconta/:token", name: "DeletarConta", component: DeletarContaView},
+        // Redirecionamentos
+        {path: "/login", redirect: {name: "login"}},
+        {path: "/signup", redirect: {name: "CriarConta"}},
+        {path: "/criarconta", redirect: {name: "CriarConta"}},
+        {path: "/novasenha/:token", redirect: {name: "NovaSenha"}},
+        {path: "/esquecisenha", redirect: {name: "EsqueciSenha"}},
+        {path: "/deletarconta/:token", redirect: {name: "DeletarConta"}},
+      ]
   },
   {
     path: '/',

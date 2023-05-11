@@ -55,16 +55,8 @@ export default {
     created(){
         this.PaginaAtual = this.$route.name
     },
-    beforeRouteUpdate(to, from, next){
+    beforeRouteUpdate(to, from, next){ // Nome da página atual
         this.PaginaAtual = to.name
-        next()
-    },
-    beforeRouteEnter(to, from, next){
-        if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
-            next({name: "home"})
-            return
-        }
-        
         next()
     },
     computed: {

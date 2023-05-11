@@ -1,12 +1,12 @@
 <template>
-<div>
+<div id="AssuntoCriarView">
     <AppNavBar/>
-    <div class="container-box">
-        <form method="post" class="criar-assunto-area">
+    <div class="criar-assunto-area">
+        <form method="post" class="criar-assunto-form">
             <label for="nome" class="nome-label">Nome do assunto:</label>
-            <input type="text" name="nome" class="nome-input" id="nome" placeholder="Nome do assunto" autocomplete="off" autofocus required>
+            <input type="text" name="nome" class="nome-input" id="nome" placeholder="Nome do assunto" autocomplete="off" autofocus>
             <label for="icone" class="icone-label">Ícone:</label>
-            <input type="text" name="icone" class="icone-input" id="icone" placeholder="Digite o código do ícone da logo" autocomplete="off" required>
+            <input type="text" name="icone" class="icone-input" id="icone" placeholder="Digite o código do ícone da logo" autocomplete="off">
             <button type="submit" class="botao-criar">Criar assunto</button>
         </form>
     </div>
@@ -23,25 +23,38 @@ export default {
 </script>
 
 <style scoped>
+#AssuntoCriarView {
+    height: 100vh;
+}
+
 .criar-assunto-area {
-    margin: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0px 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.criar-assunto-form {
+    width: 500px;
     padding: 10px;
     display: flex;
     max-width: 500px;
     border-radius: 5px;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
     background-color: #e7e7e7;
 }
 
-.criar-assunto-area label {
+.criar-assunto-form label {
     color: black;
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
-.criar-assunto-area input {
+.criar-assunto-form input {
     width: 100%;
     padding: 5px;
     color: black;

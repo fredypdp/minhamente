@@ -50,7 +50,7 @@
                         </td>
                         <td class="p-2 font-bold text-lg text-black">-</td>
                     </tr>
-                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="usuariosTotal == 0 && loaging">
+                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="usuariosTotal == 0 && !loading">
                         <td colspan="8">
                             <div class="flex justify-center items-center">
                                 <span class="text-black text-base texto-limite">Nenhum usuário encontrado</span>
@@ -337,11 +337,11 @@ export default {
                     'authorization': `Bearer ${LoginStore().token}`
                 }
             };
-
+            
             try {
                 let usuarios = await axios(config)
                 this.usuarios = []
-                this.usuarios.push(usuarios.data.usuario)
+                this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
                 this.loading = false
