@@ -87,7 +87,7 @@ div {
     padding: 4px 12px;
     border-radius: 3px;
     border: 1px solid #ccc;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -106,7 +106,7 @@ div {
     display: flex;
     margin-top: 5px;
     border-radius: 3px;
-    /* position: absolute; */
+    position: absolute;
     align-items: center;
     flex-direction: column;
     border: 1px solid #ccc;

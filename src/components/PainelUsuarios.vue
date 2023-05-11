@@ -29,7 +29,7 @@
                             <div class="flex justify-center items-center">
                                 <Multiselect
                                     v-model="funcao"
-                                    :close-on-select="false"
+                                    :close-on-select="true"
                                     :searchable="true"
                                     :options="[{value: 1, label: 'Normal'}, {value: 0, label: 'Administrador'}]"
                                     placeholder="Selecionar função"
@@ -40,7 +40,7 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDropdownPubli @maisRecente="PubliMaisRecente" @maisAntigo="PubliMaisAntiga"/>
+                                <AppDataCriacao @ordenar="ordenar" @maisRecente="PubliMaisRecente" @maisAntigo="PubliMaisAntiga"/>
                             </div>
                         </td>
                         <td class="p-2">
@@ -133,13 +133,13 @@
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
 import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
-import AppDropdownPubli from "@/components/shared/AppDropdownPubli.vue";
+import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 import { LoginStore } from "@/stores/LoginStore.js";
 export default {
     components: {
         Multiselect,
         AppDropdownEdit,
-        AppDropdownPubli,
+        AppDataCriacao,
     },
     data() {
         return {
@@ -149,6 +149,19 @@ export default {
             currentPage: 1,
             PaginaAtual: 1,
             ItensPorPagina: 20,
+        }
+    },
+    watch: {
+        funcao(novoRole, antigoRole) {
+            if (novoRole == null || undefined) {
+                this.pegarUsuarios()
+                return
+            }
+            
+            if (novoRole != null || undefined) {
+                this.usuarioPeloRole(novoRole)
+                return
+            }
         }
     },
     mounted(){
@@ -174,6 +187,9 @@ export default {
             let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
             
             return dataFormatada
+        },
+        ordenar() {
+            this.usuarios.reverse()
         },
         PubliMaisRecente() {
             this.usuarios.sort((primeiro, ultimo) => {
@@ -301,6 +317,28 @@ export default {
                 }
             };
 
+            try {
+                let usuarios = await axios(config)
+                this.usuarios = []
+                this.usuarios.push(usuarios.data.usuario)
+                this.loading = false
+            } catch (erro) {
+                this.loading = false
+                console.log(erro);
+            }
+        },
+        async usuarioPeloRole(role) {
+            this.loading = true
+
+            let config = {
+                method: 'get',
+                url: 'https://apiminhamente.onrender.com/usuario/role/'+role,
+                headers: {
+                    'authorization': `Bearer ${LoginStore().token}`
+                }
+            };
+
+            console.log(role)
             try {
                 let usuarios = await axios(config)
                 this.usuarios = []

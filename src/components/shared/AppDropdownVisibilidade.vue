@@ -87,7 +87,7 @@ div {
     padding: 4px 12px;
     border-radius: 3px;
     border: 1px solid #ccc;
-    align-content: center;
+    align-items: center;
     justify-content: space-between;
 }
 
