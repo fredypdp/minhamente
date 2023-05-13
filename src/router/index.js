@@ -82,7 +82,7 @@ const routes = [
     path: "/assunto", // Adm
     children: [
       {path: "criar", name: "AssuntoCriar", component: AssuntoCriarView},
-      {path: "editar/:assunto", name: "AssuntoEditar", component: AssuntoEditarView},
+      {path: "editar/:id", name: "AssuntoEditar", component: AssuntoEditarView},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){

@@ -132,9 +132,9 @@
 <script>
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
+import { LoginStore } from "@/stores/LoginStore.js";
 import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
 import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
-import { LoginStore } from "@/stores/LoginStore.js";
 export default {
     components: {
         Multiselect,
@@ -149,6 +149,7 @@ export default {
             currentPage: 1,
             PaginaAtual: 1,
             ItensPorPagina: 20,
+            criacaoCrescente: true,
         }
     },
     watch: {
@@ -178,7 +179,7 @@ export default {
         },
     },
     methods: {
-        paginar() {
+        paginar(pagina) {
             this.paginaAtual = pagina
         },
         formatarData(data) {
@@ -188,48 +189,84 @@ export default {
             
             return dataFormatada
         },
-        ordenar() {
-            this.usuarios.reverse()
-        },
-        PubliMaisRecente() {
-            this.usuarios.sort((primeiro, ultimo) => {
-                let a = new Date(primeiro.created_at)
-                let b = new Date(ultimo.created_at)
-                
-                if(a < b){
-                    return -1
+        async ordenar() {
+            if(!this.criacaoCrescente) {
+                const arrayOrdenado = [];
+
+                while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
+                    let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+                    for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
+                        // Procurando o index do item mais recente
+                        if (this.usuarios[i].nome < this.usuarios[MaisNovoIndex].nome) {
+                            MaisNovoIndex = i;
+                        }
+                    }
+
+                    arrayOrdenado.push(this.usuarios[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+                    this.usuarios.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
                 }
-            });
-        },
-        PubliMaisAntiga() {
-            this.usuarios.sort((primeiro, ultimo) => {
-                let a = new Date(primeiro.created_at)
-                let b = new Date(ultimo.created_at)
-                
-                if(a > b){
-                    return -1
+    
+                this.usuarios = arrayOrdenado;
+                this.criacaoCrescente = true // definindo que tá em ordem crescente
+            } else {
+                const arrayOrdenado = [];
+
+                while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
+                    let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+
+                    for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
+                        // Procurando o index do item mais antigo
+                        if (this.usuarios[i].nome > this.usuarios[MaisAntigoIndex].nome) {
+                            MaisAntigoIndex = i;
+                        }
+                    }
+
+                    arrayOrdenado.push(this.usuarios[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+                    this.usuarios.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
                 }
-            });
+    
+                this.usuarios = arrayOrdenado;
+                this.criacaoCrescente = false // definindo que tá em ordem decrescente
+            }
         },
-        EditMaisRecente(){
-            this.usuarios.sort((primeiro, ultimo) => {
-                let a = new Date(primeiro.edited_at)
-                let b = new Date(ultimo.edited_at)
-                
-                if(a < b){
-                    return -1
+        async EditMaisRecente(){
+            const arrayOrdenado = [];
+
+            while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
+                let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+                for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
+                    // Procurando o index do item mais recente
+                    if (this.usuarios[i].created_at > this.usuarios[MaisNovoIndex].created_at) {
+                        MaisNovoIndex = i;
+                    }
                 }
-            });
+                
+                arrayOrdenado.push(this.usuarios[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+                this.usuarios.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
+            }
+
+            this.usuarios = arrayOrdenado;
         },
-        EditMaisAntiga(){
-            this.usuarios.sort((primeiro, ultimo) => {
-                let a = new Date(primeiro.edited_at)
-                let b = new Date(ultimo.edited_at)
-                
-                if(a > b){
-                    return -1
+        async EditMaisAntiga(){
+            const arrayOrdenado = [];
+
+            while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
+                let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+
+                for (let i = 1; i < this.usuarios.length; i++) {
+                    // Procurando o index do item mais antigo
+                    if (this.usuarios[i].created_at < this.usuarios[MaisAntigoIndex].created_at) {
+                        MaisAntigoIndex = i;
+                    }
                 }
-            });
+
+                arrayOrdenado.push(this.usuarios[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+                this.usuarios.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
+            }
+
+            this.usuarios = arrayOrdenado;
         },
         async pegarUsuarios() {
             this.loading = true
@@ -319,6 +356,13 @@ export default {
 
             try {
                 let usuarios = await axios(config)
+
+                if(usuarios.data.usuario == undefined) {
+                    this.usuarios = []
+                    this.loading = false
+                    return
+                }
+
                 this.usuarios = []
                 this.usuarios.push(usuarios.data.usuario)
                 this.loading = false
