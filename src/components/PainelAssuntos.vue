@@ -295,7 +295,7 @@ export default {
     
                 try {
                     await axios(config)
-                    this.$router.go(0)
+                    this.assuntos.splice(assunto._id, 1)
                 } catch (erro) {   
                     console.log(erro);
                 }
