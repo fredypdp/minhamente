@@ -201,7 +201,7 @@ export default {
 
                 for (let i = 1; i < this.assuntos.length; i++) { // Verificar cada item do array
                     // Procurando o index do item mais recente
-                    if (this.assuntos[i].created_at > this.assuntos[MaisNovoIndex].created_at) {
+                    if (this.assuntos[i].edited_at > this.assuntos[MaisNovoIndex].edited_at) {
                         MaisNovoIndex = i;
                     }
                 }
@@ -220,7 +220,7 @@ export default {
 
                 for (let i = 1; i < this.assuntos.length; i++) {
                     // Procurando o index do item mais antigo
-                    if (this.assuntos[i].created_at < this.assuntos[MaisAntigoIndex].created_at) {
+                    if (this.assuntos[i].edited_at < this.assuntos[MaisAntigoIndex].edited_at) {
                         MaisAntigoIndex = i;
                     }
                 }

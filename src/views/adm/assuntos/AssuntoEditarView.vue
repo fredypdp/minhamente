@@ -1,5 +1,5 @@
 <template>
-<div id="AssuntoCriarView">
+<div id="AssuntoEditarView">
     <AppNavBar/>
     <div class="editar-assunto-area">
         <form @submit.prevent="editar" class="editar-assunto-form">
@@ -112,7 +112,7 @@ export default {
     margin-bottom: 5px;
 }
 
-#AssuntoCriarView {
+#AssuntoEditarView {
     height: 100vh;
 }
 

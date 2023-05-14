@@ -67,7 +67,7 @@ const routes = [
     path: "/apontamento", // Adm
     children: [
       {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView},
-      {path: "editar/:apontamento", name: "ApontamentoEditar", component: ApontamentoEditarView},
+      {path: "editar/:id", name: "ApontamentoEditar", component: ApontamentoEditarView},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
@@ -97,7 +97,7 @@ const routes = [
     path: "/tema", // Adm
     children: [
         {path: "criar", name: "TemaCriar", component: TemaCriarView},
-        {path: "editar/:tema", name: "TemaEditar", component: TemaEditarView},
+        {path: "editar/:id", name: "TemaEditar", component: TemaEditarView},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){

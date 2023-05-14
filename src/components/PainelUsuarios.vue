@@ -198,7 +198,7 @@ export default {
 
                     for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais recente
-                        if (this.usuarios[i].nome < this.usuarios[MaisNovoIndex].nome) {
+                        if (this.usuarios[i].created_at > this.usuarios[MaisNovoIndex].created_at) {
                             MaisNovoIndex = i;
                         }
                     }
@@ -217,7 +217,7 @@ export default {
 
                     for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais antigo
-                        if (this.usuarios[i].nome > this.usuarios[MaisAntigoIndex].nome) {
+                        if (this.usuarios[i].created_at < this.usuarios[MaisAntigoIndex].created_at) {
                             MaisAntigoIndex = i;
                         }
                     }
@@ -238,7 +238,7 @@ export default {
 
                 for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
                     // Procurando o index do item mais recente
-                    if (this.usuarios[i].created_at > this.usuarios[MaisNovoIndex].created_at) {
+                    if (this.usuarios[i].edited_at > this.usuarios[MaisNovoIndex].edited_at) {
                         MaisNovoIndex = i;
                     }
                 }
@@ -257,7 +257,7 @@ export default {
 
                 for (let i = 1; i < this.usuarios.length; i++) {
                     // Procurando o index do item mais antigo
-                    if (this.usuarios[i].created_at < this.usuarios[MaisAntigoIndex].created_at) {
+                    if (this.usuarios[i].edited_at < this.usuarios[MaisAntigoIndex].edited_at) {
                         MaisAntigoIndex = i;
                     }
                 }
