@@ -35,8 +35,8 @@ export default {
         return {
             loading: false,
             erro: "",
-            nome: "",
-            icone: "",
+            nome: undefined,
+            icone: undefined,
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -50,12 +50,11 @@ export default {
             try {
                 let assunto = await axios(config)
 
-                console.log();
                 vm.nome = assunto.data.assunto.nome
                 vm.icone = assunto.data.assunto.icone
             } catch (erro) {
                 console.log(erro);
-                vm.$route.go(-1)
+                vm.$router.go(-1)
             }
         })
     },

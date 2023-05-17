@@ -6,6 +6,7 @@
                     <tr class="bg-gray-50 border-b">
                         <th class="w-96 p-2 text-base font-bold text-gray-500">Título</th>
                         <th class="w-32 p-2 text-base font-bold text-gray-500">Slug</th>
+                        <th class="w-32 p-2 text-base font-bold text-gray-500">Assunto</th>
                         <th class="w-32 p-2 text-base font-bold text-gray-500">Data de criação</th>
                         <th class="w-32 p-2 text-base font-bold text-gray-500">Data de Edição</th>
                         <th class="w-32 p-2 text-base font-bold text-gray-500">Ações</th>
@@ -16,6 +17,7 @@
                         <td class="p-2" colspan="">
                             <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do tema" autocomplete="off" @keyup.enter="temaPeloTitulo">
                         </td>
+                        <td class="p-2 font-bold text-lg text-black">-</td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
                                 <Multiselect
@@ -76,6 +78,11 @@
                         <td class="p-2">
                             <div class="flex justify-center items-center">
                                 <span class="text-black text-base texto-limite">{{ tema.slug }}</span>
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <div class="flex justify-center items-center">
+                                <span class="text-black text-base texto-limite">-</span>
                             </div>
                         </td>
                         <td class="p-2">
@@ -311,6 +318,22 @@ export default {
                 console.log(erro);
             }
         },
+        async pegarAssuntos() {
+            let config = {
+                method: 'get',
+                url: 'https://apiminhamente.onrender.com/assuntos'
+            };
+
+            try {
+                let { data } = await axios(config)
+
+                data.assuntos.forEach( assunto => {
+                    this.assuntosLista.push({value: assunto._id, label: assunto.nome})
+                })
+            } catch (erro) {
+                console.log(erro);
+            }
+        },
         async editar(tema) {
             this.$router.push({name: "TemaEditar", params: {id: tema._id}})
         },
@@ -334,22 +357,6 @@ export default {
                 }
             }
         },
-        async pegarAssuntos() {
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/assuntos'
-            };
-
-            try {
-                let { data } = await axios(config)
-
-                data.assuntos.forEach( assunto => {
-                    this.assuntosLista.push({value: assunto._id, label: assunto.nome})
-                })
-            } catch (erro) {
-                console.log(erro);
-            }
-        }
     }
 }
 </script>

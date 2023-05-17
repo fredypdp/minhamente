@@ -5,7 +5,7 @@
         <div class="pesquisa" v-show="abrirPesquisa">
             <i class="fa-solid fa-arrow-left" @click="toggle"></i>
             <div class="pesquisa-form-area">
-                <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" autofocus>
+                <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
         </div>

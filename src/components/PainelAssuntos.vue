@@ -241,6 +241,7 @@ export default {
 
             try {
                 let assuntos = await axios(config)
+                
                 this.assuntos = assuntos.data.assuntos
                 this.loading = false
             } catch (erro) {

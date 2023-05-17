@@ -19,7 +19,11 @@
 }
 
 .container-box {
-    padding-top: 4%;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding: 80px 50px 0px 50px;
+}
+
+@media (max-width: 1235px) {
+    .container-box {
+        padding: 80px 25px 0px 25px;
+    }
 }

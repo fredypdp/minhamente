@@ -2,12 +2,12 @@
     <div class="apontamento">
         <slot>
             <div class="miniatura-area">
-                <router-link to="">
+                <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                     <img :src="apontamento.miniatura" class="apontamento-miniatura">
                 </router-link>
             </div>
             <div class="titulo-area">
-                <router-link to="">
+                <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                     <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
                 </router-link>
             </div>
@@ -17,17 +17,12 @@
 
 <script>
 export default {
-    data(){
-        return {
-            apontamento: {id: 1,titulo: "Matou, matou, menino matou o preá", miniatura: "https://i.ytimg.com/vi/FCFJ9gOkqlA/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCR3225xJGrgkZtcr_6oqErzFHTXQ"}
+    props: {
+        apontamento: {
+            type: Object,
+            require: true
         }
     }
-    // props:{
-    //     apontamento: {
-    //         type: Object,
-    //         require: true
-    //     }
-    // }
 }
 </script>
 
@@ -40,18 +35,22 @@ export default {
 }
 
 .miniatura-area {
+    flex: 1;
     width: 120px;
     height: 68px;
+    max-width: 120px;
+    max-height: 68px;
 }
 
 .apontamento-miniatura {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     background-color: var(--azul);
 }
 
 .titulo-area {
+    flex: 1;
     margin-left: 5px;
 }
 

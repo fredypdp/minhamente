@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import axios from "axios"
+import { LoginStore } from "@/stores/LoginStore.js";
 import AppNavBar from '@/components/shared/AppNavBar.vue'
 import ApontamentoLer from "@/components/ApontamentoLer.vue";
 import AppLateralBar from "@/components/shared/AppLateralBar.vue";
@@ -19,7 +21,33 @@ export default {
         AppNavBar,
         AppLateralBar,
         ApontamentoLer,
-    }
+    },
+    async beforeRouteEnter(to, from, next) {
+
+        let config = {
+            method: 'get',
+            url: 'https://apiminhamente.onrender.com/apontamento/'+to.params.id
+        };
+
+        try {
+            let apontamento = await axios(config)
+            
+            if (apontamento.data.apontamento == undefined) {
+                next({name: "home"})
+                return
+            }
+
+            if (apontamento.data.apontamento.visibilidade == false && LoginStore().usuario.role == 1 || apontamento.data.apontamento.visibilidade == false && LoginStore().usuario == undefined) {
+                next({name: "home"})
+                return
+            }
+
+            next()
+        } catch (erro) {
+            console.log(erro);
+            next({name: "home"})
+        }
+    },
 }
 </script>
 

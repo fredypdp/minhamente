@@ -69,7 +69,7 @@ export default {
                 vm.titulo = tema.data.tema.titulo
             } catch (erro) {
                 console.log(erro);
-                vm.$route.go(-1)
+                vm.$router.go(-1)
             }
         })
     },

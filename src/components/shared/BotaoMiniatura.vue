@@ -1,7 +1,7 @@
 <template>
     <div>
         <label for="miniatura" class="miniatura-label">Miniatura</label>
-        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg" @change="ShowMiniatura" ref="miniatura" required>
+        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg" @change="ShowMiniatura" ref="miniatura">
         <img :src="miniaturaPreview" class="miniatura-preview" draggable="false" v-if="miniaturaPreview">
     </div>
 </template>
@@ -23,6 +23,8 @@ export default {
             const img = this.$refs.miniatura.files[0]
             this.$emit("avatar", img)
             this.miniaturaPreview = URL.createObjectURL(img);
+
+            this.$emit("miniatura", img)
         }
     }
 }

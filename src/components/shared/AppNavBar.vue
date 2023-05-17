@@ -12,7 +12,11 @@
                     </form>
                 </div>
                 <div class="perfil-area">
-                    <span v-if="LoginStore.usuario != undefined && LoginStore.usuario.role == 0"><i class="fa-solid fa-arrow-up-from-bracket publicar"></i></span>
+                    <span v-if="LoginStore.usuario != undefined && LoginStore.usuario.role == 0">
+                        <router-link :to="{name: 'ApontamentoPublicar'}">
+                            <i class="fa-solid fa-arrow-up-from-bracket publicar"></i>
+                        </router-link>
+                    </span>
                     <PerfilDropdown v-if="LoginStore.usuario != undefined"/>
                     <span class="login" v-if="LoginStore.usuario == undefined"><router-link :to="{name: 'login'}">Entrar</router-link></span>
                 </div>
@@ -52,7 +56,7 @@ export default {
         NavPesquisaMobile
     },
     methods: {
-        abrirMenu: function (){
+        abrirMenu(){
             this.mostrarMenu = !this.mostrarMenu
         }
     }
@@ -61,15 +65,14 @@ export default {
 <style scoped>
 
 header {
+    display: flex;
     width: 100%;
     height: 50px;
     top: 0;
+    left: 0;
     z-index: 2000;
     position: fixed;
     padding: 10px 4%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     background-color: var(--verde);
 }
 
@@ -79,7 +82,7 @@ header {
 
 .header-area {
     display: flex;
-    flex-direction: row;
+    width: 100%;
 }
 
 .logo-area {
