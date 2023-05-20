@@ -19,16 +19,6 @@ export default {
     components: {
         AppApontamento,
     },
-    data(){
-        return {
-            selecionados: null,
-            options: [
-                { value: 'batman', label: 'Batman' },
-                { value: 'robin', label: 'Robin' },
-                { value: 'joker', label: 'Joker' },
-            ],
-        }
-    },
     computed: {
         column(){
             return this.FlexColumn ? "column" : "row"

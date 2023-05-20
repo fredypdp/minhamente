@@ -33,9 +33,10 @@
             <AppDataCriacao @ordenar="ordenar"/>
         </div>
       </div>
-      <div class="sem-apontamentos" v-if="apontamentos == undefined || apontamentosTotal == 0">
+      <div class="sem-apontamentos" v-if="!apontamentosSkeleton && apontamentosTotal == 0">
         <span>Nenhum apontamento encontrado</span>
       </div>
+      <ApontamentosListSkeleton v-if="apontamentosSkeleton"/>
       <ApontamentosList :apontamentos="ApontamentosMostrar"/>
       <div class="paginas-area" v-if="apontamentosTotal > 0">
         <vue-awesome-paginate
@@ -62,6 +63,7 @@ import AppNavBar from '@/components/shared/AppNavBar.vue'
 import HomeAssuntosBar from '@/components/HomeAssuntosBar.vue'
 import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
 import ApontamentosList from '@/components/shared/ApontamentosList.vue'
+import ApontamentosListSkeleton from '@/components/shared/ApontamentosListSkeleton.vue'
 export default {
   components: {
     AppNavBar,
@@ -69,6 +71,7 @@ export default {
     AppDataCriacao,
     HomeAssuntosBar,
     ApontamentosList,
+    ApontamentosListSkeleton,
   },
   data() {
     return {
@@ -82,6 +85,7 @@ export default {
       ItensPorPagina: 20,
       temasLista: [],
       TemaSelecionado: "",
+      apontamentosSkeleton: false,
     }
   },
   computed: {
@@ -118,6 +122,8 @@ export default {
           this.pegarApontamentos()
         }
       }
+      
+      this.apontamentosSkeleton = true
 
       let config = {
         method: 'get',
@@ -127,14 +133,16 @@ export default {
       try {
         let { data } = await axios(config)
         this.apontamentos = data.tema.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-        // this.loading = false
+        this.apontamentosSkeleton = false
       } catch (erro) {
         console.log(erro);
-        // this.loading = false
+        this.apontamentosSkeleton = false
       }
     },
   },
-  beforeMount() {
+  mounted() {
+    this.pegarAssuntos()
+
     if (this.HomeStore.assuntoAtual != undefined && this.HomeStore.assuntoAtual != "todos") {
       this.pegarApontamentosDoAssunto(this.HomeStore.assuntoAtual)
       this.pegarTemasDoAssunto(this.HomeStore.assuntoAtual)
@@ -145,9 +153,6 @@ export default {
       this.pegarApontamentos()
       return
     }
-  },
-  mounted() {
-    this.pegarAssuntos()
   },
   beforeRouteEnter(to, from, next) {
     if (from.name != "ApontamentoLer") {
@@ -223,7 +228,7 @@ export default {
           }
     },
     async pegarApontamentos() {
-        // this.loading = true
+        this.apontamentosSkeleton = true
 
         let config = {
             method: 'get',
@@ -233,14 +238,14 @@ export default {
         try {
             let apontamentos = await axios(config)
             this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-            // this.loading = false
+            this.apontamentosSkeleton = false
         } catch (erro) {
-            // this.loading = false
+            this.apontamentosSkeleton = false
             console.log(erro);
         }
     },
     async pegarApontamentosDoAssunto(assunto) {
-      // this.loading = true
+      this.apontamentosSkeleton = true
 
       let config = {
         method: 'get',
@@ -251,14 +256,14 @@ export default {
         let assunto = await axios(config)
         this.apontamentos = assunto.data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true)
         this.assuntoPagina = assunto.data.assunto.nome
-        // this.loading = false
+        this.apontamentosSkeleton = false
       } catch (erro) {
         console.log(erro);
-        // this.loading = false
+        this.apontamentosSkeleton = false
       }
     },
     async pegarTemasDoAssunto(assunto) {
-      // this.loading = true
+      this.apontamentosSkeleton = true
 
       let config = {
         method: 'get',
@@ -269,10 +274,10 @@ export default {
         let assunto = await axios(config)
         this.temasLista = []
         assunto.data.assunto.temas.forEach( tema => this.temasLista.push({value: tema._id, label: tema.titulo}))
-        // this.loading = false
+        this.apontamentosSkeleton = false
       } catch (erro) {
         console.log(erro);
-        // this.loading = false
+        this.apontamentosSkeleton = false
       }
     },
   },
@@ -298,8 +303,12 @@ export default {
 }
 
 .sem-apontamentos {
-  text-align: center;
+  display: flex;
   padding: 10px;
+  height: 100px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .sem-apontamentos span {
