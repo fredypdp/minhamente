@@ -1,12 +1,12 @@
 <template>
 <div>
-    <div class="assunto-area">
+    <div class="assunto-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto">
-            <i :class="assunto.icone"></i>
+            <div v-html="assunto.icone" class="icone"></div>
             <span>{{assunto.nome}}</span>
         </div>
     </div>
-    <div class="assunto-mobile-area">
+    <div class="assunto-mobile-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto-mobile">
             <span>{{assunto.nome}}</span>
         </div>
@@ -15,11 +15,22 @@
 </template>
 
 <script>
+import { HomeStore } from "@/stores/HomeStore.js";
 export default {
     props: {
         assunto: {
             type: Object,
             require: true
+        }
+    },
+    data() {
+        return {
+            HomeStore: HomeStore(),
+        }
+    },
+    methods: {
+        async apontamentosDoAssunto(assunto) {
+            this.HomeStore.assuntoAtual = assunto._id
         }
     }
 }
@@ -52,7 +63,7 @@ export default {
     background-color: var(--azul-escuro);
 }
 
-.assunto i {
+.assunto .icone {
     color: white;
     font-size: 30px;
 }

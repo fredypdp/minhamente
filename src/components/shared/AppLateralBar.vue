@@ -16,7 +16,7 @@
 <script>
 import axios from "axios";
 import { LoginStore } from "@/stores/LoginStore.js";
-import LateralBarAssunto from "@/components/LateralBarAssunto.vue";
+import LateralBarAssunto from "@/components/shared/LateralBarAssunto.vue";
 export default {
     components: {
         LateralBarAssunto

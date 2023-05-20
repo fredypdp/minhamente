@@ -1,11 +1,11 @@
 <template>
 <div>
-    <div class="assunto-area">
+    <div class="assunto-area" @click="apontamentosDoAssunto">
         <div class="assunto">
             <span>Todos</span>
         </div>
     </div>
-    <div class="assunto-mobile-area">
+    <div class="assunto-mobile-area" @click="apontamentosDoAssunto">
         <div class="assunto-mobile">
             <span>Todos</span>
         </div>
@@ -14,11 +14,22 @@
 </template>
 
 <script>
+import { HomeStore } from "@/stores/HomeStore.js";
 export default {
     props: {
         assunto: {
             type: Object,
             require: true
+        }
+    },
+    data() {
+        return {
+            HomeStore: HomeStore(),
+        }
+    },
+    methods: {
+        async apontamentosDoAssunto() {
+            this.HomeStore.assuntoAtual = "todos"
         }
     }
 }

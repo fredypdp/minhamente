@@ -2,12 +2,12 @@
     <slot>
         <div class="apontamento">
                 <div class="miniatura-area">
-                    <router-link to="">
+                    <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                         <img :src="apontamento.miniatura" class="apontamento-miniatura">
                     </router-link>
                 </div>
                 <div class="titulo-area">
-                    <router-link to="">
+                    <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                         <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
                     </router-link>
                 </div>
@@ -28,11 +28,17 @@ export default {
 
 <style scoped>
 .apontamento {
-    max-width: 340px;
-    margin: 0px 7.5px;
-    margin-bottom: 30px;
     display: flex;
+    max-width: 24%;
+    min-width: 340px;
+    margin: 0px 6.5px;
+    margin-bottom: 30px;
     flex-direction: column;
+}
+
+.miniatura-area {
+    width: 100%;
+    height: calc(225px * 0.84);
 }
 
 .apontamento-miniatura {

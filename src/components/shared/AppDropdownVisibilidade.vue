@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button class="dropdown-button" @click="toggle">
+    <button type="button" class="dropdown-button" @click="toggle">
         <span>Visibilidade</span>
         <i class="fa-solid fa-angle-up" v-if="isOpen"></i>
         <i class="fa-solid fa-angle-down" v-if="!isOpen"></i>

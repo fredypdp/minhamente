@@ -1,16 +1,23 @@
 <template>
-    <div class="assunto">
+    <div class="assunto" @click="apontamentosDoAssunto(assunto)">
         <i :class="assunto.icone"></i>
         <span class="assunto-nome">{{ assunto.nome }}</span>
     </div>
 </template>
 
 <script>
+import { HomeStore } from "@/stores/HomeStore.js";
 export default {
     props: {
         assunto: {
             type: Object,
             require: true
+        }
+    },
+    methods: {
+        async apontamentosDoAssunto(assunto) {
+            HomeStore().assuntoAtual = assunto._id
+            this.$router.push({name: "home"})
         }
     }
 }

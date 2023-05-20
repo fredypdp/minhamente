@@ -12,6 +12,7 @@
 
 <script>
 import axios from "axios"
+import { HomeStore } from "@/stores/HomeStore.js";
 import { LoginStore } from "@/stores/LoginStore.js";
 import AppNavBar from '@/components/shared/AppNavBar.vue'
 import ApontamentoLer from "@/components/ApontamentoLer.vue";
@@ -23,6 +24,8 @@ export default {
         ApontamentoLer,
     },
     async beforeRouteEnter(to, from, next) {
+
+        HomeStore().assuntoAtual = undefined
 
         let config = {
             method: 'get',
