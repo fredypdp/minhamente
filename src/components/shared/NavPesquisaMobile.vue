@@ -4,10 +4,10 @@
         <i class="fa-solid fa-magnifying-glass" @click="toggle"></i>
         <div class="pesquisa" v-show="abrirPesquisa">
             <i class="fa-solid fa-arrow-left" @click="toggle"></i>
-            <div class="pesquisa-form-area">
-                <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+            <form class="pesquisa-form-area" @submit.prevent="pesquisar">
+                <input type="search" v-model="pesquisa" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" @keyup.enter="pesquisar">
+                <button type="submit" @click="pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
         </div>
     </div>
 </div>
@@ -17,12 +17,16 @@
 export default {
     data(){
        return {
+            pesquisa: this.$route.query.pesquisa,
             abrirPesquisa: false
         }
     },
     methods: {
         toggle(){
             this.abrirPesquisa = !this.abrirPesquisa
+        },
+        pesquisar() {
+            this.$router.push({name: "pesquisa", query: {pesquisa: this.pesquisa}})
         }
     }
 }
@@ -73,5 +77,9 @@ i {
 .pesquisa-input::placeholder {
     color: black;
     font-size: 16px;
+}
+
+button {
+    outline: none;
 }
 </style>

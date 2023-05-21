@@ -36,11 +36,11 @@ export default {
     background-color: var(--azul);
 }
 
-.titulo-area {
-    /* height: 30px; */
-    /* margin-top: 5px; */
-    /* border-radius: 5px; */
-}
+/* .titulo-area {
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 5px;
+} */
 .apontamento-titulo {
     color: black;
     font-size: 20px;

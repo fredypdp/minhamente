@@ -1,5 +1,5 @@
 <template>
-<div class="apontamentos">
+<div class="apontamentos" :style="{'flex-direction': Column}">
     <AppApontamentoSkeleton v-for="(numero, index) in numeros" :key="index">
         <AppApontamentoSkeleton/>
     </AppApontamentoSkeleton>
@@ -9,6 +9,9 @@
 <script>
 import AppApontamentoSkeleton from "@/components/AppApontamentoSkeleton.vue";
 export default {
+    props: {
+        FlexColumn: Boolean,
+    },
     components: {
         AppApontamentoSkeleton,
     },
@@ -20,6 +23,9 @@ export default {
             }
             return numerosArray;
         },
+        column(){
+            return this.FlexColumn ? "column" : "row"
+        }
     }
 }
 </script>

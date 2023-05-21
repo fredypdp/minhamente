@@ -30,7 +30,7 @@ export default {
 .apontamento {
     display: flex;
     max-width: 24%;
-    min-width: 340px;
+    min-width: 320px;
     margin: 0px 6.5px;
     margin-bottom: 30px;
     flex-direction: column;

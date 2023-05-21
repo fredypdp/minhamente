@@ -6,9 +6,9 @@
                     <h1 class="logo"><router-link :to="{name: 'home'}">MinhaMente</router-link></h1>
                 </div>
                 <div class="pesquisa-area">
-                    <form class="pesquisa-form">
-                        <input type="search" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar">
-                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <form class="pesquisa-form" @submit.prevent="pesquisar">
+                        <input type="search" v-model="pesquisa" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" @keyup.enter="pesquisar">
+                        <button type="submit" @click="pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
                 <div class="perfil-area">
@@ -47,6 +47,7 @@ import NavPesquisaMobile from "@/components/shared/NavPesquisaMobile.vue";
 export default {
     data(){
        return {
+            pesquisa: this.$route.query.pesquisa,
             LoginStore: LoginStore(),
             mostrarMenu: false
         }
@@ -58,6 +59,17 @@ export default {
     methods: {
         abrirMenu(){
             this.mostrarMenu = !this.mostrarMenu
+        },
+        pesquisar() {
+            if(this.pesquisa == undefined) {
+                return
+            }
+
+            if(this.pesquisa != undefined && this.pesquisa.trim() == 0) {
+                return
+            }
+
+            this.$router.push({name: "pesquisa", query: {pesquisa: this.pesquisa}})
         }
     }
 }

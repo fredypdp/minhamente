@@ -55,7 +55,6 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
-import { useRoute } from 'vue-router';
 import Multiselect from '@vueform/multiselect'
 import { HomeStore } from "@/stores/HomeStore.js";
 import { LoginStore } from "@/stores/LoginStore.js";
@@ -76,7 +75,6 @@ export default {
   data() {
     return {
       HomeStore: HomeStore(),
-      rota: useRoute(),
       loading: false,
       assuntos: [],
       apontamentos: [],
