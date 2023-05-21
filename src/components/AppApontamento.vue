@@ -31,8 +31,7 @@ export default {
     display: flex;
     max-width: 24%;
     min-width: 320px;
-    margin: 0px 6.5px;
-    margin-bottom: 30px;
+    margin: 0px 6.5px 30px 6.5px;
     flex-direction: column;
 }
 
@@ -65,5 +64,17 @@ export default {
     color: black;
     font-size: 20px;
     font-weight: 500;
+}
+
+@media (max-width: 375px) {
+.apontamento {
+  min-width: 270px;
+  flex-direction: column;
+  margin: 0px 0px 30px 0px;
+}
+
+.miniatura-area {
+  height: 170px;
+}
 }
 </style>

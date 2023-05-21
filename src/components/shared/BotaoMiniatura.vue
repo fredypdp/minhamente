@@ -1,7 +1,7 @@
 <template>
     <div>
         <label for="miniatura" class="miniatura-label">Miniatura</label>
-        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg" @change="ShowMiniatura" ref="miniatura">
+        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg,image/svg+xml" @change="ShowMiniatura" ref="miniatura">
         <img :src="miniaturaPreview" class="miniatura-preview" draggable="false" v-if="miniaturaPreview">
     </div>
 </template>

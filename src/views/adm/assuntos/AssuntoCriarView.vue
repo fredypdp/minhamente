@@ -3,10 +3,17 @@
     <AppNavBar/>
     <div class="criar-assunto-area">
         <form @submit.prevent="criar" class="criar-assunto-form">
+            <div class="icone-area">
+                <label for="icone" class="icone-label">
+                    <div class="icone-label-container" v-if="!iconeUrl">
+                        <span >Escolha o ícone do assunto</span>
+                    </div>
+                    <img :src="iconeUrl" alt="" srcset="" class="icone-label-img" draggable="false" v-else>
+                </label>
+                <input type="file" accept="image/png,image/jpg,image/jpeg,image/svg+xml" name="icone" id="icone" @change="Showicone" ref="icone" class="icone-input">
+            </div>
             <label for="nome" class="nome-label">Nome do assunto:</label>
             <input type="text" name="nome" class="nome-input" id="nome" placeholder="Nome do assunto" autocomplete="off" autofocus v-model.trim.lazy="nome">
-            <label for="icone" class="icone-label">Ícone:</label>
-            <input type="text" name="icone" class="icone-input" id="icone" placeholder="Digite o código do ícone da logo" autocomplete="off" v-model.trim.lazy="icone">
             <span id="erro">{{ erro }}</span>
             <button type="submit" class="botao-criar">
                 <div role="status" v-if="loading">
@@ -37,26 +44,27 @@ export default {
             erro: "",
             nome: "",
             icone: "",
+            iconeUrl: "",
         }
     },
     methods: {
+        Showicone(){
+            const img = this.$refs.icone.files[0]
+            this.icone = img;
+            this.iconeUrl = URL.createObjectURL(img);
+        },
         async criar(){
             this.loading = true
 
-            let config = {
-                method: 'post',
-                url: 'https://apiminhamente.onrender.com/assunto',
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                },
-                data: {
-                    nome: this.nome,
-                    icone: this.icone,
-                }
-            };
+            const formData = new FormData();
+            let nome = this.nome
+            let icone = this.icone
+
+            formData.append('nome', nome);
+            formData.append('icone', icone);
 
             try {
-                let assunto = await axios(config)
+                let assunto = await axios.post('https://apiminhamente.onrender.com/assunto', formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
                 this.loading = false
 
                 this.$router.push({name: "PainelAssuntos"})
@@ -119,6 +127,45 @@ export default {
     border-radius: 5px;
     margin-bottom: 20px;
     border: 1px solid black;
+}
+
+.icone-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.icone-input {
+    display: none;
+}
+
+.icone-label {
+    width: 120px;
+    height: 120px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 100%;
+    background-color: var(--azul);
+}
+
+.icone-label span {
+    color: white;
+    font-size: 18px;
+}
+
+.icone-label:hover {
+    background-color: #124194;
+}
+.icone-label-container {
+    padding: 5px;
+}
+
+.icone-label-img {
+    width: 120px;
+    height: 120px;    
+    border-radius: 100%;
 }
 
 .botao-criar {

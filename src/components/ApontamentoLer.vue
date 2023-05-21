@@ -157,7 +157,7 @@ section {
     justify-content: space-between;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 1235px) {
     section {
         margin: 0px;
     }

@@ -2,12 +2,12 @@
 <div>
     <div class="assunto-area" @click="apontamentosDoAssunto">
         <div class="assunto">
-            <span>Todos</span>
+            <span>Todos apontamentos</span>
         </div>
     </div>
     <div class="assunto-mobile-area" @click="apontamentosDoAssunto">
         <div class="assunto-mobile">
-            <span>Todos</span>
+            <span>Todos apontamentos</span>
         </div>
     </div>
 </div>
@@ -64,7 +64,7 @@ export default {
     font-weight: 700;
 }
 
-.assunto span, .assunto-mobile span {
+.assunto-mobile span {
     overflow: hidden;
     text-align: center;
     text-overflow: ellipsis;

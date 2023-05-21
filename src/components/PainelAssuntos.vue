@@ -60,7 +60,9 @@
                     <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-300 text-justify border-b text-base font-medium" v-else v-for="assunto in assuntosMostrar" :key="assunto._id">
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <i v-html="assunto.icone"></i>
+                                <div class="icone-area">
+                                    <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+                                </div>
                             </div>
                         </td>
                         <td class="p-2">
@@ -330,6 +332,14 @@ td i {
     justify-content: center;
 }
 
+.icone-area {
+    max-width: 60px;
+    max-height: 60px;
+}
+.icone {
+    width: 100%;
+    height: 100%;
+}
 .paginas-area {
     padding: 5px;
     display: flex;

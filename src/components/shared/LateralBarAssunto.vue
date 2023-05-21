@@ -1,6 +1,8 @@
 <template>
     <div class="assunto" @click="apontamentosDoAssunto(assunto)">
-        <i :class="assunto.icone"></i>
+        <div class="icone-area">
+            <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+        </div>
         <span class="assunto-nome">{{ assunto.nome }}</span>
     </div>
 </template>
@@ -44,15 +46,20 @@ export default {
     background-color: var(--azul-escuro);
 }
 
-.assunto i, .assunto-nome {
+.icone-area {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.icone {
+    width: 100%;
+    height: 100%;
+}
+
+.assunto-nome {
     font-size: 20px;
     font-weight: 700;
 }
-
-.assunto i {
-    color: var(--verde);
-}
-
 .assunto-nome {
     color: white;
     overflow: hidden;

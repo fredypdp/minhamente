@@ -2,8 +2,9 @@
     <div class="assuntos-bar">
         <carousel v-bind="settings" :breakpoints="breakpoints" v-if="assuntos != undefined && assuntos.length > 0">
             <slide  v-for="(assunto, index) in assuntos" :key="assunto._id">
-                <HomeTodosAssuntos v-if="index == 0"/>
-                <HomeAssunto :assunto="assunto" v-else/>
+                <HomeCriarAssunto v-if="index == 0 && LoginStoreUsar.usuario != undefined && LoginStoreUsar.usuario.role == 0"/>
+                <HomeTodosAssuntos v-if="index == 1"/>
+                <HomeAssunto :assunto="assunto" v-if="index > 1"/>
             </slide>
             <template #addons>
                 <navigation />
@@ -17,7 +18,9 @@
 
 <script>
 import 'vue3-carousel/dist/carousel.css'
+import { LoginStore } from "@/stores/LoginStore.js";
 import HomeAssunto from "@/components/HomeAssunto.vue";
+import HomeCriarAssunto from "@/components/HomeCriarAssunto.vue";
 import HomeTodosAssuntos from "@/components/HomeTodosAssuntos.vue";
 import { Carousel, Slide, Navigation } from 'vue3-carousel'
 export default {
@@ -26,7 +29,8 @@ export default {
         Carousel,
         Navigation,
         HomeAssunto,
-        HomeTodosAssuntos
+        HomeCriarAssunto,
+        HomeTodosAssuntos,
     },
     props: {
         assuntos: {
@@ -35,6 +39,7 @@ export default {
     },
     data(){
         return {
+            LoginStoreUsar: LoginStore(),
             settings: {
                 itemsToScroll: 3
             },
@@ -98,5 +103,11 @@ export default {
 .sem-assuntos span {
     font-weight: 500;
     font-size: 1.8rem;
+}
+
+@media (max-width: 1235px) {
+.criar-assunto-area {
+    display: none;
+}
 }
 </style>

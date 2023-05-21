@@ -75,9 +75,4 @@ aside {
     align-items: center;
     justify-content: center;
 }
-@media (max-width: 390px) {
-aside {
-    display: none;
-}
-}
 </style>

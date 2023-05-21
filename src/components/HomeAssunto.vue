@@ -2,7 +2,9 @@
 <div>
     <div class="assunto-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto">
-            <div v-html="assunto.icone" class="icone"></div>
+            <div class="icone-area">
+                <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+            </div>
             <span>{{assunto.nome}}</span>
         </div>
     </div>
@@ -51,7 +53,7 @@ export default {
     height: 100%;
     display: flex;
     cursor: pointer;
-    padding: 15px 20px;
+    padding: 5px 20px;
     border-radius: 10px;
     align-items: center;
     flex-direction: column;
@@ -63,14 +65,20 @@ export default {
     background-color: var(--azul-escuro);
 }
 
-.assunto .icone {
+.icone-area {
     color: white;
-    font-size: 30px;
+    max-width: 60px;
+    max-height: 60px;
+}
+
+.icone {
+    width: 100%;
+    height: 100%;
 }
 
 .assunto span {
     color: white;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 

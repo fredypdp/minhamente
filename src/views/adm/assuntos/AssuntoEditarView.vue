@@ -3,10 +3,17 @@
     <AppNavBar/>
     <div class="editar-assunto-area">
         <form @submit.prevent="editar" class="editar-assunto-form">
+            <div class="icone-area">
+                <label for="icone" class="icone-label">
+                    <div class="icone-label-container" v-if="!iconeUrl">
+                        <span >Escolha o ícone do assunto</span>
+                    </div>
+                    <img :src="iconeUrl" alt="" srcset="" class="icone-label-img" draggable="false" v-else>
+                </label>
+                <input type="file" accept="image/png,image/jpg,image/jpeg,image/svg+xml" name="icone" id="icone" @change="Showicone" ref="icone" class="icone-input">
+            </div>
             <label for="nome" class="nome-label">Editar nome do assunto:</label>
             <input type="text" name="nome" class="nome-input" id="nome" placeholder="Nome do assunto" autocomplete="off" v-model.trim.lazy="nome">
-            <label for="icone" class="icone-label">Editar ícone:</label>
-            <input type="text" name="icone" class="icone-input" id="icone" placeholder="Digite o código do ícone da logo" autocomplete="off" v-model.trim.lazy="icone">
             <span id="erro">{{ erro }}</span>
             <button type="submit" class="botao-editar">
                 <div role="status" v-if="loading">
@@ -37,6 +44,7 @@ export default {
             erro: "",
             nome: undefined,
             icone: undefined,
+            iconeUrl: undefined,
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -59,36 +67,32 @@ export default {
         })
     },
     methods: {
+        Showicone(){
+            const img = this.$refs.icone.files[0]
+            this.icone = img;
+            this.iconeUrl = URL.createObjectURL(img);
+        },
         async editar(){
             this.loading = true
 
             let id = this.$route.params.id
-            let nome
-            let icone
-            
-            if (this.nome != undefined) {
-                nome = this.nome
-            }
-            
-            if (this.icone != undefined) {
-                icone = this.icone
-            }
 
-            let config = {
-                method: 'put',
-                url: 'https://apiminhamente.onrender.com/assunto',
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                },
-                data: {
-                    id: id,
-                    nome: nome,
-                    icone: icone
-                }
-            };
+            const formData = new FormData();
+            let nome = this.nome
+            let icone = this.icone
+            
+            formData.append('id', id);
+
+            if (nome != undefined && nome.trim().length != 0) {
+                formData.append('nome', nome);
+            }
+            
+            if (icone != undefined) {
+                formData.append('icone', icone);
+            }
 
             try {
-                let assunto = await axios(config)
+                let assunto = await axios.put('https://apiminhamente.onrender.com/assunto', formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
                 this.loading = false
 
                 this.$router.push({name: "PainelAssuntos"})
@@ -151,6 +155,45 @@ export default {
     border-radius: 5px;
     margin-bottom: 20px;
     border: 1px solid black;
+}
+
+.icone-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.icone-input {
+    display: none;
+}
+
+.icone-label {
+    width: 120px;
+    height: 120px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 100%;
+    background-color: var(--azul);
+}
+
+.icone-label span {
+    color: white;
+    font-size: 18px;
+}
+
+.icone-label:hover {
+    background-color: #124194;
+}
+.icone-label-container {
+    padding: 5px;
+}
+
+.icone-label-img {
+    width: 120px;
+    height: 120px;    
+    border-radius: 100%;
 }
 
 .botao-editar {

@@ -60,7 +60,11 @@ export default {
     margin-top: 30px;
 }
 
-@media (max-width: 390px) {
+@media (max-width: 1235px) {
+    aside {
+        display: none;
+    }
+    
     .apontamento-container {
         justify-content: center;
     }

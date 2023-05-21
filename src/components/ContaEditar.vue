@@ -9,7 +9,7 @@
                     </div>
                     <img :src="avatarUrl" alt="" srcset="" class="avatar-label-img" draggable="false" v-else>
                 </label>
-                <input type="file" accept="image/png,image/jpg,image/jpeg" name="avatar" id="foto-editar" @change="ShowAvatar" ref="avatar" class="avatar-input">
+                <input type="file" accept="image/png,image/jpg,image/jpeg+xml" name="avatar" id="foto-editar" @change="ShowAvatar" ref="avatar" class="avatar-input">
             </div>
             <label for="editar-nome">Novo nome:</label>
             <input type="text" name="nome" id="editar-nome" autocomplete="off" placeholder="Digite o seu nome" v-model.trim.lazy="nome">
