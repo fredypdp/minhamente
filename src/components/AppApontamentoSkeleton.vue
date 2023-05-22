@@ -59,4 +59,16 @@ export default {
     background-color: hsl(0, 0%, 45%);
   }
 }
+
+@media (max-width: 375px) {
+.apontamento {
+  min-width: 270px;
+  flex-direction: column;
+  margin: 0px 0px 30px 0px;
+}
+
+.miniatura-area {
+  height: 170px;
+}
+}
 </style>

@@ -185,6 +185,12 @@ export default {
         async AssuntoSelecionado(novo, antigo) {
             if(novo == undefined) {
                 this.pegarApontamentos()
+                return
+            }
+            
+            if(novo == 0) {
+                this.pegarApontamentosSemAssunto()
+                return
             }
 
             this.loading = true
@@ -311,6 +317,23 @@ export default {
                 console.log(erro);
             }
         },
+        async pegarApontamentosSemAssunto() {
+            this.loading = true
+
+            let config = {
+                method: 'get',
+                url: 'https://apiminhamente.onrender.com/apontamentos'
+            };
+
+            try {
+                let apontamentos = await axios(config)
+                this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.assuntos.length == 0)
+                this.loading = false
+            } catch (erro) {
+                this.loading = false
+                console.log(erro);
+            }
+        },
         async pesquisarApontamento(titulo){
             this.loading = true
             if (titulo.target.value.trim().length == 0 || titulo.target.value == undefined) {
@@ -353,6 +376,7 @@ export default {
             try {
                 let { data } = await axios(config)
                 
+                this.assuntosLista.push({value: 0, label: "Sem assunto"})
                 data.assuntos.forEach( assunto => {
                     this.assuntosLista.push({value: assunto._id, label: assunto.nome})
                 })
