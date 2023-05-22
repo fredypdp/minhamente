@@ -5,7 +5,7 @@
         <div class="pesquisa" v-show="abrirPesquisa">
             <i class="fa-solid fa-arrow-left" @click="toggle"></i>
             <form class="pesquisa-form-area" @submit.prevent="pesquisar">
-                <input type="search" v-model="pesquisa" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" @keyup.enter="pesquisar">
+                <input type="search" v-model="pesquisa" ref="pesquisa" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" @keyup.enter="pesquisar">
                 <button type="submit" @click="pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </div>
@@ -26,6 +26,17 @@ export default {
     },
     beforeUnmount() {
         document.removeEventListener('click', this.clickOutListener);
+    },
+    watch: {
+        abrirPesquisa(novo, antigo) {
+			this.$nextTick(() => {
+			  this.$refs.pesquisa.focus()
+			})
+            // Por causa do condicional
+            // O focus estava sendo chamado antes da nova renderização da mundaça do condicional
+            // Daí estava limpando o focus quando acontecia
+            // Com $nextTick tu chama uma função quando o próxima renderização (tick) termina de acontecer
+        }
     },
     methods: {
         toggle(){
