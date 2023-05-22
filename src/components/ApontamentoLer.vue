@@ -12,7 +12,7 @@
         </div>
         <span id="erro">{{ erro }}</span>
         <div class="botoes" v-if="LoginStore.usuario != undefined && LoginStore.usuario.role == 0">
-            <BotaoApagar :loading="loadingApagar" @click="apagar(apontamento)"/>
+            <BotaoApagar :loading="loadingApagar" @click="deletar(apontamento)"/>
             <BotaoEditar :loading="loadingEditar" @click="editar(apontamento)"/>
         </div>
     </section>

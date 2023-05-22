@@ -16,7 +16,8 @@ export default {
 <style scoped>
 .apontamento {
     display: flex;
-    max-width: 24%;
+    width: 24%;
+	max-width: 340px;
     min-width: 340px;
     margin: 0px 6.5px;
     margin-bottom: 30px;
