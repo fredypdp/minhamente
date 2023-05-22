@@ -61,7 +61,7 @@
                         <td class="p-2">
                             <div class="flex justify-center items-center">
                                 <div class="icone-area">
-                                    <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+                                    <img :src="assunto.icone" draggable="false" alt="Ícone do assunto" class="icone">
                                 </div>
                             </div>
                         </td>

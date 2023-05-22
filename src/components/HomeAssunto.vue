@@ -3,7 +3,7 @@
     <div class="assunto-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto">
             <div class="icone-area">
-                <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+                <img :src="assunto.icone" draggable="false" alt="Ícone do assunto" class="icone">
             </div>
             <span>{{assunto.nome}}</span>
         </div>

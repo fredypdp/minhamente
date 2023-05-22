@@ -1,7 +1,7 @@
 <template>
     <div class="assunto" @click="apontamentosDoAssunto(assunto)">
         <div class="icone-area">
-            <img :src="assunto.icone" alt="Ícone do assunto" class="icone">
+            <img :src="assunto.icone" draggable="false" alt="Ícone do assunto" class="icone">
         </div>
         <span class="assunto-nome">{{ assunto.nome }}</span>
     </div>
