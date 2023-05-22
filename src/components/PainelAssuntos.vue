@@ -335,11 +335,11 @@ td i {
 .icone-area {
     max-width: 60px;
     max-height: 60px;
+	overflow: hidden;
 }
 .icone {
     width: 100%;
     height: 100%;
-	overflow: hidden;
 }
 .paginas-area {
     padding: 5px;
