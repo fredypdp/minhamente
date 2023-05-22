@@ -21,13 +21,27 @@ export default {
             abrirPesquisa: false
         }
     },
+    mounted(){
+        document.addEventListener("click", this.clickOutListener)
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this.clickOutListener);
+    },
     methods: {
         toggle(){
             this.abrirPesquisa = !this.abrirPesquisa
         },
         pesquisar() {
             this.$router.push({name: "pesquisa", query: {pesquisa: this.pesquisa}})
-        }
+        },
+        close(){
+            this.abrirPesquisa = false
+        },
+        clickOutListener(evt){
+            if (!this.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+                this.close()
+            }
+        },
     }
 }
 </script>
