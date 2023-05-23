@@ -216,7 +216,7 @@ export default {
 
 .apontamento-titulo {
   color: black;
-  font-size: 1.8rem;
+  font-size: 20px;
   font-weight: 400;
 }
 
@@ -267,7 +267,7 @@ export default {
     background-color: var(--verde-escuro);
 }
 
-@media (max-width: 320px) {
+@media (max-width: 375px) {
 .apontamento {
   min-width: 270px;
   flex-direction: column;

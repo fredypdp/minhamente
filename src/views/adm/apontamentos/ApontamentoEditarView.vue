@@ -27,4 +27,14 @@ export default {
 .editar-container {
     display: flex;
 }
+
+@media (max-width: 1235px) {
+    aside {
+        display: none;
+    }
+    
+    .editar-container {
+        justify-content: center;
+    }
+}
 </style>

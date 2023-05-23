@@ -109,6 +109,7 @@ section {
     flex: 1;
     max-width: 1000px;
     margin-left: 60px;
+    padding-bottom: 50px;
 }
 
 .apontamento-area {
@@ -143,12 +144,9 @@ section {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
+    word-break: break-word;
     border: 2px solid #ebf2f7;
 }
-
-/* .apontamento-conteudo * {
-    color: black;
-} */
 
 .botoes {
     width: 165px;

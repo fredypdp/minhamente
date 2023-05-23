@@ -27,4 +27,14 @@ export default {
 .publicar-container {
     display: flex;
 }
+
+@media (max-width: 1235px) {
+    aside {
+        display: none;
+    }
+    
+    .publicar-container {
+        justify-content: center;
+    }
+}
 </style>
