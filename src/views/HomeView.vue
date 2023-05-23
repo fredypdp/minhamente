@@ -236,8 +236,18 @@ export default {
 
         try {
             let apontamentos = await axios(config)
-            this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-            this.apontamentosSkeleton = false
+            
+            if(LoginStore().usuario != undefined && LoginStore().usuario.role == 0) {
+              this.apontamentos = apontamentos.data.apontamentos
+              this.apontamentosSkeleton = false
+              return
+            } 
+            
+            if(LoginStore().usuario == undefined || LoginStore().usuario.role == 1){
+              this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+              this.apontamentosSkeleton = false
+              return
+            }
         } catch (erro) {
             this.apontamentosSkeleton = false
             console.log(erro);
@@ -253,9 +263,21 @@ export default {
 
       try {
         let assunto = await axios(config)
-        this.apontamentos = assunto.data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-        this.assuntoPagina = assunto.data.assunto.nome
-        this.apontamentosSkeleton = false
+
+        if(LoginStore().usuario != undefined && LoginStore().usuario.role == 0) {
+          this.apontamentos = assunto.data.assunto.apontamentos
+          this.apontamentosSkeleton = false
+          this.assuntoPagina = assunto.data.assunto.nome
+          return
+        } 
+        
+        if(LoginStore().usuario == undefined || LoginStore().usuario.role == 1){
+          this.apontamentos = assunto.data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+          this.apontamentosSkeleton = false
+          this.assuntoPagina = assunto.data.assunto.nome
+          return
+        }
+
       } catch (erro) {
         console.log(erro);
         this.apontamentosSkeleton = false

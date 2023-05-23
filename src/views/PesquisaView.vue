@@ -159,8 +159,18 @@ export default {
         
         try {
             let apontamentos = await axios(config)
-            this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-            this.loading = false
+
+            if(LoginStore().usuario != undefined && LoginStore().usuario.role == 0) {
+              this.apontamentos = apontamentos.data.apontamentos
+              this.loading = false
+              return
+            } 
+            
+            if(LoginStore().usuario == undefined || LoginStore().usuario.role == 1){
+              this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+              this.loading = false
+              return
+            }
         } catch (erro) {
           this.loading = false
             console.log(erro);
