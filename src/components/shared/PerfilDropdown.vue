@@ -137,7 +137,7 @@ export default {
     width: 100%;
     height: 35px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 2.6rem;
     font-weight: 500;
     text-align: center;
     display: flex;

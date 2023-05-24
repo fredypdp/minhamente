@@ -8,7 +8,7 @@
                 <div class="pesquisa-area">
                     <form class="pesquisa-form" @submit.prevent="pesquisar">
                         <input type="search" v-model="pesquisa" name="search" class="pesquisa-input" autocomplete="off" placeholder="Pesquisar" @keyup.enter="pesquisar">
-                        <button type="submit" @click="pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" @click="pesquisar"><i class="fa-solid fa-magnifying-glass pesquisar-icone"></i></button>
                     </form>
                 </div>
                 <div class="perfil-area">
@@ -75,6 +75,9 @@ export default {
 }
 </script>
 <style scoped>
+span {
+    font-size: 1.6rem;
+}
 
 header {
     display: flex;
@@ -102,11 +105,13 @@ header {
 }
 
 .logo {
+    display: flex;
     outline: none;
     color: white;
-    font-size: clamp(0.5rem, 1.5rem, 2rem);
-    font-weight: 700;
     text-align: left;
+    font-weight: 700;
+    font-size: 3.2rem;
+    align-items: center;
 }
 
 .pesquisa-mobile-area {
@@ -151,8 +156,9 @@ header {
     width: 10%;
     border: none;
     outline: none;
-    cursor: pointer;
     display: flex;
+    font-size: 2.4rem;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     background-color: #B5B5B5;
@@ -182,7 +188,7 @@ header {
     color: white;
     display: flex;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 2.8rem;
     font-weight: 500;
 }
 
@@ -192,7 +198,7 @@ header {
 
 .publicar {
     color: white;
-    font-size: 24px;
+    font-size: 2.4rem;
     cursor: pointer;
 }
 

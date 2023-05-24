@@ -58,7 +58,7 @@ export default {
 }
 
 .assunto-nome {
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 700;
 }
 .assunto-nome {

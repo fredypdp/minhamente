@@ -60,12 +60,13 @@ export default {
 
 .assunto span {
     color: white;
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 700;
 }
 
 .assunto-mobile span {
     overflow: hidden;
+    font-size: 1.6rem;
     text-align: center;
     text-overflow: ellipsis;
     display: -webkit-box;

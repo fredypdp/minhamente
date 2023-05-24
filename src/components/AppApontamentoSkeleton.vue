@@ -44,7 +44,7 @@ export default {
 } */
 .apontamento-titulo {
     color: black;
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 500;
 }
 

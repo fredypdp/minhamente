@@ -101,7 +101,7 @@ export default {
 
 .titulo {
     color: black;
-    font-size: 26px;
+    font-size: 2.6rem;
     font-weight: 500;
 }
 .painel-menu-items {
@@ -134,6 +134,6 @@ export default {
 
 .painel-menu-item-titulo {
     color: black;
-    font-size: 26px;
+    font-size: 2.6rem;
 }
 </style>

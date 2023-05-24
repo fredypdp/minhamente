@@ -44,7 +44,7 @@ div {
     outline: none;
     color: black;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 1.5rem;
     max-height: 30px;
     font-weight: 700;
     padding: 5px 15px;

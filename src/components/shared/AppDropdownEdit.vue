@@ -94,11 +94,12 @@ div {
 .dropdown-button span {
     color: black;
     font-weight: bold;
+    font-size: 1.6rem;
 }
 
 .dropdown-button i {
     color: black;
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .dropdown {

@@ -185,9 +185,9 @@ export default {
 
 section {
     width: 85%;
-    max-width: 900px;
+    width: 100%;
     margin-left: 60px;
-    padding-bottom: 20px;
+    padding-bottom: 80px;
 }
 
 .publicar-area {
@@ -198,7 +198,7 @@ section {
 
 .publicar-area label[for="titulo"], .publicar-area label[for="miniatura"], .publicar-area label[for="apontamento-conteudo"] {
     color: black;
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 15px;
 }
@@ -207,7 +207,7 @@ section {
     width: 100%;
     height: 40px;
     color: black;
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 500;
     padding: 15px 15px;
     border-radius: 5px;

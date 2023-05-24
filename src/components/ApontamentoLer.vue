@@ -107,7 +107,7 @@ export default {
 
 section {
     flex: 1;
-    max-width: 1000px;
+    width: 100%;
     margin-left: 60px;
     padding-bottom: 50px;
 }
@@ -123,7 +123,7 @@ section {
 
 .apontamento-titulo {
     color: black;
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -136,7 +136,7 @@ section {
 
 .apontamento-data {
     color: black;
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 500;
 }
 

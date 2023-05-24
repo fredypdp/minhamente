@@ -60,7 +60,7 @@ export default {
 <style scoped>
 i {
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     margin-right: 10px;
 }
 
@@ -90,7 +90,7 @@ i {
 .pesquisa-input {
     width: 100%;
     height: 100%;
-    font-size: 1rem;
+    font-size: 1.6rem;
     margin-right: 5px;
     outline: none;
     background: transparent;
@@ -101,7 +101,6 @@ i {
 }
 .pesquisa-input::placeholder {
     color: black;
-    font-size: 16px;
 }
 
 button {

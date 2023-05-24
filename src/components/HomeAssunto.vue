@@ -78,7 +78,13 @@ export default {
 
 .assunto span {
     color: white;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.assunto-mobile span {
+    color: white;
+    font-size: 1.6rem;
     font-weight: 700;
 }
 

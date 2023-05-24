@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: 62.5%;
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
 }
@@ -16,10 +17,34 @@
     --amarelo-escuro: #d3ba1c;
     --azul: #1651B8;
     --azul-escuro: #124194;
+
+    --ms-font-size: 2rem;
+    /* --ms-py: 0.8rem;
+    --ms-px: 1.4rem;
+    --ms-max-height: 16rem;
+    --ms-tag-font-size: 1.4rem;
+    --ms-tag-line-height: 0.5rem;
+    --ms-tag-py: 0.2rem;
+    --ms-tag-px: 0.8rem;
+    --ms-tag-my: 0.4rem;
+    --ms-tag-mx: 0.4rem;
+    --ms-tag-remove-py: 0.4rem;
+    --ms-tag-remove-px: 0.4rem;
+    --ms-tag-remove-my: 0rem;
+    --ms-tag-remove-mx: 0.32rem;
+    --ms-group-label-py: 0.48rem;
+    --ms-group-label-px: 1.2rem;
+    --ms-option-font-size: 1.6rem;
+    --ms-option-py: 0.8rem;
+    --ms-option-px: 0.45rem; */
 }
 
 .container-box {
     padding: 80px 3.3% 0 3.3%;
+}
+
+.multiselect * {
+    font-size: 1.7rem;
 }
 
 @media (max-width: 1235px) {
