@@ -62,4 +62,22 @@ export default {
     width: 100%;
     height: 100%;
 }
+
+@media (max-width: 1235px) {
+.criar-assunto-area {
+    width: 150px;
+    height: 35px;
+    margin-right: 5px;
+}
+
+.assunto {
+    width: 100%;
+    height: 100%;
+}
+
+.icone {
+    width: 30px;
+    height: 30px;
+}
+}
 </style>

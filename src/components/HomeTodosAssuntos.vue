@@ -76,10 +76,11 @@ export default {
 
 .assunto-mobile-area {
     display: none;
-    max-width: 200px;
+    width: 150px;
     margin-right: 5px;
  }
  .assunto-mobile {
+    width: 100%;
     color: white;
     cursor: pointer;
     padding: 5px 10px;

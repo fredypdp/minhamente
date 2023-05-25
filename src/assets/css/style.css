@@ -18,6 +18,8 @@
     --azul: #1651B8;
     --azul-escuro: #124194;
 
+    --vc-icn-width: 50px;
+
     --ms-font-size: 2rem;
     /* --ms-py: 0.8rem;
     --ms-px: 1.4rem;
@@ -50,5 +52,9 @@
 @media (max-width: 1235px) {
     .container-box {
         padding: 80px 25px 0px 25px;
+    }
+
+    :root {    
+        --vc-icn-width: 40px;
     }
 }

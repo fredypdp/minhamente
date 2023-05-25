@@ -2,9 +2,9 @@
     <div class="assuntos-bar">
         <carousel v-bind="settings" :breakpoints="breakpoints" v-if="assuntos != undefined && assuntos.length > 0">
             <slide  v-for="(assunto, index) in assuntos" :key="assunto._id">
-                <HomeCriarAssunto v-if="index == 0 && LoginStoreUsar.usuario != undefined && LoginStoreUsar.usuario.role == 0"/>
-                <HomeTodosAssuntos v-if="index == 1"/>
-                <HomeAssunto :assunto="assunto" v-if="index > 1"/>
+                <HomeTodosAssuntos v-if="index == 0"/>
+                <HomeAssunto :assunto="assunto" v-if="index > 0 && index + 1 < assuntos.length"/>
+                <HomeCriarAssunto v-if="index + 1 == assuntos.length && LoginStoreUsar.usuario != undefined && LoginStoreUsar.usuario.role == 0"/>
             </slide>
             <template #addons>
                 <navigation />
@@ -20,9 +20,9 @@
 import 'vue3-carousel/dist/carousel.css'
 import { LoginStore } from "@/stores/LoginStore.js";
 import HomeAssunto from "@/components/HomeAssunto.vue";
+import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import HomeCriarAssunto from "@/components/HomeCriarAssunto.vue";
 import HomeTodosAssuntos from "@/components/HomeTodosAssuntos.vue";
-import { Carousel, Slide, Navigation } from 'vue3-carousel'
 export default {
     components: {
         Slide,
@@ -52,33 +52,34 @@ export default {
                 1235: {
                     itemsToShow: 5.5,
                 },
+                // Mobile
                 // 1100px pra cima
                 1100: {
-                    itemsToShow: 10.5,
+                    itemsToShow: 6.5,
                 },
                 // 924px pra cima
                 924: {
-                    itemsToShow: 8.5,
+                    itemsToShow: 5.5,
                 },
                 // 700px pra cima
                 700: {
-                    itemsToShow: 6.5,
+                    itemsToShow: 4.5,
                 },
                 // 600px pra cima
                 600: {
-                    itemsToShow: 5.5,
+                    itemsToShow: 3.5,
                 },
                 // 480px pra cima
                 480: {
-                    itemsToShow: 4.5,
+                    itemsToShow: 3.5,
                 },
                 // 370px pra cima
                 370: {
-                    itemsToShow: 3.5,
+                    itemsToShow: 2.2,
                 },
                 // 200px pra cima
                 200: {
-                    itemsToShow: 2.5,
+                    itemsToShow: 1.5,
                 },
             },
         }
@@ -103,11 +104,5 @@ export default {
 .sem-assuntos span {
     font-weight: 500;
     font-size: 1.8rem;
-}
-
-@media (max-width: 1235px) {
-.criar-assunto-area {
-    display: none;
-}
 }
 </style>

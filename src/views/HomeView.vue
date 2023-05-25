@@ -217,9 +217,9 @@ export default {
           try {
               let assuntos = await axios(config)
               
-              this.assuntos.push("Assunto usado pra preencher o primeiro index (Criar assunto)")
-              this.assuntos.push("Assunto usado pra preencher o segundo index (Todos os assuntos)")
+              this.assuntos.push("Usado pra preencher o primeiro index (Todos os assuntos)")
               assuntos.data.assuntos.forEach( assunto => this.assuntos.push(assunto))
+              this.assuntos.push("Usado pra preencher o último index (Criar assunto)")
               this.loading = false
           } catch (erro) {
               this.loading = false
