@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div>
-                    <BotaoEditar :loading="loading"/>
+                    <BotaoEditar :botaoDesativado="botaoDesativado" :loading="loading"/>
                 </div>
             </div>
         </form>
@@ -74,10 +74,11 @@ export default {
     },
     data(){
         return {
+            loading: false,
             erro: undefined,
+            botaoDesativado: false,
             titulo: undefined,
             conteudo: undefined,
-            loading: false,
             miniatura: undefined,
             visibilidade: Boolean,
             TemasSelecionados: [],
@@ -143,6 +144,7 @@ export default {
         },
         async editar() {
             this.loading = true
+            this.botaoDesativado = true
 
             const formData = new FormData();
             let titulo = this.titulo
@@ -182,6 +184,7 @@ export default {
                 let apontamento = await axios.put("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
                 
                 this.loading = false
+                this.botaoDesativado = false
                 this.$router.push({name: "home"})
             } catch (erro) {
                 console.log(erro);
@@ -190,6 +193,7 @@ export default {
                 document.getElementById("erro").style.display = "flex"
                 
                 this.loading = false
+                this.botaoDesativado = false
             }
         },
         async pegarAssuntos() {

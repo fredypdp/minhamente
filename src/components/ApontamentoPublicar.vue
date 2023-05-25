@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div>
-                    <BotaoPublicar :loading="loading"/>
+                    <BotaoPublicar :botaoDesativado="botaoDesativado" :loading="loading"/>
                 </div>
             </div>
         </form>
@@ -76,9 +76,10 @@ export default {
     data(){
         return {
             erro: "",
+            loading: false,
+            botaoDesativado: false,
             titulo: undefined,
             conteudo: undefined,
-            loading: false,
             miniatura: undefined,
             visibilidade: undefined,
             TemasSelecionados: [],
@@ -125,7 +126,8 @@ export default {
         },
         async publicar() {
             this.loading = true
-
+            this.botaoDesativado = true
+            
             const formData = new FormData();
             let titulo = this.titulo
             let conteudo = this.conteudo
@@ -147,6 +149,7 @@ export default {
                 let apontamento = await axios.post("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
                 
                 this.loading = false
+                this.botaoDesativado = false
                 this.$router.push({name: "home"})
             } catch (erro) {
                 console.log(erro);
@@ -155,6 +158,7 @@ export default {
                 document.getElementById("erro").style.display = "flex"
                 
                 this.loading = false
+                this.botaoDesativado = false
             }
         },
         async pegarAssuntos() {

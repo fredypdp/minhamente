@@ -330,8 +330,8 @@ export default {
                 this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.assuntos.length == 0)
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async pesquisarApontamento(titulo){
@@ -363,8 +363,8 @@ export default {
                 this.apontamentos = apontamentos.data.apontamentos
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async pegarAssuntos() {
@@ -411,10 +411,6 @@ export default {
 }
 </script>
 <style scoped>
-span {
-    font-size: 1.6rem;
-}
-
 .texto-limite {
     overflow: hidden;
     text-align: left;

@@ -172,8 +172,8 @@ export default {
               return
             }
         } catch (erro) {
+          console.log(erro);
           this.loading = false
-            console.log(erro);
         }
     },
   },

@@ -15,7 +15,7 @@
             <label for="nome" class="nome-label">Nome do assunto:</label>
             <input type="text" name="nome" class="nome-input" id="nome" placeholder="Nome do assunto" autocomplete="off" autofocus v-model.trim.lazy="nome">
             <span id="erro">{{ erro }}</span>
-            <button type="submit" class="botao-criar">
+            <button :disabled="botaoDesativado" type="submit" class="botao-criar">
                 <div role="status" v-if="loading">
                     <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -40,11 +40,12 @@ export default {
     },
     data() {
         return {
-            loading: false,
             erro: "",
             nome: "",
             icone: "",
             iconeUrl: "",
+            loading: false,
+            botaoDesativado: false,
         }
     },
     methods: {
@@ -55,6 +56,7 @@ export default {
         },
         async criar(){
             this.loading = true
+            this.botaoDesativado = true
 
             const formData = new FormData();
             let nome = this.nome
@@ -65,15 +67,17 @@ export default {
 
             try {
                 let assunto = await axios.post('https://apiminhamente.onrender.com/assunto', formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
+                
                 this.loading = false
-
+                this.botaoDesativado = false
                 this.$router.push({name: "PainelAssuntos"})
             } catch (erro) {
+                console.log(erro);
                 this.erro = erro.response.data.erro
                 document.getElementById("erro").style.display = "flex"
                 
                 this.loading = false
-                console.log(erro);
+                this.botaoDesativado = false
             }
         }
     }

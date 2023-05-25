@@ -7,8 +7,8 @@
                 <img :src="LoginStore.usuario.avatar" draggable="false" class="foto-perfil">
                 <h1 class="nome-usuario">{{ LoginStore.usuario.nome }} {{ LoginStore.usuario.sobrenome }}</h1>
                 <span class="email-usuario">{{ LoginStore.usuario.email }}</span>
-                <button class="botao-sair" @click="logout">Terminar sessão</button>
-                <button class="botao-deletar-conta" @click="eliminarConta">Eliminar conta</button>
+                <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">Terminar sessão</button>
+                <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarConta">Eliminar conta</button>
                 <input type="hidden" name="id" value="" id="id">
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
@@ -22,7 +22,7 @@
                     <img :src="LoginStore.usuario.avatar" draggable="false" class="foto-perfil">
                     <h1 class="nome-usuario">{{ LoginStore.usuario.nome }} {{ LoginStore.usuario.sobrenome }}</h1>
                     <span class="email-usuario">{{ LoginStore.usuario.email }}</span>
-                    <button class="botao-sair" @click="logout">
+                    <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">
                         <div role="status" v-if="loadingLogout">
                             <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -32,7 +32,7 @@
                         </div>
                         <span v-else>Terminar sessão</span>
                     </button>
-                    <button class="botao-deletar-conta" @click="eliminarContaEmail">
+                    <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarContaEmail">
                         <div role="status" v-if="loadingEliminarConta">
                             <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -66,6 +66,8 @@ export default {
     data(){
         return {
             loadingLogout: false,
+            botaoSairDesativado: false,
+            botaoDeletarDesativado: false,
             loadingEliminarConta: false,
             responseErro: "",
             responseSucesso: "",
@@ -75,6 +77,7 @@ export default {
     methods: {
         async logout(){
             this.loadingLogout = true
+            this.botaoSairDesativado = true
 
             let config = {
                 method: 'post',
@@ -92,14 +95,16 @@ export default {
                 localStorage.removeItem("_links")
 
                 this.loadingLogout = false
+                this.botaoSairDesativado = false
                 this.$router.go(0)
             } catch (erro) {
-                this.loadingLogout = false
-
+                console.log(erro);
+                
                 this.responseErro = erro.response.data.erro
                 document.getElementById("response-erro").style.display = "flex"
-    
-                console.log(erro);
+                
+                this.loadingLogout = false
+                this.botaoSairDesativado = false
             }
         },
         async eliminarContaEmail(){
@@ -107,6 +112,7 @@ export default {
             
             if(eliminar) {
                 this.loadingEliminarConta = true
+                this.botaoDeletarDesativado = true
 
                 let config = {
                     method: 'post',
@@ -121,13 +127,15 @@ export default {
                     this.responseSucesso = sucesso.data
                     document.getElementById("response-sucesso").style.display = "flex"
                     this.loadingEliminarConta = false
+                    this.botaoDeletarDesativado = false
                 } catch (erro) {
+                    console.log(erro);
                     this.loadingEliminarConta = false
-
+                    this.botaoDeletarDesativado = false
+                    
                     this.responseErro = erro.response.data.erro
                     document.getElementById("response-erro").style.display = "flex"
-                
-                    console.log(erro);
+                    
                 }
             }
         }
@@ -144,10 +152,6 @@ export default {
 </script>
 
 <style scoped>
-span {
-    font-size: 1.6rem;
-}
-
 #perfil-view {
     padding-bottom: 50px;
 }

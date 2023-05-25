@@ -284,8 +284,8 @@ export default {
                 this.temas = temas.data.temas
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async temaPeloTitulo(titulo){
@@ -314,8 +314,8 @@ export default {
                 this.temas.push(tema.data.tema)
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async pegarAssuntos() {

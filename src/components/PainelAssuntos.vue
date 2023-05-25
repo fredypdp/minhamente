@@ -247,8 +247,8 @@ export default {
                 this.assuntos = assuntos.data.assuntos
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async assuntoPeloNome(nome) {
@@ -277,8 +277,8 @@ export default {
                 this.assuntos.push(assunto.data.assunto)
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async editar(assunto) {

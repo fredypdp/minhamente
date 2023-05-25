@@ -25,7 +25,7 @@
             </div>
             <span id="sucessoEsqueciSenha">{{ sucessoEsqueciSenha }}</span>
             <span id="erroEsqueciSenha">{{ erroEsqueciSenha }}</span>
-            <button class="editar-conta-botao" type="submit">
+            <button class="editar-conta-botao" :disabled="botaoDesativado" type="submit">
                 <div role="status" v-if="loading">
                     <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -48,12 +48,13 @@ export default {
             erroEsqueciSenha: undefined,
             erroEditar: undefined,
             avatarUrl: undefined,
-            loading: false,
             nome: undefined,
             sobrenome: undefined,
             avatar: undefined,
             email: undefined,
             senha: undefined,
+            loading: false,
+            botaoDesativado: false,
         }
     },
     methods: {
@@ -64,6 +65,7 @@ export default {
         },
         async editar(){
             this.loading = true
+            this.botaoDesativado = true
 
             const formData = new FormData();
             let id = LoginStore().usuario.id
@@ -122,13 +124,15 @@ export default {
                 localStorage.setItem("_links", JSON.stringify(data._links))
 
                 this.loading = false
+                this.botaoDesativado = false
                 this.$router.go(0)
             } catch (erro) {
+                console.log(erro);
                 this.erroEditar = erro.response.data.erro
                 document.getElementById("erroEditar").style.display = "flex"
                 
                 this.loading = false
-                console.log(erro);
+                this.botaoDesativado = false
             }
         },
         async esqueciSenha() {
@@ -142,10 +146,10 @@ export default {
                this.sucessoEsqueciSenha = sucesso.data
                document.getElementById("sucessoEsqueciSenha").style.display = "flex"
             } catch (erro) {
+                console.log(erro);
+                
                 this.erroEsqueciSenha = erro.response.data.erro
                 document.getElementById("erroEsqueciSenha").style.display = "flex"
-                
-                console.log(erro);
             }
         }
     }

@@ -284,8 +284,8 @@ export default {
                 this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async usuarioPeloNome(nome) {
@@ -309,8 +309,8 @@ export default {
                 this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async usuarioPeloSobrenome(sobrenome) {
@@ -334,8 +334,8 @@ export default {
                 this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async usuarioPeloEmail(email) {
@@ -367,8 +367,8 @@ export default {
                 this.usuarios.push(usuarios.data.usuario)
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async usuarioPeloRole(role) {
@@ -388,8 +388,8 @@ export default {
                 this.usuarios = usuarios.data.usuarios
                 this.loading = false
             } catch (erro) {
-                this.loading = false
                 console.log(erro);
+                this.loading = false
             }
         },
         async deletarUsuario(usuario) {

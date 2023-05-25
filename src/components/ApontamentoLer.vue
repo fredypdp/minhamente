@@ -12,7 +12,7 @@
         </div>
         <span id="erro">{{ erro }}</span>
         <div class="botoes" v-if="LoginStore.usuario != undefined && LoginStore.usuario.role == 0">
-            <BotaoApagar :loading="loadingApagar" @click="deletar(apontamento)"/>
+            <BotaoApagar :botaoDesativado="botaoDesativado" :loading="loadingApagar" @click="deletar(apontamento)"/>
             <BotaoEditar :loading="loadingEditar" @click="editar(apontamento)"/>
         </div>
     </section>
@@ -34,6 +34,7 @@ export default {
             LoginStore: LoginStore(),
             loadingApagar: false,
             loadingEditar: false,
+            botaoDesativado: false,
         }
     },
     beforeMount() {
@@ -74,6 +75,7 @@ export default {
         async deletar(apontamento) {
             let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
             this.loadingApagar = true
+            this.botaoDesativado = true
 
             if(deletar) {
                 let config = {
@@ -87,10 +89,12 @@ export default {
                 try {
                     await axios(config)
                     this.loadingApagar = false
+                    this.botaoDesativado = false
                     this.$router.push({name: "home"})
                 } catch (erro) {   
                     console.log(erro);
                     this.loadingApagar = false
+                    this.botaoDesativado = false
                 }
             }
         },
