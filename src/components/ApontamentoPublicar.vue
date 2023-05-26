@@ -18,8 +18,8 @@
             </div>
             <span id="erro">{{ erro }}</span>
             <div class="botoes-area">
-                <div class="botoes">
-                    <div class="botoes-top">
+                <div class="botoes-left">
+                    <div class="botoes-left-top">
                         <div class="multi-select-area">
                             <Multiselect
                                 v-model="AssuntosSelecionados"
@@ -43,12 +43,13 @@
                             />
                         </div>
                     </div>
-                    <div class="botoes-bottom">
+                    <div class="botoes-left-bottom">
                         <AppDropdownVisibilidade @publico="visibilidadePublico" @privado="visibilidadePrivado"/>
                         <BotaoMiniatura @miniatura="miniatura = $event"/>
                     </div>
                 </div>
-                <div>
+                <div class="botoes-right">
+                    <BotaoCancelar/>
                     <BotaoPublicar :botaoDesativado="botaoDesativado" :loading="loading"/>
                 </div>
             </div>
@@ -62,6 +63,7 @@ import TinyMCE from '@tinymce/tinymce-vue';
 import Multiselect from '@vueform/multiselect'
 import { LoginStore } from "@/stores/LoginStore.js";
 import BotaoPublicar from "@/components/shared/BotaoPublicar.vue";
+import BotaoCancelar from "@/components/shared/BotaoCancelar.vue";
 import BotaoMiniatura from "@/components/shared/BotaoMiniatura.vue";
 import AppDropdownVisibilidade from "@/components/shared/AppDropdownVisibilidade.vue";
 import { registerRuntimeCompiler } from 'vue';
@@ -70,6 +72,7 @@ export default {
         TinyMCE,
         Multiselect,
         BotaoPublicar,
+        BotaoCancelar,
         BotaoMiniatura,
         AppDropdownVisibilidade,
     },
@@ -232,13 +235,14 @@ section {
     justify-content: space-between;
 }
 
-.botoes {
+.botoes-left {
     width: 80%;
     display: flex;
+    margin-right: 10px;
     flex-direction: column;
 }
 
-.botoes-top {
+.botoes-left-top {
     margin-bottom: 10px;
 }
 
@@ -251,11 +255,50 @@ section {
     margin-left: 10px;
 }
 
-.botoes-bottom {
+.botoes-left-bottom {
     display: flex;
 }
 
-.botoes-bottom div:first-child {
+.botoes-left-bottom div:first-child {
     margin-right: 10px;
+}
+
+.botoes-right {
+    display: flex;
+    height: fit-content;
+}
+
+.botoes-right button:first-child {
+    margin-right: 10px;
+}
+
+@media (max-width: 1235px) {
+section {
+    margin: 0px;
+}
+
+.botoes-area {
+    flex-wrap: wrap;
+}
+
+.botoes-left {
+    width: 100%;
+    /* margin: 0px; */
+}
+
+.botoes-left-bottom {
+    flex-wrap: wrap;
+}
+
+.botoes-left-bottom div:first-child {
+    margin-bottom: 10px;
+}
+
+.botoes-right {
+    width: 100%;
+    display: flex;
+	margin-top: 15px;
+    justify-content: flex-end;
+}
 }
 </style>

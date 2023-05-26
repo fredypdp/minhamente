@@ -28,9 +28,8 @@ export default {
     outline: none;
     color: white;
     cursor: pointer;
-    font-size: 2.4rem;
     font-weight: 700;
-    padding: 0px 15px;
+    padding: 5px 15px;
     border-radius: 5px;
     text-align: center;
     background-color: var(--verde);

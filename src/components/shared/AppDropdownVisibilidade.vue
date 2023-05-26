@@ -110,7 +110,7 @@ div {
     display: flex;
     margin-top: 5px;
     border-radius: 3px;
-    /* position: absolute; */
+    position: absolute;
     align-items: center;
     flex-direction: column;
     border: 1px solid #ccc;
