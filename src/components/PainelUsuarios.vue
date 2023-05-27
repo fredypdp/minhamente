@@ -4,14 +4,14 @@
             <table class="w-full border">
                 <thead>
                     <tr class="bg-gray-50 border-b">
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Avatar</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Nome</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Sobrenome</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Email</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Função</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Data de criação</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Data de edição</th>
-                        <th class="w-32 p-5 text-base font-bold text-gray-500">Ações</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Avatar</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Nome</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Sobrenome</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Email</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Função</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de criação</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de edição</th>
+                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -53,7 +53,7 @@
                     <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="usuariosTotal == 0 && !loading">
                         <td colspan="8">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">Nenhum usuário encontrado</span>
+                                <span class="text-black texto-limite">Nenhum usuário encontrado</span>
                             </div>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200 text-justify border-b text-base font-medium" v-else v-for="usuario in usuariosMostrar" :key="usuario.id">
+                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200 text-justify border-b font-medium" v-else v-for="usuario in usuariosMostrar" :key="usuario.id">
                         <td class="p-2">
                             <div class="avatar-area">
                                 <img :src="usuario.avatar" class="avatar" alt="Avatar" draggable="false">
@@ -78,33 +78,33 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ usuario.nome }}</span>
+                                <span class="text-black texto-limite">{{ usuario.nome }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ usuario.sobrenome }}</span>
+                                <span class="text-black texto-limite">{{ usuario.sobrenome }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ usuario.email }}</span>
+                                <span class="text-black texto-limite">{{ usuario.email }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ usuario.role }}</span>
+                                <span class="text-black texto-limite">{{ usuario.role }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ formatarData(usuario.created_at) }}</span>
+                                <span class="text-black texto-limite">{{ formatarData(usuario.created_at) }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite" v-if="usuario.edited_at != undefined">{{ formatarData(usuario.edited_at) }}</span>
-                                <span class="text-black text-base texto-limite" v-else>-</span>
+                                <span class="text-black texto-limite" v-if="usuario.edited_at != undefined">{{ formatarData(usuario.edited_at) }}</span>
+                                <span class="text-black texto-limite" v-else>-</span>
                             </div>
                         </td>
                         <td class="p-2">
@@ -415,14 +415,6 @@ export default {
 }
 </script>
 <style scoped>
-span {
-    font-size: 1.6rem;
-}
-
-th {
-    font-size: 1.6rem;
-}
-
 button {
     font-size: 1.6rem;
 }

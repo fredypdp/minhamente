@@ -64,7 +64,7 @@
                     <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="apontamentosTotal == 0 && !loading">
                         <td colspan="6">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">Nenhum apontamento encontrado</span>
+                                <span class="text-black texto-limite">Nenhum apontamento encontrado</span>
                             </div>
                         </td>
                     </tr>
@@ -81,29 +81,29 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-300 text-justify border-b text-base font-medium" v-else v-for="apontamento in apontamentosMostrar" :key="apontamento.id">
+                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-300 text-justify border-b font-medium" v-else v-for="apontamento in apontamentosMostrar" :key="apontamento.id">
                         <td class="w-96 p-2">
                             <PainelApontamento :apontamento="apontamento"/>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ apontamento.visibilidade }}</span>
+                                <span class="text-black texto-limite">{{ apontamento.visibilidade }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">-</span>
+                                <span class="text-black texto-limite">-</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ formatarData(apontamento.created_at) }}</span>
+                                <span class="text-black texto-limite">{{ formatarData(apontamento.created_at) }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite" v-if="apontamento.edited_at != undefined">{{ formatarData(apontamento.edited_at) }}</span>
-                                <span class="text-black text-base texto-limite" v-else>-</span>
+                                <span class="text-black texto-limite" v-if="apontamento.edited_at != undefined">{{ formatarData(apontamento.edited_at) }}</span>
+                                <span class="text-black texto-limite" v-else>-</span>
                             </div>
                         </td>
                         <td class="p-2">

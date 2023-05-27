@@ -52,7 +52,7 @@
                     <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-200" v-if="temasTotal == 0 && !loading">
                         <td colspan="6">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">Nenhum tema encontrado</span>
+                                <span class="text-black texto-limite">Nenhum tema encontrado</span>
                             </div>
                         </td>
                     </tr>
@@ -69,31 +69,31 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-300 text-justify border-b text-base font-medium" v-else v-for="tema in temasMostrar" :key="tema._id">
+                    <tr class="max-h-20 h-20 bg-gray-100 hover:bg-gray-300 text-justify border-b font-medium" v-else v-for="tema in temasMostrar" :key="tema._id">
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ tema.titulo }}</span>
+                                <span class="text-black texto-limite">{{ tema.titulo }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ tema.slug }}</span>
+                                <span class="text-black texto-limite">{{ tema.slug }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">-</span>
+                                <span class="text-black texto-limite">-</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <span class="text-black text-base texto-limite">{{ formatarData(tema.created_at) }}</span>
+                                <span class="text-black texto-limite">{{ formatarData(tema.created_at) }}</span>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center" >
-                                <span class="text-black text-base texto-limite" v-if="tema.edited_at != undefined">{{ formatarData(tema.edited_at) }}</span>
-								<span class="text-black text-base texto-limite" v-else>-</span>
+                                <span class="text-black texto-limite" v-if="tema.edited_at != undefined">{{ formatarData(tema.edited_at) }}</span>
+								<span class="text-black texto-limite" v-else>-</span>
                             </div>
                         </td>
                         <td class="p-2">
@@ -361,10 +361,6 @@ export default {
 }
 </script>
 <style scoped>
-span {
-    font-size: 1.6rem;
-}
-
 th {
     font-size: 1.6rem;
 }

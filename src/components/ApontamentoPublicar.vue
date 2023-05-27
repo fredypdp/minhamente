@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="botoes-right">
-                    <BotaoCancelar/>
+                    <BotaoCancelar @click="$router.push({name: 'PainelApontamentos'})"/>
                     <BotaoPublicar :botaoDesativado="botaoDesativado" :loading="loading"/>
                 </div>
             </div>

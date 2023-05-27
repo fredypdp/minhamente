@@ -108,6 +108,10 @@ export default {
                 this.botaoDesativado = false
             }
         }
+    },
+    beforeRouteLeave(to, fom, next) {
+        let confirmar = confirm("Deseja realmente saír?")
+        next(confirmar)
     }
 }
 </script>
