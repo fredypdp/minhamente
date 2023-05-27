@@ -17,8 +17,7 @@
                         <td class="p-5" colspan="">
                             <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do tema" autocomplete="off" @keyup.enter="temaPeloTitulo">
                         </td>
-                        <td class="p-5 font-bold text-lg text-black">-</td>
-                        <td class="p-5">
+                        <td class="p-5" colspan="2">
                             <div class="flex justify-center items-center">
                                 <Multiselect
                                     v-model="AssuntoSelecionado"

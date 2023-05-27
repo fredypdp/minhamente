@@ -26,6 +26,9 @@
                 </div>
                 <span v-else>Editar tema</span>
             </button>
+            <button @click="cancelar" type="button" class="botao-cancelar">
+                <span>Cancelar</span>
+            </button>
         </form>
     </div>
 </div>
@@ -217,5 +220,22 @@ span {
 
 .botao-editar:hover {
     background-color: var(--verde-escuro);
+}
+
+.botao-cancelar {
+    width: 100%;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 10px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: var(--amarelo);
+}
+
+.botao-cancelar:hover {
+    background-color: var(--amarelo-escuro);
 }
 </style>
