@@ -101,11 +101,14 @@ export default {
             } catch (erro) {
                 console.log(erro);
             }
+        },
+        cancelar() {
+            let confirmar = confirm("Deseja realmente saír?")
+
+            if(confirmar) {
+                this.$router.push({name: "PainelTemas"})
+            }
         }
-    },
-    beforeRouteLeave(to, fom, next) {
-        let confirmar = confirm("Deseja realmente saír?")
-        next(confirmar)
     }
 }
 </script>

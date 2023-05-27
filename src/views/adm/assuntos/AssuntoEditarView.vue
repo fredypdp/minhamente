@@ -107,11 +107,14 @@ export default {
                 this.loading = false
                 this.botaoDesativado = false
             }
+        },
+        cancelar() {
+            let confirmar = confirm("Deseja realmente saír?")
+
+            if(confirmar) {
+                this.$router.push({name: "PainelAssuntos"})
+            }
         }
-    },
-    beforeRouteLeave(to, fom, next) {
-        let confirmar = confirm("Deseja realmente saír?")
-        next(confirmar)
     }
 }
 </script>

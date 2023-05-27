@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="botoes-right">
-                    <BotaoCancelar @click="$router.push({name: 'PainelApontamentos'})"/>
+                    <BotaoCancelar @click="cancelar"/>
                     <BotaoPublicar :botaoDesativado="botaoDesativado" :loading="loading"/>
                 </div>
             </div>
@@ -180,6 +180,13 @@ export default {
                 console.log(erro);
             }
         },
+        cancelar() {
+            let confirmar = confirm("Deseja realmente saír?")
+
+            if(confirmar) {
+                this.$router.push({name: "PainelApontamentos"})
+            }
+        }
     }
 }
 </script>
