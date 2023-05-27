@@ -1,7 +1,7 @@
 <template>
     <div class="apontamento">
         <div class="miniatura-area skeleton">
-            <img lass="apontamento-miniatura">
+            <img class="apontamento-miniatura">
         </div>
         <div class="titulo-area skeleton">
         </div>
@@ -17,16 +17,16 @@ export default {
 .apontamento {
     display: flex;
     width: 24%;
-	max-width: 340px;
-    min-width: 340px;
-    margin: 0px 6.5px;
-    margin-bottom: 30px;
+    height: 100vh;
+	  max-width: 360px;
+    max-height: 280px;
+    margin: 0px 6.5px 30px;
     flex-direction: column;
 }
 
 .miniatura-area {
     width: 100%;
-    height: calc(225px * 0.84);
+    height: 80%;
     border-radius: 10px;
 }
 
@@ -34,14 +34,13 @@ export default {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: var(--azul);
 }
 
-/* .titulo-area {
-    height: 30px;
-    margin-top: 5px;
-    border-radius: 5px;
-} */
+.titulo-area {
+  height: 20%;
+  margin-top: 5px;
+  border-radius: 5px;
+}
 .apontamento-titulo {
     color: black;
     font-size: 2rem;
@@ -61,15 +60,34 @@ export default {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 1392px) {
 .apontamento {
-  min-width: 270px;
-  flex-direction: column;
-  margin: 0px 0px 30px 0px;
+    width: 32%;
+    max-width: 374px;
+    max-height: 300px;
+}
 }
 
-.miniatura-area {
-  height: 170px;
+@media (max-width: 1025px) {
+.apontamento {
+    width: 48%;
+    max-width: 460px;
+    max-height: 360px;
+}
+}
+
+@media (max-width: 1025px) {
+.apontamento {
+    width: 48%;
+    max-width: none;
+}
+}
+
+@media (max-width: 700px) {
+.apontamento {
+    width: 100%;
+    max-width: 635px;
+    max-height: 390px;
 }
 }
 </style>
