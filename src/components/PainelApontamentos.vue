@@ -334,9 +334,10 @@ export default {
                 this.loading = false
             }
         },
-        async pesquisarApontamento(titulo){
+        async pesquisarApontamento(event){
             this.loading = true
-            if (titulo.target.value.trim().length == 0 || titulo.target.value == undefined) {
+            let titulo = event.target.value
+            if (titulo.trim().length == 0 || titulo == undefined) {
                 this.loading = false
                 this.pegarApontamentos()
                 return
@@ -362,6 +363,8 @@ export default {
                 this.apontamentos = []
                 this.apontamentos = apontamentos.data.apontamentos
                 this.loading = false
+                console.log(titulo);
+                console.log(apontamentos);
             } catch (erro) {
                 console.log(erro);
                 this.loading = false
