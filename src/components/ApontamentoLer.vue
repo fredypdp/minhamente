@@ -60,8 +60,10 @@ export default {
 
             try {
                 let apontamento = await axios(config)
+                
                 if(apontamento.data.apontamento != undefined) {
                     this.apontamento = apontamento.data.apontamento
+                    document.title = `${apontamento.data.apontamento.titulo} - MinhaMente`
                 }
             } catch (erro) {
                 console.log(erro);

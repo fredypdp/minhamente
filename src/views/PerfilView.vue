@@ -4,9 +4,9 @@
     <div class="container-box">
         <div class="perfil-container">
             <div class="cartao-usuario-mobile">
-                <img :src="LoginStore.usuario.avatar" draggable="false" class="foto-perfil">
-                <h1 class="nome-usuario">{{ LoginStore.usuario.nome }} {{ LoginStore.usuario.sobrenome }}</h1>
-                <span class="email-usuario">{{ LoginStore.usuario.email }}</span>
+                <img :src="LoginStoreUsar.usuario.avatar" draggable="false" class="foto-perfil">
+                <h1 class="nome-usuario">{{ LoginStoreUsar.usuario.nome }} {{ LoginStoreUsar.usuario.sobrenome }}</h1>
+                <span class="email-usuario">{{ LoginStoreUsar.usuario.email }}</span>
                 <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">Terminar sessão</button>
                 <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarConta">Eliminar conta</button>
                 <input type="hidden" name="id" value="" id="id">
@@ -19,9 +19,9 @@
             </div>
             <div class="cartao-area">
                 <div class="cartao-usuario">
-                    <img :src="LoginStore.usuario.avatar" draggable="false" class="foto-perfil">
-                    <h1 class="nome-usuario">{{ LoginStore.usuario.nome }} {{ LoginStore.usuario.sobrenome }}</h1>
-                    <span class="email-usuario">{{ LoginStore.usuario.email }}</span>
+                    <img :src="LoginStoreUsar.usuario.avatar" draggable="false" class="foto-perfil">
+                    <h1 class="nome-usuario">{{ LoginStoreUsar.usuario.nome }} {{ LoginStoreUsar.usuario.sobrenome }}</h1>
+                    <span class="email-usuario">{{ LoginStoreUsar.usuario.email }}</span>
                     <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">
                         <div role="status" v-if="loadingLogout">
                             <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,8 +71,11 @@ export default {
             loadingEliminarConta: false,
             responseErro: "",
             responseSucesso: "",
-            LoginStore: LoginStore(),
+            LoginStoreUsar: LoginStore(),
         }
+    },
+    beforeCreate() {
+        document.title = `${LoginStore().usuario.nome} ${LoginStore().usuario.sobrenome} - MinhaMente`
     },
     methods: {
         async logout(){

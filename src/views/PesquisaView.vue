@@ -70,8 +70,8 @@ export default {
       next({name: "home"})
       return
     }
-
-    next()
+    
+    next(vm => document.title = `${vm.$route.query.pesquisa} - MinhaMente`)
   },
   watch: {
     "$route"(to, from) {
@@ -85,6 +85,7 @@ export default {
         return
       }
   
+      document.title = `${to.query.pesquisa} - MinhaMente`
       this.pesquisarApontamentos()
     },
   },
@@ -240,7 +241,7 @@ export default {
 }
 
 .sem-apontamentos span {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .paginas-area {

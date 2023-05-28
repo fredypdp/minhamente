@@ -30,24 +30,26 @@ import PainelApontamentos from '@/components/PainelApontamentos.vue'
 
 const routes = [
   {
-    path: "/resultados",
     name: "pesquisa",
-    component: PesquisaView
+    meta: {title: ''},
+    path: "/resultados",
+    component: PesquisaView,
   },
   {
-    path: "/perfil",
     name: "perfil",
-    component: PerfilView
+    path: "/perfil",
+    meta: {title: ''},
+    component: PerfilView,
   },
   {
     path: "/painel", // Adm
     component: PainelView,
     children: [
-      {path: "temas", name: "PainelTemas", component: PainelTemas},
-      {path: "assuntos", name: "PainelAssuntos", component: PainelAssuntos},
-      {path: "usuarios", name: "PainelUsuarios", component: PainelUsuarios},
-      {path: "apontamentos", name: "PainelApontamentos", component: PainelApontamentos},
-      {path: "", name: "painel", component: PainelApontamentos}
+      {path: "temas", name: "PainelTemas", component: PainelTemas, meta: {title:'Painel: Temas - MinhaMente'}},
+      {path: "assuntos", name: "PainelAssuntos", component: PainelAssuntos, meta: {title: 'Painel: Assuntos - MinhaMente'}},
+      {path: "usuarios", name: "PainelUsuarios", component: PainelUsuarios, meta: {title: 'Painel: Usuários - MinhaMente'}},
+      {path: "apontamentos", name: "PainelApontamentos", component: PainelApontamentos, meta: {title: 'Painel: Apontamentos - MinhaMente'}},
+      {path: "", name: "painel", component: PainelApontamentos, meta: {title: 'Painel - MinhaMente'}}
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
@@ -60,14 +62,15 @@ const routes = [
   },
   {
     path: "/ler/:id",
+    meta: {title: ''},
     name: "ApontamentoLer",
     component: ApontamentoView,
   },
   {
     path: "/apontamento", // Adm
     children: [
-      {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView},
-      {path: "editar/:id", name: "ApontamentoEditar", component: ApontamentoEditarView},
+      {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView, meta: {title: 'Publicar Apontamento - MinhaMente'}},
+      {path: "editar/:id", name: "ApontamentoEditar", component: ApontamentoEditarView, meta: {title: 'Editar Apontamento - MinhaMente'}},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
@@ -81,8 +84,8 @@ const routes = [
   {
     path: "/assunto", // Adm
     children: [
-      {path: "criar", name: "AssuntoCriar", component: AssuntoCriarView},
-      {path: "editar/:id", name: "AssuntoEditar", component: AssuntoEditarView},
+      {path: "criar", name: "AssuntoCriar", component: AssuntoCriarView, meta: {title: 'Criar assunto - MinhaMente'}},
+      {path: "editar/:id", name: "AssuntoEditar", component: AssuntoEditarView, meta: {title: 'Editar assunto - MinhaMente'}},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
@@ -96,8 +99,8 @@ const routes = [
   {
     path: "/tema", // Adm
     children: [
-        {path: "criar", name: "TemaCriar", component: TemaCriarView},
-        {path: "editar/:id", name: "TemaEditar", component: TemaEditarView},
+        {path: "criar", name: "TemaCriar", component: TemaCriarView, meta: {title: 'Criar tema - MinhaMente'}},
+        {path: "editar/:id", name: "TemaEditar", component: TemaEditarView, meta: {title: 'Editar tema - MinhaMente'}},
     ],
     beforeEnter(to, from, next) {
       if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
@@ -111,11 +114,11 @@ const routes = [
   {
     path: "/auth",
     children: [
-        {path: "login", name: "login", component: LoginView},
-        {path: "criarconta", name: "CriarConta", component: CriarContaView},
-        {path: "novasenha/:token", name: "NovaSenha", component: NovaSenhaView},
-        {path: "esquecisenha", name: "EsqueciSenha", component: EsqueciSenhaView},
-        {path: "deletarconta/:token", name: "DeletarConta", component: DeletarContaView},
+        {path: "login", name: "login", component: LoginView, meta: {title: 'Fazer login'}},
+        {path: "criarconta", name: "CriarConta", component: CriarContaView, meta: {title: 'Criar Conta'}},
+        {path: "novasenha/:token", name: "NovaSenha", component: NovaSenhaView, meta: {title: 'Definir nova senha'}},
+        {path: "esquecisenha", name: "EsqueciSenha", component: EsqueciSenhaView, meta: {title: 'Esqueci a senha'}},
+        {path: "deletarconta/:token", name: "DeletarConta", component: DeletarContaView, meta: {title: 'Deletar minha conta'}},
         // Redirecionamentos
         {path: "/login", redirect: {name: "login"}},
         {path: "/signup", redirect: {name: "CriarConta"}},
