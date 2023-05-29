@@ -83,6 +83,7 @@ export default {
     methods: {
         async editar(){
             this.loading = true
+            document.getElementById("erro").style.display = "none"
 
             let id = this.$route.params.id
             let titulo

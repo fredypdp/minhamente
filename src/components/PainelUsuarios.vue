@@ -17,13 +17,13 @@
                 <tbody class="text-center">
                     <tr class="bg-gray-50 text-center">
                         <td class="p-2" colspan="2">
-                            <input type="search" name="nome" class="input-pesquisar" autocomplete="off" placeholder="Nome do usuário" @keyup.enter="usuarioPeloNome">
+                            <input type="search" name="nome" class="input-pesquisar" autocomplete="off" placeholder="Nome do usuário" @keyup.enter="usuarioPeloNome" ref="nome">
                         </td>
                         <td class="p-2">
-                            <input type="search" name="sobrenome" class="input-pesquisar" autocomplete="off" placeholder="Sobrenome do usuário" @keyup.enter="usuarioPeloSobrenome">
+                            <input type="search" name="sobrenome" class="input-pesquisar" autocomplete="off" placeholder="Sobrenome do usuário" @keyup.enter="usuarioPeloSobrenome" ref="sobrenome">
                         </td>
                         <td class="p-2">
-                            <input type="search" name="email" class="input-pesquisar" autocomplete="off" placeholder="Email do usuário" @keyup.enter="usuarioPeloEmail">
+                            <input type="search" name="email" class="input-pesquisar" autocomplete="off" placeholder="Email do usuário" @keyup.enter="usuarioPeloEmail" ref="email">
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
@@ -143,7 +143,7 @@ export default {
     },
     data() {
         return {
-            funcao: "",
+            funcao: undefined,
             usuarios: [],
             loading: false,
             currentPage: 1,
@@ -270,6 +270,10 @@ export default {
         },
         async pegarUsuarios() {
             this.loading = true
+            this.$refs.nome.value = ""
+            this.$refs.sobrenome.value = ""
+            this.$refs.email.value = ""
+            this.funcao = ""
 
             let config = {
                 method: 'get',
@@ -290,6 +294,9 @@ export default {
         },
         async usuarioPeloNome(nome) {
             this.loading = true
+            this.$refs.sobrenome.value = ""
+            this.$refs.email.value = ""
+
             if (nome.target.value.trim().length == 0 || nome.target.value == undefined) {
                 this.loading = false
                 this.pegarUsuarios()
@@ -315,6 +322,9 @@ export default {
         },
         async usuarioPeloSobrenome(sobrenome) {
             this.loading = true
+            this.$refs.nome.value = ""
+            this.$refs.email.value = ""
+
             if (sobrenome.target.value.trim().length == 0 || sobrenome.target.value == undefined) {
                 this.loading = false
                 this.pegarUsuarios()
@@ -340,6 +350,9 @@ export default {
         },
         async usuarioPeloEmail(email) {
             this.loading = true
+            this.$refs.nome.value = ""
+            this.$refs.sobrenome.value = ""
+
             if (email.target.value.trim().length == 0 || email.target.value == undefined) {
                 this.loading = false
                 this.pegarUsuarios()
@@ -373,6 +386,9 @@ export default {
         },
         async usuarioPeloRole(role) {
             this.loading = true
+            this.$refs.nome.value = ""
+            this.$refs.sobrenome.value = ""
+            this.$refs.email.value = ""
 
             let config = {
                 method: 'get',

@@ -60,6 +60,7 @@ export default {
         async criar(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erro").style.display = "none"
 
             const formData = new FormData();
             let nome = this.nome

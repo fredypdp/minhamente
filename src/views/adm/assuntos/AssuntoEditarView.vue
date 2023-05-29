@@ -79,6 +79,7 @@ export default {
         async editar(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erro").style.display = "none"
 
             let id = this.$route.params.id
 

@@ -15,7 +15,7 @@
                 <tbody>
                     <tr class="bg-gray-50 text-center">
                         <td class="p-2">
-                            <input type="search" name="nome" class="input-pesquisar" placeholder="Nome do assunto" autocomplete="off" @keyup.enter="assuntoPeloNome">
+                            <input type="search" name="nome" class="input-pesquisar" placeholder="Nome do assunto" autocomplete="off" @keyup.enter="assuntoPeloNome" ref="nome">
                         </td>
                         <td class="p-2 font-bold text-lg text-black">-</td>
                         <td class="p-2 font-bold text-lg text-black">-</td>
@@ -235,6 +235,7 @@ export default {
         },
         async pegarAssuntos() {
             this.loading = true
+            this.$refs.nome.value = ""
 
             let config = {
                 method: 'get',

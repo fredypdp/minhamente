@@ -15,7 +15,7 @@
                 <tbody>
                     <tr class="bg-gray-50 text-center">
                         <td class="p-2">
-                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do apontamento" autocomplete="off" @keyup.enter="pesquisarApontamento">
+                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do apontamento" autocomplete="off" @keyup.enter="pesquisarApontamento" ref="pesquisarApontamento">
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
@@ -178,6 +178,7 @@ export default {
             }
 
             this.loading = true
+            this.$refs.pesquisarApontamento.value = ""
             
             this.apontamentos = this.apontamentos.filter( apontamento => apontamento.visibilidade == novo)
             this.loading = false
@@ -194,6 +195,7 @@ export default {
             }
 
             this.loading = true
+            this.$refs.pesquisarApontamento.value = ""
 
             let config = {
                 method: 'get',
@@ -302,6 +304,7 @@ export default {
         },
         async pegarApontamentos() {
             this.loading = true
+            this.$refs.pesquisarApontamento.value = ""
 
             let config = {
                 method: 'get',
@@ -319,6 +322,7 @@ export default {
         },
         async pegarApontamentosSemAssunto() {
             this.loading = true
+            this.$refs.pesquisarApontamento.value = ""
 
             let config = {
                 method: 'get',
@@ -363,8 +367,6 @@ export default {
                 this.apontamentos = []
                 this.apontamentos = apontamentos.data.apontamentos
                 this.loading = false
-                console.log(titulo);
-                console.log(apontamentos);
             } catch (erro) {
                 console.log(erro);
                 this.loading = false

@@ -66,6 +66,7 @@ export default {
         async editar(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erroEditar").style.display = "none"
 
             const formData = new FormData();
             let id = LoginStore().usuario.id
@@ -103,7 +104,46 @@ export default {
                     'authorization': `Bearer ${LoginStore().token}`
                 }})
                 
+                if (usuarioEditado.response != undefined && usuarioEditado.response.data.status == 406) {
+                    return
+                }
+                
                 // Terminando a sessão no servidor
+                await this.logout()
+
+                // Fazendo login
+                await this.login(usuarioEditado.data.usuario.email, this.senha)
+
+                this.loading = false
+                this.botaoDesativado = false
+                this.$router.go(0)
+            } catch (erro) {
+                console.log(erro);
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
+                
+                this.loading = false
+                this.botaoDesativado = false
+            }
+        },
+        async login(email, senha) {
+            try {
+                let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: email, senha: senha})
+                                    
+                localStorage.setItem("token", JSON.stringify(data.token))
+                localStorage.setItem("usuario", JSON.stringify(data.usuario))
+                localStorage.setItem("_links", JSON.stringify(data._links))
+            } catch (erro) {
+                console.log(erro);
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
+                
+                this.loading = false
+                this.botaoDesativado = false
+            }
+        },
+        async logout() {
+            try {
                 await axios({
                     method: 'post',
                     url: 'https://apiminhamente.onrender.com/logout',
@@ -111,21 +151,10 @@ export default {
                         'authorization': `Bearer ${LoginStore().token}`
                     }
                 })
-
+    
                 localStorage.removeItem("token")
                 localStorage.removeItem("usuario")
                 localStorage.removeItem("_links")
-
-                // Fazendo login
-                let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: usuarioEditado.data.usuario.email, senha: this.senha})
-                                
-                localStorage.setItem("token", JSON.stringify(data.token))
-                localStorage.setItem("usuario", JSON.stringify(data.usuario))
-                localStorage.setItem("_links", JSON.stringify(data._links))
-
-                this.loading = false
-                this.botaoDesativado = false
-                this.$router.go(0)
             } catch (erro) {
                 console.log(erro);
                 this.erroEditar = erro.response.data.erro

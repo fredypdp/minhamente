@@ -41,6 +41,7 @@ export default {
         async login(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erro").style.display = "none"
 
             let config = {
                 method: 'post',

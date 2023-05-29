@@ -44,6 +44,7 @@ export default {
         async esqueciSenha() {
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erroEsqueciSenha").style.display = "none"
 
             try {
                 let config = {

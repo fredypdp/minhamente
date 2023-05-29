@@ -15,7 +15,7 @@
                 <tbody>
                     <tr class="bg-gray-50 text-center">
                         <td class="p-5" colspan="">
-                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do tema" autocomplete="off" @keyup.enter="temaPeloTitulo">
+                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do tema" autocomplete="off" @keyup.enter="temaPeloTitulo" ref="titulo">
                         </td>
                         <td class="p-5" colspan="2">
                             <div class="flex justify-center items-center">
@@ -164,6 +164,7 @@ export default {
             }
 
             this.loading = true
+            this.$refs.titulo.value = ""
 
             let config = {
                 method: 'get',
@@ -272,6 +273,7 @@ export default {
         },
         async pegarTemas() {
             this.loading = true
+            this.$refs.titulo.value = ""
 
             let config = {
                 method: 'get',

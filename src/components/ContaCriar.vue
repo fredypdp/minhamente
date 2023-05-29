@@ -61,6 +61,7 @@ export default {
         async criar(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erro").style.display = "none"
 
             const formData = new FormData();
             let nome = this.nome
@@ -78,11 +79,8 @@ export default {
             try {
                 let usuarioCriado = await axios.post("https://apiminhamente.onrender.com/usuario", formData)
                 
-                let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: this.email, senha: this.senha})
-                                
-                localStorage.setItem("token", JSON.stringify(data.token))
-                localStorage.setItem("usuario", JSON.stringify(data.usuario))
-                localStorage.setItem("_links", JSON.stringify(data._links))
+                // Fazendo login
+                await this.login(usuarioCriado.data.usuario.email, this.senha)
 
                 this.loading = false
                 this.botaoDesativado = false
@@ -95,7 +93,23 @@ export default {
                 this.loading = false
                 this.botaoDesativado = false
             }
-        }
+        },
+        async login(email, senha) {
+            try {
+                let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: email, senha: senha})
+                                    
+                localStorage.setItem("token", JSON.stringify(data.token))
+                localStorage.setItem("usuario", JSON.stringify(data.usuario))
+                localStorage.setItem("_links", JSON.stringify(data._links))
+            } catch (erro) {
+                console.log(erro);
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
+                
+                this.loading = false
+                this.botaoDesativado = false
+            }
+        },
     }
 }
 </script>

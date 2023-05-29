@@ -61,6 +61,7 @@ export default {
         async criar(){
             this.loading = true
             this.botaoDesativado = true
+            document.getElementById("erro").style.display = "none"
 
             let config = {
                 method: 'post',

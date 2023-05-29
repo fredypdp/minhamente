@@ -81,6 +81,7 @@ export default {
         async logout(){
             this.loadingLogout = true
             this.botaoSairDesativado = true
+            document.getElementById("response-erro").style.display = "none"
 
             let config = {
                 method: 'post',
@@ -116,6 +117,7 @@ export default {
             if(eliminar) {
                 this.loadingEliminarConta = true
                 this.botaoDeletarDesativado = true
+                document.getElementById("response-erro").style.display = "none"
 
                 let config = {
                     method: 'post',
@@ -138,7 +140,6 @@ export default {
                     
                     this.responseErro = erro.response.data.erro
                     document.getElementById("response-erro").style.display = "flex"
-                    
                 }
             }
         }

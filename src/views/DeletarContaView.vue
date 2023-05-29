@@ -32,7 +32,7 @@ export default {
             next({name: "home"})
         } catch (erro) {
             console.log(erro)
-            this.erro = erro.response.data.erro
+            next(vm => vm.erro.erro.response.data.erro)
         }
     }
 }
