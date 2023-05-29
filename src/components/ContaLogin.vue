@@ -3,9 +3,9 @@
         <h1>Entrar</h1>
         <form @submit.prevent="login" class="login-form">
             <label for="login-email">Email:</label>
-            <input type="email" name="email" id="login-email" autocomplete="off" placeholder="Digite o seu email" v-model.trim.lazy="email">
+            <input type="email" name="email" class="login-email" id="login-email" autocomplete="off" placeholder="Digite o seu email" v-model.trim.lazy="email">
             <label for="login-senha">Senha:</label>
-            <input type="password" name="senha" id="login-senha" minlength="8" autocomplete="off" placeholder="Digite a sua senha" v-model.trim.lazy="senha">
+            <SenhaInput @senha="definirSenha"/>
             <span id="erro">{{ erro }}</span>
             <div class="links-form">
                 <router-link :to="{name: 'EsqueciSenha'}"><span>Esqueci a senha</span></router-link>
@@ -27,7 +27,11 @@
 
 <script>
 import axios from "axios";
+import SenhaInput from "@/components/shared/SenhaInput.vue";
 export default {
+    components: {
+        SenhaInput
+    },
     data(){
         return {
             erro: "",
@@ -38,6 +42,9 @@ export default {
         }
     },
     methods: {
+		definirSenha(senha) {
+			this.senha = senha
+		},
         async login(){
             this.loading = true
             this.botaoDesativado = true
@@ -71,16 +78,12 @@ export default {
                 this.loading = false
                 this.botaoDesativado = false
             }
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
-span {
-    font-size: 1.6rem;
-}
-
 #erro {
     display: none;
     color: red;
@@ -120,7 +123,7 @@ span {
     margin-bottom: 10px;
 }
 
-.login-form input {
+.login-email {
     width: 100%;
     padding: 5px;
     color: black;
@@ -128,6 +131,10 @@ span {
     font-weight: 500;
     border-radius: 5px;
     border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.senha-area {
     margin-bottom: 20px;
 }
 

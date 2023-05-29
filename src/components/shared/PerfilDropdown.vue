@@ -31,19 +31,15 @@ export default {
             }
         },
     },
-
     created() {
         this.emitter.on('MenuDropdownOpen', this.rootCloseListener);
     },
-
     mounted(){
         document.addEventListener("click", this.clickOutListener)
-    },
-    
+    },    
     beforeUnmount() {
         document.removeEventListener('click', this.clickOutListener);
     },
-
     methods: {
         MinhaConta(){
             this.$router.push({name: "perfil"})
@@ -84,13 +80,11 @@ export default {
         close(){
             this.isOpen = false
         },
-
         clickOutListener(evt){
             if (!this.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
                 this.close()
             }
-        },
-        
+        },      
         rootCloseListener(vm) {
             if (vm !== this) {
                 this.close();

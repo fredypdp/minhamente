@@ -3,7 +3,7 @@
         <div class="mudar-senha-area">
             <form class="mudar-senha-form" @submit.prevent="mudarSenha">
                 <label for="login-email" class="mudar-senha-label">Nova Senha:</label>
-                <input type="password" name="senha" id="nova-senha" autocomplete="off" placeholder="Digite a sua nova senha" class="mudar-senha-input" v-model="senha">
+                <SenhaInput @senha="definirSenha"/>
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Senha alterada com sucesso</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="senha-erro">A senha precisa ter no mínimo 8 caracteres</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="token-erro">Token inválido ou inexistente!</span>
@@ -26,7 +26,11 @@
 <script>
 import axios from "axios";
 import { LoginStore } from "@/stores/LoginStore.js";
+import SenhaInput from "@/components/shared/SenhaInput.vue";
 export default {
+    components: {
+        SenhaInput
+    },
     data(){
         return {
             loading: false,
@@ -36,6 +40,9 @@ export default {
         }
     },
     methods: {
+        definirSenha(senha) {
+			this.senha = senha
+		},
         async mudarSenha() {
             this.loading = true
             this.botaoDesativado = true
@@ -156,14 +163,7 @@ span {
     margin-bottom: 10px;
 }
 
-.mudar-senha-input {
-    width: 100%;
-    padding: 5px;
-    color: black;
-    font-size: 2rem;
-    font-weight: 500;
-    border-radius: 5px;
-    border: 1px solid black;
+.senha-area {
     margin-bottom: 20px;
 }
 

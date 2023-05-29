@@ -18,7 +18,7 @@
             <label for="editar-email">Novo email:</label>
             <input type="email" name="email" id="editar-email" autocomplete="off" placeholder="Digite o seu email" v-model.trim.lazy="email">
             <label for="editar-senha">Senha:</label>
-            <input type="password" name="senha" minlength="8" id="editar-senha" autocomplete="off" placeholder="Digite a sua senha" v-model.trim.lazy="senha" required>
+            <SenhaInput @senha="definirSenha"/>
             <span id="erroEditar">{{ erroEditar }}</span>
             <div class="links-form">
                 <span @click="esqueciSenha">Nova senha</span>
@@ -41,7 +41,11 @@
 <script>
 import axios from "axios";
 import { LoginStore } from "@/stores/LoginStore.js";
+import SenhaInput from "@/components/shared/SenhaInput.vue";
 export default {
+    components: {
+        SenhaInput
+    },
     data(){
         return {
             sucessoEsqueciSenha: undefined,
@@ -58,6 +62,9 @@ export default {
         }
     },
     methods: {
+        definirSenha(senha) {
+			this.senha = senha
+		},
         ShowAvatar(){
             const img = this.$refs.avatar.files[0]
             this.avatar = img;
@@ -288,6 +295,10 @@ span {
     font-weight: 500;
     border-radius: 5px;
     border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.senha-area {
     margin-bottom: 20px;
 }
 

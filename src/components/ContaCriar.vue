@@ -18,7 +18,7 @@
             <label for="cadastro-email">Email:</label>
             <input type="email" name="email" id="cadastro-email" autocomplete="off" placeholder="Digite o seu email" v-model.trim.lazy="email">
             <label for="cadastro-senha">Senha:</label>
-            <input type="password" name="senha" minlength="8" id="cadastro-senha" autocomplete="off" placeholder="Digite a sua senha" v-model.trim.lazy="senha">
+            <SenhaInput @senha="definirSenha"/>
             <span id="erro">{{ erro }}</span>
             <div class="links-form">
                 <router-link :to="{name: 'login'}"><span>Fazer login</span></router-link>
@@ -38,7 +38,11 @@
 </template>
 <script>
 import axios from "axios";
+import SenhaInput from "@/components/shared/SenhaInput.vue";
 export default {
+    components: {
+        SenhaInput
+    },
     data(){
         return {
             erro: "",
@@ -53,6 +57,9 @@ export default {
         }
     },
     methods: {
+        definirSenha(senha) {
+			this.senha = senha
+		},
         ShowAvatar(){
             const img = this.$refs.avatar.files[0]
             this.avatar = img;
@@ -205,6 +212,10 @@ span {
     font-weight: 500;
     border-radius: 5px;
     border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.senha-area {
     margin-bottom: 20px;
 }
 
