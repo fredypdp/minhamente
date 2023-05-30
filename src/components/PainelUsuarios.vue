@@ -421,7 +421,7 @@ export default {
     
                 try {
                     await axios(config)
-                    this.usuarios.splice(usuario._id, 1)
+                    this.usuarios.splice(usuario.id, 1)
                 } catch (erro) {   
                     console.log(erro);
                 }
