@@ -18,8 +18,8 @@ export default {
     display: flex;
     width: 24%;
     height: 100vh;
-	  max-width: 360px;
-    max-height: 280px;
+    max-width: 360px;
+    max-height: 245px;
     margin: 0px 6.5px 30px;
     flex-direction: column;
 }
