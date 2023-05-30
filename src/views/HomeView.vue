@@ -265,14 +265,30 @@ export default {
         let assunto = await axios(config)
 
         if(LoginStore().usuario != undefined && LoginStore().usuario.role == 0) {
-          this.apontamentos = assunto.data.assunto.apontamentos
+          this.apontamentos = assunto.data.assunto.apontamentos.sort( (a,b) => {
+            if(a.created_at < b.created_at) {
+              return 1
+            }
+            
+            if(a.created_at > b.created_at) {
+              return -1
+            }
+          })
           this.apontamentosSkeleton = false
           this.assuntoPagina = assunto.data.assunto.nome
           return
         } 
         
         if(LoginStore().usuario == undefined || LoginStore().usuario.role == 1){
-          this.apontamentos = assunto.data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+          this.apontamentos = assunto.data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true).sort( (a,b) => {
+            if(a.created_at < b.created_at) {
+              return 1
+            }
+            
+            if(a.created_at > b.created_at) {
+              return -1
+            }
+          })
           this.apontamentosSkeleton = false
           this.assuntoPagina = assunto.data.assunto.nome
           return
