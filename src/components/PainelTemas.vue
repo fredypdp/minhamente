@@ -138,7 +138,7 @@ export default {
             currentPage: 1,
             PaginaAtual: 1,
             ItensPorPagina: 20,
-            criacaoCrescente: true,
+            criacaoCrescente: false,
             AssuntoSelecionado: "",
             assuntosLista: [],
         }
@@ -201,7 +201,7 @@ export default {
 
                     for (let i = 1; i < this.temas.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais recente
-                        if (this.temas[i].titulo < this.temas[MaisNovoIndex].titulo) {
+                        if (this.temas[i].created_at < this.temas[MaisNovoIndex].created_at) {
                             MaisNovoIndex = i;
                         }
                     }
@@ -220,7 +220,7 @@ export default {
 
                     for (let i = 1; i < this.temas.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais antigo
-                        if (this.temas[i].titulo > this.temas[MaisAntigoIndex].titulo) {
+                        if (this.temas[i].created_at > this.temas[MaisAntigoIndex].created_at) {
                             MaisAntigoIndex = i;
                         }
                     }

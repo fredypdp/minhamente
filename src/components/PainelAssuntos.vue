@@ -127,7 +127,7 @@ export default {
             currentPage: 1,
             PaginaAtual: 1,
             ItensPorPagina: 20,
-            criacaoCrescente: true,
+            criacaoCrescente: false,
         }
     },
     mounted(){
@@ -163,7 +163,7 @@ export default {
 
                     for (let i = 1; i < this.assuntos.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais recente
-                        if (this.assuntos[i].nome < this.assuntos[MaisNovoIndex].nome) {
+                        if (this.assuntos[i].created_at < this.assuntos[MaisNovoIndex].created_at) {
                             MaisNovoIndex = i;
                         }
                     }
@@ -182,7 +182,7 @@ export default {
 
                     for (let i = 1; i < this.assuntos.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais antigo
-                        if (this.assuntos[i].nome > this.assuntos[MaisAntigoIndex].nome) {
+                        if (this.assuntos[i].created_at > this.assuntos[MaisAntigoIndex].created_at) {
                             MaisAntigoIndex = i;
                         }
                     }

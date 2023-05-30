@@ -154,7 +154,7 @@ export default {
             visibilidade: Boolean,
             assuntosLista: [],
             AssuntoSelecionado: "",
-            criacaoCrescente: true,
+            criacaoCrescente: false,
         }
     },
     mounted(){
@@ -232,7 +232,7 @@ export default {
 
                     for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais recente
-                        if (this.apontamentos[i].titulo < this.apontamentos[MaisNovoIndex].titulo) {
+                        if (this.apontamentos[i].created_at < this.apontamentos[MaisNovoIndex].created_at) {
                             MaisNovoIndex = i;
                         }
                     }
@@ -251,7 +251,7 @@ export default {
 
                     for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
                         // Procurando o index do item mais antigo
-                        if (this.apontamentos[i].titulo > this.apontamentos[MaisAntigoIndex].titulo) {
+                        if (this.apontamentos[i].created_at > this.apontamentos[MaisAntigoIndex].created_at) {
                             MaisAntigoIndex = i;
                         }
                     }
