@@ -3,7 +3,7 @@
         <header class="navbar-pc">
             <div class="header-area">
                 <div class="logo-area">
-                    <h1 class="logo"><router-link :to="{name: 'home'}">MinhaMente</router-link></h1>
+                    <h1 class="logo"><router-link :to="{name: 'home'}" @click="apontamentosDoAssunto">MinhaMente</router-link></h1>
                 </div>
                 <div class="pesquisa-area">
                     <form class="pesquisa-form" @submit.prevent="pesquisar">
@@ -25,7 +25,7 @@
         <header class="navbar-mobile">
             <div class="header-area">
                 <div class="logo-area">
-                    <h1 class="logo"><router-link :to="{name: 'home'}">MinhaMente</router-link></h1>
+                    <h1 class="logo"><router-link :to="{name: 'home'}" @click="apontamentosDoAssunto">MinhaMente</router-link></h1>
                 </div>
                 <div class="nav-right-side">
                     <NavPesquisaMobile/>
@@ -40,8 +40,9 @@
 </template>
 <script>
 
-import PerfilDropdown from "../shared/PerfilDropdown.vue";
+import { HomeStore } from "@/stores/HomeStore.js";
 import { LoginStore } from "@/stores/LoginStore.js";
+import PerfilDropdown from "../shared/PerfilDropdown.vue";
 import NavPesquisaMobile from "@/components/shared/NavPesquisaMobile.vue";
 
 export default {
@@ -70,6 +71,9 @@ export default {
             }
 
             this.$router.push({name: "pesquisa", query: {pesquisa: this.pesquisa}})
+        },
+        apontamentosDoAssunto() {
+            HomeStore().assuntoAtual = undefined
         }
     }
 }
