@@ -23,10 +23,10 @@ export default {
         AppLateralBar,
         ApontamentoLer,
     },
-    async beforeRouteEnter(to, from, next) {
-
+    beforeMount() {
         HomeStore().assuntoAtual = undefined
-
+    },
+    async beforeRouteEnter(to, from, next) {
         let config = {
             method: 'get',
             url: 'https://apiminhamente.onrender.com/apontamento/'+to.params.id

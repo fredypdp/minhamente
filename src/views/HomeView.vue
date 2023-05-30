@@ -16,7 +16,7 @@
     <div class="container-box">
       <div class="home-apontamentos-top">
         <div class="assuntos-page-titulo-area">
-            <h2 class="assunto-page-titulo" v-if="HomeStore.assuntoAtual == undefined || HomeStore.assuntoAtual == 'todos'">Todos apontamentos</h2>
+            <h2 class="assunto-page-titulo" v-if="HomeStoreUsar.assuntoAtual == undefined || HomeStoreUsar.assuntoAtual == 'todos'">Todos apontamentos</h2>
             <h2 class="assunto-page-titulo" v-else>{{ assuntoPagina }}</h2>
             <div class="assunto-page-titulo-bar"></div>
         </div>
@@ -74,7 +74,7 @@ export default {
   },
   data() {
     return {
-      HomeStore: HomeStore(),
+      HomeStoreUsar: HomeStore(),
       loading: false,
       assuntos: [],
       apontamentos: [],
@@ -83,6 +83,7 @@ export default {
       ItensPorPagina: 20,
       temasLista: [],
       TemaSelecionado: "",
+      criacaoCrescente: true,
       apontamentosSkeleton: false,
     }
   },
@@ -97,14 +98,13 @@ export default {
     },
   },
   watch: {
-    "HomeStore.assuntoAtual": {
+    "HomeStoreUsar.assuntoAtual": {
       handler(novaAssunto, antigaAssunto) {
         if (novaAssunto != undefined && novaAssunto != "todos") {
           this.pegarApontamentosDoAssunto(novaAssunto)
           this.pegarTemasDoAssunto(novaAssunto)
           return
         } 
-        
         if(novaAssunto == undefined || novaAssunto == "todos") {
           this.pegarApontamentos()
           return
@@ -141,13 +141,13 @@ export default {
   mounted() {
     this.pegarAssuntos()
 
-    if (this.HomeStore.assuntoAtual != undefined && this.HomeStore.assuntoAtual != "todos") {
-      this.pegarApontamentosDoAssunto(this.HomeStore.assuntoAtual)
-      this.pegarTemasDoAssunto(this.HomeStore.assuntoAtual)
+    if (this.HomeStoreUsar.assuntoAtual != undefined && this.HomeStoreUsar.assuntoAtual != "todos") {
+      this.pegarApontamentosDoAssunto(this.HomeStoreUsar.assuntoAtual)
+      this.pegarTemasDoAssunto(this.HomeStoreUsar.assuntoAtual)
       return
     } 
     
-    if(this.HomeStore.assuntoAtual == undefined || this.HomeStore.assuntoAtual == "todos") {
+    if(this.HomeStoreUsar.assuntoAtual == undefined || this.HomeStoreUsar.assuntoAtual == "todos") {
       this.pegarApontamentos()
       return
     }
@@ -255,7 +255,7 @@ export default {
     },
     async pegarApontamentosDoAssunto(assunto) {
       this.apontamentosSkeleton = true
-
+      
       let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/assunto/'+assunto
@@ -285,7 +285,7 @@ export default {
     },
     async pegarTemasDoAssunto(assunto) {
       this.apontamentosSkeleton = true
-
+      
       let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/assunto/'+assunto
