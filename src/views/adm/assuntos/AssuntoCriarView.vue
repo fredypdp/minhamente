@@ -43,10 +43,10 @@ export default {
     },
     data() {
         return {
-            erro: "",
-            nome: "",
-            icone: "",
-            iconeUrl: "",
+            erro: undefined,
+            nome: undefined,
+            icone: undefined,
+            iconeUrl: undefined,
             loading: false,
             botaoDesativado: false,
         }

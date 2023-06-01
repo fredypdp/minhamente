@@ -34,9 +34,9 @@ export default {
     },
     data(){
         return {
-            erro: "",
-            email: "",
-            senha: "",
+            erro: undefined,
+            email: undefined,
+            senha: undefined,
             loading: false,
             botaoDesativado: false,
         }

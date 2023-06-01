@@ -45,13 +45,13 @@ export default {
     },
     data(){
         return {
-            erro: "",
-            avatarUrl: "",
-            nome: "",
-            sobrenome: "",
-            avatar: "",
-            email: "",
-            senha: "",
+            erro: undefined,
+            avatarUrl: undefined,
+            nome: undefined,
+            sobrenome: undefined,
+            avatar: undefined,
+            email: undefined,
+            senha: undefined,
             loading: false,
             botaoDesativado: false,
         }

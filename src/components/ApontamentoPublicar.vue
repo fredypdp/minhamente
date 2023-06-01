@@ -78,13 +78,13 @@ export default {
     },
     data(){
         return {
-            erro: "",
+            erro: undefined,
             loading: false,
             botaoDesativado: false,
-            titulo: "",
-            conteudo: "",
-            miniatura: "",
-            visibilidade: "",
+            titulo: undefined,
+            conteudo: undefined,
+            miniatura: undefined,
+            visibilidade: undefined,
             TemasSelecionados: [],
             AssuntosSelecionados: [],
             temasLista: [],

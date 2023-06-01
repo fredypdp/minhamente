@@ -43,12 +43,12 @@ export default {
     },
     data() {
         return {
-            erro: "",
+            erro: undefined,
             loading: false,
             botaoDesativado: false,
-            nome: "",
-            icone: "",
-            iconeUrl: "",
+            nome: undefined,
+            icone: undefined,
+            iconeUrl: undefined,
         }
     },
     beforeRouteEnter(to, from, next) {

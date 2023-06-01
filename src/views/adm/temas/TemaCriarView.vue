@@ -46,11 +46,11 @@ export default {
     },
     data(){
         return {
-            erro: "",
+            erro: undefined,
             loading: false,
             botaoDesativado: false,
-            titulo: "",
-            AssuntoSelecionado: "",
+            titulo: undefined,
+            AssuntoSelecionado: undefined,
             assuntosLista: [],
         }
     },
