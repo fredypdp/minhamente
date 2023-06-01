@@ -9,17 +9,19 @@
           <div class="sem-apontamentos" v-if="!loading && apontamentosTotal == 0">
             <span>Nenhum apontamento encontrado</span>
           </div>
-          <ApontamentosList :flexColumn="true" :apontamentos="apontamentos" v-slot="{apontamento}">
-            <div class="apontamento">
-              <div class="miniatura-area">
-                  <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
-                    <img :src="apontamento.miniatura" class="apontamento-miniatura">
-                  </router-link>
-              </div>
-              <div class="titulo-area">
-                  <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
-                    <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
-                  </router-link>
+          <ApontamentosList :FlexColumn="true" :apontamentos="apontamentos" v-slot="{apontamento}">
+            <div class="apontamento-container">
+              <div class="apontamento">
+                <div class="miniatura-area">
+                    <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
+                      <img :src="apontamento.miniatura" class="apontamento-miniatura">
+                    </router-link>
+                </div>
+                <div class="titulo-area">
+                    <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
+                      <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
+                    </router-link>
+                </div>
               </div>
             </div>
           </ApontamentosList>
@@ -58,6 +60,7 @@ export default {
       PaginaAtual: 1,
       currentPage: 1,
       ItensPorPagina: 20,
+      criacaoCrescente: false,
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -115,7 +118,7 @@ export default {
 
                 for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
                     // Procurando o index do item mais recente
-                    if (this.apontamentos[i].titulo < this.apontamentos[MaisNovoIndex].titulo) {
+                    if (this.apontamentos[i].created_at < this.apontamentos[MaisNovoIndex].created_at) {
                         MaisNovoIndex = i;
                     }
                 }
@@ -134,7 +137,7 @@ export default {
 
                 for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
                     // Procurando o index do item mais antigo
-                    if (this.apontamentos[i].titulo > this.apontamentos[MaisAntigoIndex].titulo) {
+                    if (this.apontamentos[i].created_at > this.apontamentos[MaisAntigoIndex].created_at) {
                         MaisAntigoIndex = i;
                     }
                 }
@@ -182,6 +185,14 @@ export default {
 </script>
 
 <style scoped>
+#PesquisaView {
+  padding-bottom: 30px;
+}
+
+.apontamentos {
+  flex-wrap: nowrap;
+}
+
 .pesquisa-area {
   display: flex;
   flex-direction: column;
@@ -193,16 +204,26 @@ export default {
   border-bottom: 1px solid black;
 }
 
+.apontamento-container {
+    width: 100%;
+    height: 100vh;
+    max-height: 200px;
+    margin-bottom: 20px;
+    /* height: 100vh; */
+    /* aspect-ratio: 16/9; */
+}
 .apontamento {
   width: 100%;
+  height: 100%;
   display: flex;
-  min-width: 320px;
-  margin-bottom: 10px;
+  /* max-height: 200px; */
+  /* margin-bottom: 10px; */
 }
 
 .miniatura-area {
-  min-width: 320px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
+  max-width: 360px;
 }
 
 .apontamento-miniatura {
@@ -227,8 +248,8 @@ export default {
 
 .apontamento-titulo {
   color: black;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 .sem-apontamentos {
@@ -277,8 +298,45 @@ export default {
 ::v-deep .active-page:hover {
     background-color: var(--verde-escuro);
 }
+@media (max-width: 700px) {
+.apontamento-container {
+  height: unset;
+  max-height: unset;
+}
 
-@media (max-width: 375px) {
+.apontamento {
+    width: 100%;
+    height: unset;
+    aspect-ratio: 16/9;
+    flex-direction: column;
+    /* max-height: 100%; */
+    /* margin-bottom: 20px; */
+}
+
+.miniatura-area {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.apontamento-miniatura {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: var(--azul);
+}
+
+.titulo-area {
+  margin-top: 5px;
+  margin-left: 0px;
+}
+
+.apontamento-titulo {
+  font-size: 3.8vw;
+}
+}
+
+/* @media (max-width: 375px) {
 .apontamento {
   min-width: 270px;
   flex-direction: column;
@@ -288,5 +346,5 @@ export default {
   min-width: 0px;
   height: 170px;
 }
-}
+} */
 </style>

@@ -1,6 +1,7 @@
 <template>
     <slot>
-        <div class="apontamento">
+        <div class="apontamento-container">
+            <div class="apontamento">
                 <div class="miniatura-area">
                     <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                         <img :src="apontamento.miniatura" class="apontamento-miniatura">
@@ -11,6 +12,7 @@
                         <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
                     </router-link>
                 </div>
+            </div>
         </div>
     </slot>
 </template>
@@ -27,13 +29,19 @@ export default {
 </script>
 
 <style scoped>
-.apontamento {
-    display: flex;
+.apontamento-container {
     width: 24%;
-	max-width: 360px;
+    height: 100%;
+    max-width: 360px;
     max-height: 280px;
     margin: 0px 6.5px 30px;
+}
+
+.apontamento {
+    width: 100%;
+    display: flex;
     flex-direction: column;
+    aspect-ratio: 16/11.455;
 }
 
 .miniatura-area {
@@ -69,37 +77,65 @@ export default {
 }
 
 @media (max-width: 1392px) {
-.apontamento {
+.apontamento-container {
     width: 32%;
-    max-width: 374px;
+    height: 100%;
+    max-width: unset;
     max-height: 300px;
 }
-}
 
-@media (max-width: 1025px) {
-.apontamento {
-    width: 48%;
-    max-width: 460px;
-    max-height: 360px;
-}
-}
-
-@media (max-width: 1025px) {
-.apontamento {
-    width: 48%;
-    max-width: none;
-}
-}
-
-@media (max-width: 700px) {
 .apontamento {
     width: 100%;
-    max-width: 635px;
-    max-height: 390px;
+    display: flex;
+    aspect-ratio: 16/11.848;
+    flex-direction: column;
 }
 
 .apontamento-titulo {
-    font-size: 2.5rem;
+    font-size: 1.5vw;
+}
+}
+
+@media (max-width: 1025px) {
+.apontamento-container {
+    width: 48%;
+    height: 100%;
+    max-width: 460px;
+    max-height: 360px;
+}
+
+.apontamento {
+    width: 100%;
+    display: flex;
+    aspect-ratio: 16/11.848;
+    flex-direction: column;
+}
+
+.apontamento-titulo {
+    font-size: 2vw;
+}
+
+}
+
+@media (max-width: 700px) {
+
+.apontamento-container {
+    width: 100%;
+    height: unset;
+    max-width: unset;
+    max-height: 390px;
+    margin: 0px 0px 30px 0px;
+}
+
+.apontamento {
+    width: 100%;
+    height: unset;
+    aspect-ratio: 16/10;
+    flex-direction: column;
+}
+
+.apontamento-titulo {
+    font-size: 4vw;
 }
 }
 </style>

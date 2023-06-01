@@ -37,7 +37,7 @@
         <span>Nenhum apontamento encontrado</span>
       </div>
       <ApontamentosListSkeleton v-if="apontamentosSkeleton"/>
-      <ApontamentosList :apontamentos="ApontamentosMostrar"/>
+      <ApontamentosList v-if="!apontamentosSkeleton && apontamentosTotal > 0" :apontamentos="ApontamentosMostrar"/>
       <div class="paginas-area" v-if="apontamentosTotal > 0">
         <vue-awesome-paginate
         :total-items="apontamentosTotal"
@@ -321,8 +321,7 @@ export default {
 }
 </script>
 <style scoped>
-#HomeView .contaner-box {
-  padding-top: 50px;
+#HomeView {
   padding-bottom: 30px;
 }
 

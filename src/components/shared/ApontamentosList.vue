@@ -1,5 +1,5 @@
 <template>
-<div class="apontamentos" :style="{'flex-direction': Column}">
+<div class="apontamentos" :style="{'flex-direction': column}">
     <AppApontamento v-for="apontamento in apontamentos" :key="apontamento.id" :apontamento="apontamento">
         <slot :apontamento="apontamento"></slot>
     </AppApontamento>
