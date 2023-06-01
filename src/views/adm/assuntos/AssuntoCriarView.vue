@@ -43,8 +43,8 @@ export default {
     },
     data() {
         return {
-            erro: undefined,
-            nome: undefined,
+            erro: "",
+            nome: "",
             icone: undefined,
             iconeUrl: undefined,
             loading: false,
@@ -77,11 +77,11 @@ export default {
                 this.$router.push({name: "PainelAssuntos"})
             } catch (erro) {
                 console.log(erro);
-                this.erro = erro.response.data.erro
-                document.getElementById("erro").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erro = erro.response.data.erro
+                document.getElementById("erro").style.display = "flex"
             }
         },
         cancelar() {

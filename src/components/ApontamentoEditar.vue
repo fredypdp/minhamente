@@ -78,10 +78,10 @@ export default {
     data(){
         return {
             loading: false,
-            erro: undefined,
+            erro: "",
             botaoDesativado: false,
-            titulo: undefined,
-            conteudo: undefined,
+            titulo: "",
+            conteudo: "",
             miniatura: undefined,
             visibilidade: Boolean,
             TemasSelecionados: [],
@@ -160,23 +160,23 @@ export default {
             
             formData.append('id', this.$route.params.id);
 
-            if(titulo != undefined) {
+            if(titulo != undefined && titulo.trim().length > 0) {
                 formData.append('titulo', titulo);
             }
 
-            if(conteudo != undefined) {
+            if(conteudo != undefined && conteudo.trim().length > 0) {
                 formData.append('conteudo', conteudo);
             }
             
-            if(assuntos != undefined && assuntos.length != 0) {
+            if(assuntos != undefined && assuntos.trim().length > 0 && assuntos.length != 0) {
                 formData.append("assuntos", JSON.stringify(assuntos))
             }
 
-            if(temas != undefined && temas.length != 0) {
+            if(temas != undefined && temas.trim().length > 0 && temas.length != 0) {
                 formData.append("temas", JSON.stringify(temas));
             }
 
-            if(visibilidade != undefined) {
+            if(visibilidade != undefined && visibilidade.trim().length > 0) {
                 formData.append('visibilidade', visibilidade);
             }
             
@@ -192,12 +192,11 @@ export default {
                 this.$router.push({name: "home"})
             } catch (erro) {
                 console.log(erro);
+                this.loading = false
+                this.botaoDesativado = false
                 
                 this.erro = erro.response.data.erro
                 document.getElementById("erro").style.display = "flex"
-                
-                this.loading = false
-                this.botaoDesativado = false
             }
         },
         async pegarAssuntos() {

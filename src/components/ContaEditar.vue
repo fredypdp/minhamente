@@ -48,15 +48,15 @@ export default {
     },
     data(){
         return {
-            sucessoEsqueciSenha: undefined,
-            erroEsqueciSenha: undefined,
-            erroEditar: undefined,
-            avatarUrl: undefined,
-            nome: undefined,
-            sobrenome: undefined,
+            sucessoEsqueciSenha: "",
+            erroEsqueciSenha: "",
+            erroEditar: "",
+            avatarUrl: "",
+            nome: "",
+            sobrenome: "",
             avatar: undefined,
-            email: undefined,
-            senha: undefined,
+            email: "",
+            senha: "",
             loading: false,
             botaoDesativado: false,
         }
@@ -89,19 +89,19 @@ export default {
                 formData.append('avatar', avatar);
             }
             
-            if (nome != undefined) {
+            if (nome != undefined && nome.trim().length > 0) {
                 formData.append('nome', nome);
             }
             
-            if (sobrenome != undefined) {
+            if (sobrenome != undefined && sobrenome.trim().length > 0) {
                 formData.append('sobrenome', sobrenome);
             }
             
-            if (email != undefined) {
+            if (email != undefined && email.trim().length > 0) {
                 formData.append('email', email);
             }
             
-            if (senha != undefined) {
+            if (senha != undefined && senha.trim().length > 0) {
                 formData.append('senha', senha);
             }
             
@@ -126,11 +126,11 @@ export default {
                 this.$router.go(0)
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
         async login(email, senha) {
@@ -142,11 +142,11 @@ export default {
                 localStorage.setItem("_links", JSON.stringify(data._links))
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
         async logout() {
@@ -164,11 +164,11 @@ export default {
                 localStorage.removeItem("_links")
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
         async esqueciSenha() {

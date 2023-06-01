@@ -46,11 +46,11 @@ export default {
     },
     data(){
         return {
-            erro: undefined,
+            erro: "",
             loading: false,
             botaoDesativado: false,
-            titulo: undefined,
-            AssuntoSelecionado: undefined,
+            titulo: "",
+            AssuntoSelecionado: "",
             assuntosLista: [],
         }
     },
@@ -83,11 +83,11 @@ export default {
                 this.$router.push({name: "PainelTemas"})
             } catch (erro) {
                 console.log(erro);
-                this.erro = erro.response.data.erro
-                document.getElementById("erro").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erro = erro.response.data.erro
+                document.getElementById("erro").style.display = "flex"
             }
         },
         async pegarAssuntos() {

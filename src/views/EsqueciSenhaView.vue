@@ -34,10 +34,10 @@ export default {
     data(){
         return {
             loading: false,
-            email: undefined,
+            email: "",
             botaoDesativado: false,
-            erroEsqueciSenha: undefined,
-            sucessoEsqueciSenha: undefined,
+            erroEsqueciSenha: "",
+            sucessoEsqueciSenha: "",
         }
     },
     methods: {
@@ -59,11 +59,11 @@ export default {
                this.botaoDesativado = false
             } catch (erro) {
                 console.log(erro);
-                this.erroEsqueciSenha = erro.response.data.erro
-                document.getElementById("erroEsqueciSenha").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEsqueciSenha = erro.response.data.erro
+                document.getElementById("erroEsqueciSenha").style.display = "flex"
             }
         }
     }

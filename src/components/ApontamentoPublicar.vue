@@ -78,13 +78,13 @@ export default {
     },
     data(){
         return {
-            erro: undefined,
+            erro: "",
             loading: false,
             botaoDesativado: false,
-            titulo: undefined,
-            conteudo: undefined,
+            titulo: "",
+            conteudo: "",
             miniatura: undefined,
-            visibilidade: undefined,
+            visibilidade: "",
             TemasSelecionados: [],
             AssuntosSelecionados: [],
             temasLista: [],
@@ -157,12 +157,11 @@ export default {
                 this.$router.push({name: "home"})
             } catch (erro) {
                 console.log(erro);
+                this.loading = false
+                this.botaoDesativado = false
                 
                 this.erro = erro.response.data.erro
                 document.getElementById("erro").style.display = "flex"
-                
-                this.loading = false
-                this.botaoDesativado = false
             }
         },
         async pegarAssuntos() {

@@ -45,13 +45,13 @@ export default {
     },
     data(){
         return {
-            erro: undefined,
-            avatarUrl: undefined,
-            nome: undefined,
-            sobrenome: undefined,
+            erro: "",
+            avatarUrl: "",
+            nome: "",
+            sobrenome: "",
             avatar: undefined,
-            email: undefined,
-            senha: undefined,
+            email: "",
+            senha: "",
             loading: false,
             botaoDesativado: false,
         }
@@ -94,11 +94,11 @@ export default {
                 this.$router.go(0)
             } catch (erro) {
                 console.log(erro);
-                this.erro = erro.response.data.erro
-                document.getElementById("erro").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erro = erro.response.data.erro
+                document.getElementById("erro").style.display = "flex"
             }
         },
         async login(email, senha) {
@@ -110,11 +110,11 @@ export default {
                 localStorage.setItem("_links", JSON.stringify(data._links))
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
     }

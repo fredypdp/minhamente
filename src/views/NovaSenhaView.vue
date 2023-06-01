@@ -74,12 +74,11 @@ export default {
                 this.$router.push({name: "home"})
             } catch (erro) {
                 console.log(erro);
+                this.loading = false
+                this.botaoDesativado = false
                 
                 this.responseErro = erro.response.data.erro
                 document.getElementById("response-erro").style.display = "flex"
-                
-                this.loading = false
-                this.botaoDesativado = false
             }
         },
         async login(email, senha) {
@@ -91,11 +90,11 @@ export default {
                 localStorage.setItem("_links", JSON.stringify(data._links))
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
         async logout() {
@@ -113,11 +112,11 @@ export default {
                 localStorage.removeItem("_links")
             } catch (erro) {
                 console.log(erro);
-                this.erroEditar = erro.response.data.erro
-                document.getElementById("erroEditar").style.display = "flex"
-                
                 this.loading = false
                 this.botaoDesativado = false
+
+                this.erroEditar = erro.response.data.erro
+                document.getElementById("erroEditar").style.display = "flex"
             }
         },
     }
