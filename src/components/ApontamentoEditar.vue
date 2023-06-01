@@ -176,7 +176,7 @@ export default {
                 formData.append("temas", JSON.stringify(temas));
             }
 
-            if(visibilidade != undefined && visibilidade.trim().length > 0) {
+            if(visibilidade != undefined) {
                 formData.append('visibilidade', visibilidade);
             }
             
