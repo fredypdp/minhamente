@@ -335,16 +335,4 @@ export default {
   font-size: 3.8vw;
 }
 }
-
-/* @media (max-width: 375px) {
-.apontamento {
-  min-width: 270px;
-  flex-direction: column;
-}
-
-.miniatura-area {
-  min-width: 0px;
-  height: 170px;
-}
-} */
 </style>
