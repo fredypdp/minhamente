@@ -34,10 +34,10 @@ export default {
     data(){
         return {
             loading: false,
-            email: undefined,
+            email: "",
             botaoDesativado: false,
-            erroEsqueciSenha: undefined,
-            sucessoEsqueciSenha: undefined,
+            erroEsqueciSenha: "",
+            sucessoEsqueciSenha: "",
         }
     },
     methods: {

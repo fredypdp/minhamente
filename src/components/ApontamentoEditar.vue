@@ -78,11 +78,11 @@ export default {
     data(){
         return {
             loading: false,
-            erro: undefined,
+            erro: "",
             botaoDesativado: false,
-            titulo: undefined,
-            conteudo: undefined,
-            miniatura: undefined,
+            titulo: "",
+            conteudo: "",
+            miniatura: "",
             visibilidade: Boolean,
             TemasSelecionados: [],
             AssuntosSelecionados: [],

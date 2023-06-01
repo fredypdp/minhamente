@@ -46,9 +46,9 @@ export default {
             erro: "",
             loading: false,
             botaoDesativado: false,
-            nome: undefined,
-            icone: undefined,
-            iconeUrl: undefined,
+            nome: "",
+            icone: "",
+            iconeUrl: "",
         }
     },
     beforeRouteEnter(to, from, next) {
