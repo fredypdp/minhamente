@@ -168,11 +168,11 @@ export default {
                 formData.append('conteudo', conteudo);
             }
             
-            if(assuntos != undefined && assuntos.trim().length > 0 && assuntos.length != 0) {
+            if(assuntos != undefined && assuntos.length != 0) {
                 formData.append("assuntos", JSON.stringify(assuntos))
             }
 
-            if(temas != undefined && temas.trim().length > 0 && temas.length != 0) {
+            if(temas != undefined && temas.length != 0) {
                 formData.append("temas", JSON.stringify(temas));
             }
 
