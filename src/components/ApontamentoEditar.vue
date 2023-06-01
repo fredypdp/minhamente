@@ -83,7 +83,7 @@ export default {
             titulo: "",
             conteudo: "",
             miniatura: undefined,
-            visibilidade: Boolean,
+            visibilidade: undefined,
             TemasSelecionados: [],
             AssuntosSelecionados: [],
             temasLista: [],
