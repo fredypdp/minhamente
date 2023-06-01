@@ -273,7 +273,7 @@ export default {
             this.$refs.nome.value = ""
             this.$refs.sobrenome.value = ""
             this.$refs.email.value = ""
-            this.funcao = ""
+            // this.funcao = ""
 
             let config = {
                 method: 'get',
