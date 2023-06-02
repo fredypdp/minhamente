@@ -269,7 +269,7 @@ export default {
     background-color: rgb(185, 0, 0);
 }
 
-@media (max-width: 390px) {
+@media (max-width: 1024px) {
     .perfil-container {
         display: flex;
         flex-direction: column;
