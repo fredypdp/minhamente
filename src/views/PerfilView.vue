@@ -272,7 +272,7 @@ export default {
 @media (max-width: 1024px) {
     .perfil-container {
         display: flex;
-		align-items: center; 
+		align-items: center;
         flex-direction: column;
     }
 
