@@ -76,10 +76,11 @@ export default {
         },
         async deletar(apontamento) {
             let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
-            this.loadingApagar = true
-            this.botaoDesativado = true
-
+            
             if(deletar) {
+                this.loadingApagar = true
+                this.botaoDesativado = true
+                
                 let config = {
                     method: 'delete',
                     url: 'https://apiminhamente.onrender.com/apontamento/'+apontamento.id,
