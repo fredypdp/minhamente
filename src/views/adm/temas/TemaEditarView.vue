@@ -5,16 +5,6 @@
         <form class="editar-tema-form" @submit.prevent="editar">
             <label for="titulo" class="titulo-label">Editar título do tema:</label>
             <input type="text" name="titulo" class="titulo-input" id="titulo" placeholder="Título do tema" autocomplete="off" v-model.trim.lazy="titulo">
-            <span class="assuntos-label">Assuntos:</span>
-            <Multiselect
-                v-model="AssuntoSelecionado"
-                :close-on-select="true"
-                :searchable="true"
-                :options="assuntosLista"
-                placeholder="Selecionar assunto"
-                noOptionsText="Sem assuntos"
-                noResultsText="Sem resultados"
-            />
             <span id="erro">{{ erro }}</span>
             <button :disabled="botaoDesativado" type="submit" class="botao-editar">
                 <div role="status" v-if="loading">
@@ -50,8 +40,6 @@ export default {
             loading: false,
             botaoDesativado: false,
             titulo: "",
-            AssuntoSelecionado: "",
-            assuntosLista: [],
         }
     },
     beforeRouteEnter(to, from, next) {
@@ -77,9 +65,6 @@ export default {
             }
         })
     },
-    mounted() {
-        this.pegarAssuntos()
-    },
     methods: {
         async editar(){
             this.loading = true
@@ -87,14 +72,9 @@ export default {
 
             let id = this.$route.params.id
             let titulo
-            let AssuntoSelecionado
             
             if (this.titulo != undefined && this.titulo.trim().length > 0) {
                 titulo = this.titulo
-            }
-            
-            if (this.AssuntoSelecionado != undefined && this.AssuntoSelecionado.trim().length > 0) {
-                AssuntoSelecionado = this.AssuntoSelecionado
             }
 
             let config = {
@@ -106,7 +86,6 @@ export default {
                 data: {
                     id: id,
                     titulo: titulo,
-                    AssuntoSelecionado: AssuntoSelecionado
                 }
             };
 
@@ -124,22 +103,6 @@ export default {
 
                 this.erro = erro.response.data.erro
                 document.getElementById("erro").style.display = "flex"
-            }
-        },
-        async pegarAssuntos() {
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/assuntos'
-            };
-
-            try {
-                let { data } = await axios(config)
-                
-                data.assuntos.forEach( assunto => {
-                    this.assuntosLista.push({value: assunto._id, label: assunto.nome})
-                })
-            } catch (erro) {
-                console.log(erro);
             }
         },
         cancelar() {
