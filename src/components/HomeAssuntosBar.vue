@@ -4,7 +4,7 @@
             <slide  v-for="(assunto, index) in assuntos" :key="assunto._id">
                 <HomeTodosAssuntos v-if="index == 0"/>
                 <HomeAssunto :assunto="assunto" v-if="index > 0 && index + 1 < assuntos.length"/>
-                <HomeCriarAssunto v-if="index + 1 == assuntos.length && LoginStoreUsar.usuario != undefined && LoginStoreUsar.usuario.role == 0"/>
+                <HomeCriarAssunto v-if="index + 1 == assuntos.length && storeLogin.usuario != undefined && storeLogin.usuario.role == 0"/>
             </slide>
             <template #addons>
                 <navigation />
@@ -16,75 +16,65 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import 'vue3-carousel/dist/carousel.css'
-import { LoginStore } from "@/stores/LoginStore.js";
+import { Login } from "@/stores/Login.js";
+import { reactive } from "vue";
 import HomeAssunto from "@/components/HomeAssunto.vue";
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import HomeCriarAssunto from "@/components/HomeCriarAssunto.vue";
 import HomeTodosAssuntos from "@/components/HomeTodosAssuntos.vue";
-export default {
-    components: {
-        Slide,
-        Carousel,
-        Navigation,
-        HomeAssunto,
-        HomeCriarAssunto,
-        HomeTodosAssuntos,
-    },
-    props: {
-        assuntos: {
-            type: Array,
-        }
-    },
-    data(){
-        return {
-            LoginStoreUsar: LoginStore(),
-            settings: {
-                itemsToScroll: 3
-            },
-            breakpoints: {
-                // 1500px pra cima
-                1500: {
-                    itemsToShow: 7.5,
-                },
-                // 1235px pra cima
-                1235: {
-                    itemsToShow: 5.5,
-                },
-                // Mobile
-                // 1100px pra cima
-                1100: {
-                    itemsToShow: 6.5,
-                },
-                // 924px pra cima
-                924: {
-                    itemsToShow: 5.5,
-                },
-                // 700px pra cima
-                700: {
-                    itemsToShow: 4.5,
-                },
-                // 600px pra cima
-                600: {
-                    itemsToShow: 3.5,
-                },
-                // 480px pra cima
-                480: {
-                    itemsToShow: 3.5,
-                },
-                // 370px pra cima
-                370: {
-                    itemsToShow: 2.2,
-                },
-                // 200px pra cima
-                200: {
-                    itemsToShow: 1.5,
-                },
-            },
-        }
+
+const props = defineProps({
+    assuntos: {
+        type: Array,
     }
-}
+})
+
+const storeLogin = Login()
+const settings = reactive({
+    itemsToScroll: 3
+})
+
+const breakpoints = reactive({
+    // 1500px pra cima
+    1500: {
+        itemsToShow: 7.5,
+    },
+    // 1235px pra cima
+    1235: {
+        itemsToShow: 5.5,
+    },
+    // Mobile
+    // 1100px pra cima
+    1100: {
+        itemsToShow: 6.5,
+    },
+    // 924px pra cima
+    924: {
+        itemsToShow: 5.5,
+    },
+    // 700px pra cima
+    700: {
+        itemsToShow: 4.5,
+    },
+    // 600px pra cima
+    600: {
+        itemsToShow: 3.5,
+    },
+    // 480px pra cima
+    480: {
+        itemsToShow: 3.5,
+    },
+    // 370px pra cima
+    370: {
+        itemsToShow: 2.2,
+    },
+    // 200px pra cima
+    200: {
+        itemsToShow: 1.5,
+    },
+})
 </script>
 
 <style scoped>
@@ -103,6 +93,6 @@ export default {
 
 .sem-assuntos span {
     font-weight: 500;
-    font-size: 1.8rem;
+    font-size: 18px;
 }
 </style>

@@ -1,32 +1,25 @@
 <template>
     <div>
         <label for="miniatura" class="miniatura-label">Miniatura</label>
-        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg,image/svg+xml" @change="ShowMiniatura" ref="miniatura">
+        <input type="file" name="miniatura" class="miniatura-input" id="miniatura" accept="image/png, image/jpeg,image/svg+xml" @change="ShowMiniatura" ref="miniaturaRef">
         <img :src="miniaturaPreview" class="miniatura-preview" draggable="false" v-if="miniaturaPreview">
     </div>
 </template>
 
-<script>
-export default {
-    props: {
-        miniatura: {
-            type: String,
-        }
-    },
-    data(){
-        return {
-            miniaturaPreview: this.miniatura
-        }
-    },
-    methods: {
-        ShowMiniatura(){
-            const img = this.$refs.miniatura.files[0]
-            this.$emit("avatar", img)
-            this.miniaturaPreview = URL.createObjectURL(img);
+<script setup>
+import { ref } from 'vue';
 
-            this.$emit("miniatura", img)
-        }
-    }
+const miniaturaPreview = ref()
+const miniaturaRef = ref()
+
+const emit = defineEmits(["avatar","miniatura"])
+    
+function ShowMiniatura(){
+    const img = miniaturaRef.value.files[0]
+    emit("avatar", img)
+    miniaturaPreview.value = URL.createObjectURL(img);
+
+    emit("miniatura", img)
 }
 </script>
 
@@ -44,7 +37,6 @@ div {
     outline: none;
     color: black;
     cursor: pointer;
-    font-size: 1.5rem;
     max-height: 30px;
     font-weight: 700;
     padding: 5px 15px;

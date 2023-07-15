@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="botoes-left-bottom">
-                        <AppDropdownVisibilidade @publico="visibilidadePublico" @privado="visibilidadePrivado"/>
+                        <DropdownVisibilidade @publico="visibilidadePublico" @privado="visibilidadePrivado"/>
                         <BotaoMiniatura @miniatura="miniatura = $event"/>
                     </div>
                 </div>
@@ -57,175 +57,180 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
+import { Login } from "@/stores/Login.js";
 import TinyMCE from '@tinymce/tinymce-vue';
 import Multiselect from '@vueform/multiselect';
-import { LoginStore } from "@/stores/LoginStore.js";
+import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { ref, onMounted , onBeforeMount, watch} from "vue";
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
 import BotaoCancelar from "@/components/shared/BotaoCancelar.vue";
 import BotaoMiniatura from "@/components/shared/BotaoMiniatura.vue";
-import AppDropdownVisibilidade from "@/components/shared/AppDropdownVisibilidade.vue";
-export default {
-    components: {
-        TinyMCE,
-        Multiselect,
-        BotaoEditar,
-        BotaoCancelar,
-        BotaoMiniatura,
-        AppDropdownVisibilidade,
-    },
-    data(){
-        return {
-            loading: false,
-            erro: "",
-            botaoDesativado: false,
-            titulo: "",
-            conteudo: "",
-            miniatura: undefined,
-            visibilidade: undefined,
-            TemasSelecionados: [],
-            AssuntosSelecionados: [],
-            temasLista: [],
-            assuntosLista: [],
+import DropdownVisibilidade from "@/components/shared/DropdownVisibilidade.vue";
+
+const route = useRoute()
+const router = useRouter()
+const storeLogin = Login()
+const loading = ref(false)
+const erro = ref("")
+const botaoDesativado = ref(false)
+const titulo = ref("")
+const conteudo = ref("")
+const miniatura = ref(undefined)
+const visibilidade = ref(undefined)
+const TemasSelecionados = ref([])
+const AssuntosSelecionados = ref([])
+const temasLista = ref([])
+const assuntosLista = ref([])
+
+onBeforeRouteLeave((to, from, next) => {
+    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            next()
         }
-    },
-    async beforeMount() {
+        
+        return
+    }
+
+    next()
+})
+
+onBeforeMount(async () => {
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/apontamento/'+route.params.id
+    };
+
+    try {
+        let { data } = await axios(config)
+        
+        titulo.value = data.apontamento.titulo
+        conteudo.value = data.apontamento.conteudo
+        miniatura.value = data.apontamento.miniatura
+        visibilidade.value = data.apontamento.visibilidade
+    } catch (error) {
+        console.log(error);
+        route.go(-1)
+    }
+})
+
+onMounted(() => {
+    pegarAssuntos()
+})
+
+watch(AssuntosSelecionados, (novos, antigos) => {
+    temasLista.value = []
+    TemasSelecionados.value = []
+
+    if(novos == undefined) {
+        return
+    }
+    
+    novos.forEach( async assunto => {
 
         let config = {
             method: 'get',
-            url: 'https://apiminhamente.onrender.com/apontamento/'+this.$route.params.id
+            url: 'https://apiminhamente.onrender.com/assunto/'+assunto
         };
 
         try {
-            let apontamento = await axios(config)
-            
-            this.titulo = apontamento.data.apontamento.titulo
-            this.conteudo = apontamento.data.apontamento.conteudo
-            this.miniatura = apontamento.data.apontamento.miniatura
-            this.visibilidade = apontamento.data.apontamento.visibilidade
-        } catch (erro) {
-            console.log(erro);
-            vm.$route.go(-1)
+            let { data } = await axios(config)
+            // temasLista.value = []
+            data.assunto.temas.forEach( tema => temasLista.value.push({value: tema._id, label: tema.titulo}))
+        } catch (error) {
+            console.log(error);
         }
-    },
-    mounted() {
-        this.pegarAssuntos()
-    },
-    watch: {
-        AssuntosSelecionados(novos, antigos) {
-            this.temasLista = []
-            this.TemasSelecionados = []
+    })
+})
 
-            if(novos == undefined) {
-                return
-            }
-            
-            novos.forEach( async assunto => {
+function visibilidadePublico() {
+    visibilidade.value = true
+}
 
-                let config = {
-                    method: 'get',
-                    url: 'https://apiminhamente.onrender.com/assunto/'+assunto
-                };
+function visibilidadePrivado() {
+    visibilidade.value = false
+}
 
-                try {
-                    let { data } = await axios(config)
-                    // this.temasLista = []
-                    data.assunto.temas.forEach( tema => this.temasLista.push({value: tema._id, label: tema.titulo}))
-                } catch (erro) {
-                    console.log(erro);
-                }
-            })
-        }
-    },
-    methods: {
-        visibilidadePublico() {
-            this.visibilidade = true
-        },
-        visibilidadePrivado() {
-            this.visibilidade = false
-        },
-        async editar() {
-            this.loading = true
-            this.botaoDesativado = true
-            document.getElementById("erro").style.display = "none"
+async function editar() {
+    loading.value = true
+    botaoDesativado.value = true
+    document.getElementById("erro").style.display = "none"
 
-            const formData = new FormData();
-            let titulo = this.titulo
-            let conteudo = this.conteudo
-            let assuntos = this.AssuntosSelecionados
-            let temas = this.TemasSelecionados
-            let visibilidade = this.visibilidade
-            let miniatura = this.miniatura
-            
-            formData.append('id', this.$route.params.id);
+    const formData = new FormData();
+    let tituloValue = titulo.value
+    let conteudoValue = conteudo.value
+    let assuntos = AssuntosSelecionados.value
+    let temas = TemasSelecionados.value
+    let visibilidadeValue = visibilidade.value
+    let miniaturaValue = miniatura.value
+    
+    formData.append('id', route.params.id);
 
-            if(titulo != undefined && titulo.trim().length > 0) {
-                formData.append('titulo', titulo);
-            }
+    if(tituloValue != undefined && tituloValue.trim().length > 0) {
+        formData.append('titulo', tituloValue);
+    }
 
-            if(conteudo != undefined && conteudo.trim().length > 0) {
-                formData.append('conteudo', conteudo);
-            }
-            
-            if(assuntos != undefined && assuntos.length != 0) {
-                formData.append("assuntos", JSON.stringify(assuntos))
-            }
+    if(conteudoValue != undefined && conteudoValue.trim().length > 0) {
+        formData.append('conteudo', conteudoValue);
+    }
+    
+    if(assuntos != undefined && assuntos.length != 0) {
+        formData.append("assuntos", JSON.stringify(assuntos))
+    }
 
-            if(temas != undefined && temas.length != 0) {
-                formData.append("temas", JSON.stringify(temas));
-            }
+    if(temas != undefined && temas.length != 0) {
+        formData.append("temas", JSON.stringify(temas));
+    }
 
-            if(visibilidade != undefined) {
-                formData.append('visibilidade', visibilidade);
-            }
-            
-            if(miniatura != undefined) {
-                formData.append('miniatura', miniatura);
-            }
-            
-            try {
-                let apontamento = await axios.put("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${LoginStore().token}`}})
-                
-                this.loading = false
-                this.botaoDesativado = false
-                this.$router.push({name: "home"})
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-                this.botaoDesativado = false
-                
-                this.erro = erro.response.data.erro
-                document.getElementById("erro").style.display = "flex"
-            }
-        },
-        async pegarAssuntos() {
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/assuntos'
-            };
-
-            try {
-                let { data } = await axios(config)
-
-                data.assuntos.forEach( assunto => {
-                    this.assuntosLista.push({value: assunto._id, label: assunto.nome})
-                })
-            } catch (erro) {
-                console.log(erro);
-            }
-        },
-        cancelar() {
-            let confirmar = confirm("Deseja realmente saír?")
-
-            if(confirmar) {
-                this.$router.push({name: "PainelApontamentos"})
-            }
-        }
+    if(visibilidadeValue != undefined) {
+        formData.append('visibilidade', visibilidadeValue);
+    }
+    
+    if(miniaturaValue != undefined) {
+        formData.append('miniatura', miniaturaValue);
+    }
+    
+    try {
+        let apontamento = await axios.put("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${storeLogin.token}`}})
+        
+        loading.value = false
+        botaoDesativado.value = false
+        router.push({name: "home"})
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+        botaoDesativado.value = false
+        
+        erro.value = error.response.data.erro
+        document.getElementById("erro").style.display = "flex"
     }
 }
+
+async function pegarAssuntos() {
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/assuntos'
+    };
+
+    try {
+        let { data } = await axios(config)
+
+        data.assuntos.forEach( assunto => {
+            assuntosLista.value.push({value: assunto._id, label: assunto.nome})
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function cancelar() {
+    router.push({name: "home"})
+}
 </script>
-<style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped>
 #erro {
     display: none;
@@ -248,7 +253,7 @@ section {
 
 .editar-area label[for="titulo"], .editar-area label[for="miniatura"], .editar-area label[for="apontamento-conteudo"] {
     color: black;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 15px;
 }
@@ -257,7 +262,7 @@ section {
     width: 100%;
     height: 40px;
     color: black;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 500;
     padding: 15px 15px;
     border-radius: 5px;

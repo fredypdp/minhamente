@@ -1,33 +1,27 @@
 <template>
 <div class="apontamentos" :style="{'flex-direction': Column}">
-    <AppApontamentoSkeleton v-for="(numero, index) in numeros" :key="index">
-        <AppApontamentoSkeleton/>
-    </AppApontamentoSkeleton>
+    <ApontamentoSkeleton v-for="(numero, index) in numeros" :key="index"/>
 </div>
 </template>
 
-<script>
-import AppApontamentoSkeleton from "@/components/AppApontamentoSkeleton.vue";
-export default {
-    props: {
-        FlexColumn: Boolean,
-    },
-    components: {
-        AppApontamentoSkeleton,
-    },
-    computed: {
-        numeros() {
-            const numerosArray = [];
-            for (let i = 0; i < 8; i++) {
-                numerosArray.push(i);
-            }
-            return numerosArray;
-        },
-        column(){
-            return this.FlexColumn ? "column" : "row"
-        }
+<script setup>
+import { computed } from "vue";
+import ApontamentoSkeleton from "@/components/ApontamentoSkeleton.vue";
+const props = defineProps({
+    FlexColumn: Boolean,
+})
+
+const numeros = computed(() => {
+    const numerosArray = [];
+    for (let i = 0; i < 8; i++) {
+        numerosArray.push(i);
     }
-}
+    return numerosArray;
+})
+
+const column = computed(() => {
+    return props.FlexColumn ? "column" : "row"
+})
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style> // Estilo do multiselect
 <style scoped>

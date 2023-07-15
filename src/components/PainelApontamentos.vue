@@ -1,21 +1,21 @@
 <template>
     <div id="PainelApontamentos">
-        <div class="table w-full p-5">
+        <div class="table w-full p-2">
             <table class="w-full border">
                 <thead>
                     <tr class="bg-gray-50 border-b">
-                        <th class="w-96 p-5 text-2xl font-bold text-gray-500">Apontamento</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Visibilidade</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Assunto</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de criação</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de Edição</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Ações</th>
+                        <th class="w-96 p-2 text-lg font-bold text-gray-500">Apontamento</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Visibilidade</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Assunto</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Data de criação</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Data de Edição</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="bg-gray-50 text-center">
                         <td class="p-2">
-                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do apontamento" autocomplete="off" @keyup.enter="pesquisarApontamento" ref="pesquisarApontamento">
+                            <input type="search" name="titulo" class="input-pesquisar" placeholder="Título do apontamento" autocomplete="off" @keyup.enter="pesquisarApontamento" ref="titulo">
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
@@ -45,18 +45,18 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDataCriacao @ordenar="ordenar"/>
+                                <DataCriacao @ordenar="ordenar"/>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDropdownEdit @maisRecente="EditMaisRecente" @maisAntigo="EditMaisAntiga"/>
+                                <DropdownEdit @maisRecente="EditMaisRecente" @maisAntigo="EditMaisAntiga"/>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
                                 <router-link :to="{name: 'ApontamentoPublicar'}">
-                                    <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-2xl px-5 py-3 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Novo apontamento</button>
+                                    <button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-2 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Novo apontamento</button>
                                 </router-link>
                             </div>
                         </td>
@@ -72,7 +72,7 @@
                         <td colspan="6">
                             <div class="spin-area">
                                 <div role="status">
-                                    <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
                                     </svg>
@@ -108,9 +108,9 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <button type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-5 py-5 mr-2 mb-2 dark:focus:ring-yellow-900" @click="editar(apontamento)">Editar</button>
+                                <button type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-2 py-2 mr-2 mb-2 dark:focus:ring-yellow-900" @click="editar(apontamento)">Editar</button>
     
-                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xl px-5 py-5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="deletar(apontamento)">Deletar</button>
+                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xl px-2 py-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="deletar(apontamento)">Deletar</button>
                             </div>
                         </td>
                     </tr>
@@ -130,288 +130,290 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
-import { LoginStore } from "@/stores/LoginStore.js";
+import { ref, watch, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { Login } from "@/stores/Login.js";
 import PainelApontamento from "@/components/PainelApontamento.vue";
-import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
-import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
-export default {
-    components: {
-        Multiselect,
-        AppDataCriacao,
-        AppDropdownEdit,
-        PainelApontamento,
-    },
-    data() {
-        return {
-            apontamentos: [],
-            loading: false,
-            currentPage: 1,
-            PaginaAtual: 1,
-            ItensPorPagina: 20,
-            visibilidade: Boolean,
-            assuntosLista: [],
-            AssuntoSelecionado: "",
-            criacaoCrescente: false,
+import DataCriacao from "@/components/shared/DataCriacao.vue";
+import DropdownEdit from "@/components/shared/DataEdicao.vue";
+
+const storeLogin = Login()
+const router = useRouter()
+const apontamentos = ref([])
+const loading = ref(false)
+const currentPage = ref(1)
+const PaginaAtual = ref(1)
+const ItensPorPagina = ref(20)
+const visibilidade = ref(Boolean)
+const assuntosLista = ref([])
+const AssuntoSelecionado = ref("")
+const criacaoCrescente = ref(false)
+const titulo = ref()
+const apontamentosTotal = computed(() => {
+    return apontamentos.value.length
+})
+const apontamentosMostrar = computed(() => {
+    let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
+    let fim = inicio + ItensPorPagina.value
+    return apontamentos.value.slice(inicio, fim)
+})
+
+onMounted(() => {
+    pegarApontamentos()
+    pegarAssuntos()
+})
+
+watch(visibilidade, (novo, antigo) => {
+    if(novo == undefined) {
+        pegarApontamentos()
+    }
+
+    loading.value = true
+    titulo.value.value = ""
+    
+    apontamentos.value = apontamentos.value.filter( apontamento => apontamento.visibilidade == novo)
+    loading.value = false
+})
+
+watch(AssuntoSelecionado, async (novo, antigo) => {
+    if(novo == undefined) {
+        pegarApontamentos()
+        return
+    }
+    
+    if(novo == 0) {
+        pegarApontamentosSemAssunto()
+        return
+    }
+
+    loading.value = true
+    titulo.value.value = ""
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/assunto/'+novo
+    };
+
+    try {
+        let { data } = await axios(config)
+        apontamentos.value = data.assunto.apontamentos
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+})
+    
+function paginar(pagina) {
+    paginaAtual.value = pagina
+}
+
+function formatarData(data) {
+    let opcoes = { month: 'long' };
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+    let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
+    
+    return dataFormatada
+}
+
+async function ordenar() {
+    if(!criacaoCrescente.value) {
+        const arrayOrdenado = [];
+
+        while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
+            let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+            for (let i = 1; i < apontamentos.value.length; i++) { // Verificar cada item do array
+                // Procurando o index do item mais recente
+                if (apontamentos.value[i].created_at < apontamentos.value[MaisNovoIndex].created_at) {
+                    MaisNovoIndex = i;
+                }
+            }
+
+            arrayOrdenado.push(apontamentos.value[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+            apontamentos.value.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
         }
-    },
-    mounted(){
-        this.pegarApontamentos()
-        this.pegarAssuntos()
-    },
-    computed: {
-        apontamentosTotal() {
-            return this.apontamentos.length
-        },
-        apontamentosMostrar() {
-            let inicio = (this.PaginaAtual - 1) * this.ItensPorPagina
-            let fim = inicio + this.ItensPorPagina
-            return this.apontamentos.slice(inicio, fim)
-        },
-    },
-    watch: {
-        visibilidade(novo, antigo){
-            if(novo == undefined) {
-                this.pegarApontamentos()
-            }
 
-            this.loading = true
-            this.$refs.pesquisarApontamento.value = ""
-            
-            this.apontamentos = this.apontamentos.filter( apontamento => apontamento.visibilidade == novo)
-            this.loading = false
-        },
-        async AssuntoSelecionado(novo, antigo) {
-            if(novo == undefined) {
-                this.pegarApontamentos()
-                return
-            }
-            
-            if(novo == 0) {
-                this.pegarApontamentosSemAssunto()
-                return
-            }
+        apontamentos.value = arrayOrdenado;
+        criacaoCrescente.value = true // definindo que tá em ordem crescente
+    } else {
+        const arrayOrdenado = [];
 
-            this.loading = true
-            this.$refs.pesquisarApontamento.value = ""
+        while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
+            let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
 
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/assunto/'+novo
-            };
-
-            try {
-                let assunto = await axios(config)
-                this.apontamentos = assunto.data.assunto.apontamentos
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-    },
-    methods: {
-        paginar(pagina) {
-            this.paginaAtual = pagina
-        },
-        formatarData(data) {
-            let opcoes = { month: 'long' };
-            let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
-            let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
-            
-            return dataFormatada
-        },
-        async ordenar() {
-            if(!this.criacaoCrescente) {
-                const arrayOrdenado = [];
-
-                while (this.apontamentos.length > 0) { // Enquanto o array ter pelo menos um item
-                    let MaisNovoIndex = 0; // Index do item mais recente encontrado
-
-                    for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
-                        // Procurando o index do item mais recente
-                        if (this.apontamentos[i].created_at < this.apontamentos[MaisNovoIndex].created_at) {
-                            MaisNovoIndex = i;
-                        }
-                    }
-
-                    arrayOrdenado.push(this.apontamentos[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
-                    this.apontamentos.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
+            for (let i = 1; i < apontamentos.value.length; i++) { // Verificar cada item do array
+                // Procurando o index do item mais antigo
+                if (apontamentos.value[i].created_at > apontamentos.value[MaisAntigoIndex].created_at) {
+                    MaisAntigoIndex = i;
                 }
+            }
+
+            arrayOrdenado.push(apontamentos.value[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+            apontamentos.value.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
+        }
+
+        apontamentos.value = arrayOrdenado;
+        criacaoCrescente.value = false // definindo que tá em ordem decrescente
+    }
+}
+
+async function EditMaisRecente(){
+    const arrayOrdenado = [];
+
+    while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
+        let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+        for (let i = 1; i < apontamentos.value.length; i++) { // Verificar cada item do array
+            // Procurando o index do item mais recente
+            if (apontamentos.value[i].edited_at > apontamentos.value[MaisNovoIndex].edited_at) {
+                MaisNovoIndex = i;
+            }
+        }
+        
+        arrayOrdenado.push(apontamentos.value[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+        apontamentos.value.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
+    }
+
+    apontamentos.value = arrayOrdenado;
+}
+
+async function EditMaisAntiga(){
+    const arrayOrdenado = [];
+
+    while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
+        let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+
+        for (let i = 1; i < apontamentos.value.length; i++) {
+            // Procurando o index do item mais antigo
+            if (apontamentos.value[i].edited_at < apontamentos.value[MaisAntigoIndex].edited_at) {
+                MaisAntigoIndex = i;
+            }
+        }
+
+        arrayOrdenado.push(apontamentos.value[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+        apontamentos.value.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
+    }
+
+    apontamentos.value = arrayOrdenado;
+}
+
+async function pegarApontamentos() {
+    loading.value = true
+    titulo.value.value = ""
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/apontamentos'
+    };
+
+    try {
+        let { data } = await axios(config)
+        apontamentos.value = data.apontamentos
+        loading.value = false
+    } catch (error) {
+        loading.value = false
+        console.log(error);
+    }
+}
+
+async function pegarApontamentosSemAssunto() {
+    loading.value = true
+    titulo.value.value = ""
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/apontamentos'
+    };
+
+    try {
+        let { data } = await axios(config)
+        apontamentos.value = data.apontamentos.filter(apontamento => apontamento.assuntos.length == 0)
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
+
+async function pesquisarApontamento(event){
+    loading.value = true
     
-                this.apontamentos = arrayOrdenado;
-                this.criacaoCrescente = true // definindo que tá em ordem crescente
-            } else {
-                const arrayOrdenado = [];
+    if (titulo.value.value.trim().length == 0 || titulo.value.value == undefined) {
+        loading.value = false
+        pegarApontamentos()
+        return
+    }
 
-                while (this.apontamentos.length > 0) { // Enquanto o array ter pelo menos um item
-                    let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/results',
+        params: {
+            pesquisa: titulo.value.value
+        }
+    };
 
-                    for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
-                        // Procurando o index do item mais antigo
-                        if (this.apontamentos[i].created_at > this.apontamentos[MaisAntigoIndex].created_at) {
-                            MaisAntigoIndex = i;
-                        }
-                    }
+    try {
+        let { data } = await axios(config)
+        
+        if(data.apontamentos == undefined) {
+            apontamentos.value = []
+            loading.value = false
+            return
+        }
+        
+        apontamentos.value = []
+        apontamentos.value = data.apontamentos
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
 
-                    arrayOrdenado.push(this.apontamentos[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
-                    this.apontamentos.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
-                }
-    
-                this.apontamentos = arrayOrdenado;
-                this.criacaoCrescente = false // definindo que tá em ordem decrescente
+async function pegarAssuntos() {
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/assuntos'
+    };
+
+    try {
+        let { data } = await axios(config)
+        
+        assuntosLista.value.push({value: 0, label: "Sem assunto"})
+        data.assuntos.forEach( assunto => {
+            assuntosLista.value.push({value: assunto._id, label: assunto.nome})
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function editar(apontamento) {
+    router.push({name: "ApontamentoEditar", params: {id: apontamento.id}})
+}
+
+async function deletar(apontamento) {
+    let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
+
+    if(deletar) {
+        let config = {
+            method: 'delete',
+            url: 'https://apiminhamente.onrender.com/apontamento/'+apontamento.id,
+            headers: {
+                'authorization': `Bearer ${storeLogin.token}`
             }
-        },
-        async EditMaisRecente(){
-            const arrayOrdenado = [];
+        };
 
-            while (this.apontamentos.length > 0) { // Enquanto o array ter pelo menos um item
-                let MaisNovoIndex = 0; // Index do item mais recente encontrado
-
-                for (let i = 1; i < this.apontamentos.length; i++) { // Verificar cada item do array
-                    // Procurando o index do item mais recente
-                    if (this.apontamentos[i].edited_at > this.apontamentos[MaisNovoIndex].edited_at) {
-                        MaisNovoIndex = i;
-                    }
-                }
-                
-                arrayOrdenado.push(this.apontamentos[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
-                this.apontamentos.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
-            }
-
-            this.apontamentos = arrayOrdenado;
-        },
-        async EditMaisAntiga(){
-            const arrayOrdenado = [];
-
-            while (this.apontamentos.length > 0) { // Enquanto o array ter pelo menos um item
-                let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
-
-                for (let i = 1; i < this.apontamentos.length; i++) {
-                    // Procurando o index do item mais antigo
-                    if (this.apontamentos[i].edited_at < this.apontamentos[MaisAntigoIndex].edited_at) {
-                        MaisAntigoIndex = i;
-                    }
-                }
-
-                arrayOrdenado.push(this.apontamentos[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
-                this.apontamentos.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
-            }
-
-            this.apontamentos = arrayOrdenado;
-        },
-        async pegarApontamentos() {
-            this.loading = true
-            this.$refs.pesquisarApontamento.value = ""
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/apontamentos'
-            };
-
-            try {
-                let apontamentos = await axios(config)
-                this.apontamentos = apontamentos.data.apontamentos
-                this.loading = false
-            } catch (erro) {
-                this.loading = false
-                console.log(erro);
-            }
-        },
-        async pegarApontamentosSemAssunto() {
-            this.loading = true
-            this.$refs.pesquisarApontamento.value = ""
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/apontamentos'
-            };
-
-            try {
-                let apontamentos = await axios(config)
-                this.apontamentos = apontamentos.data.apontamentos.filter(apontamento => apontamento.assuntos.length == 0)
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async pesquisarApontamento(event){
-            this.loading = true
-            let titulo = event.target.value
-            if (titulo.trim().length == 0 || titulo == undefined) {
-                this.loading = false
-                this.pegarApontamentos()
-                return
-            }
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/results',
-                params: {
-                    pesquisa: titulo
-                }
-            };
-
-            try {
-                let apontamentos = await axios(config)
-
-                if(apontamentos.data.apontamentos == undefined) {
-                    this.apontamentos = []
-                    this.loading = false
-                    return
-                }
-                
-                this.apontamentos = []
-                this.apontamentos = apontamentos.data.apontamentos
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async pegarAssuntos() {
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/assuntos'
-            };
-
-            try {
-                let { data } = await axios(config)
-                
-                this.assuntosLista.push({value: 0, label: "Sem assunto"})
-                data.assuntos.forEach( assunto => {
-                    this.assuntosLista.push({value: assunto._id, label: assunto.nome})
-                })
-            } catch (erro) {
-                console.log(erro);
-            }
-        },
-        async editar(apontamento) {
-            this.$router.push({name: "ApontamentoEditar", params: {id: apontamento.id}})
-        },
-        async deletar(apontamento) {
-            let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
-
-            if(deletar) {
-                let config = {
-                    method: 'delete',
-                    url: 'https://apiminhamente.onrender.com/apontamento/'+apontamento.id,
-                    headers: {
-                        'authorization': `Bearer ${LoginStore().token}`
-                    }
-                };
-    
-                try {
-                    await axios(config)
-                    this.apontamentos.splice(apontamento.id, 1)
-                } catch (erro) {   
-                    console.log(erro);
-                }
-            }
-        },
+        try {
+            await axios(config)
+            apontamentos.value.splice(apontamento.id, 1)
+        } catch (error) {   
+            console.log(error);
+        }
     }
 }
 </script>
@@ -428,7 +430,7 @@ export default {
 .input-pesquisar {
     width: 100%;
     outline: none;
-    font-size: 1.8rem;
+    font-size: 18px;
     border-bottom: 1px solid black;
 }
 
@@ -461,7 +463,7 @@ export default {
     border: none;
     cursor: pointer;
     color: white;
-    font-size: 1.6rem;
+    font-size: 16px;
     border-radius: 5px;
     background-color: var(--azul);
 }

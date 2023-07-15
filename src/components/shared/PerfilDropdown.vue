@@ -1,95 +1,105 @@
 <template>
 <div>
     <div class="perfil-avatar-area" @click="toggle">
-        <img :src="LoginStore.usuario.avatar" draggable="false" class="perfil-avatar">
+        <img :src="storeLogin.usuario.avatar" draggable="false" class="perfil-avatar">
     </div>
     <div class="perfil-nav" v-show="isOpen">
         <ul>
-            <li @click="MinhaConta"><span>Minha Conta</span></li>
-            <li @click="Painel" v-if="LoginStore.usuario.role == 0"><span>Painel</span></li>
+            <router-link :to="{name: 'perfil'}">
+                <li @click="MinhaConta">
+                    <span>Minha Conta</span>
+                </li>
+            </router-link>
+            <router-link :to="{name: 'painel'}">
+                <li @click="Painel" v-if="storeLogin.usuario.role == 0"><span>Painel</span></li>
+            </router-link>
             <li @click="logout"><span>Saír</span></li>
         </ul>
     </div>
 </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
-import { LoginStore } from "@/stores/LoginStore.js";
-export default {
-    data(){
-        return {
-            LoginStore: LoginStore(),
-            isOpen: false
+import { ref, watch, inject, onMounted, onBeforeUnmount, getCurrentInstance } from "vue";
+import { useRouter } from "vue-router";
+import { Login } from "@/stores/Login.js";
+
+const instance = getCurrentInstance()
+
+const storeLogin = Login()
+const router = useRouter()
+const emitter = inject("emitter")
+const isOpen = ref(false)
+
+emitter.on('MenuDropdownOpen', rootClosePerfilDropdownListener);
+
+watch(isOpen, (value) => {
+    if (value) {
+        emitter.emit('MenuDropdownOpen', instance.proxy.$el);
+    }
+})
+
+onMounted(() => {
+    document.addEventListener("click", clickOutPerfilDropdownListener)
+})
+
+onBeforeUnmount(() => {
+    document.removeEventListener('click', clickOutPerfilDropdownListener);
+})
+
+function MinhaConta(){
+    close();
+}
+
+function Painel(){
+    close();
+}
+
+async function logout(){
+    close();
+
+    let config = {
+        method: 'post',
+        url: 'https://apiminhamente.onrender.com/logout',
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
         }
-    },
+    };
+    
+    try {
+        await axios(config)
 
-    watch: {
-        isOpen(value) {
-            if (value) {
-                this.emitter.emit('MenuDropdownOpen', this);
-            }
-        },
-    },
-    created() {
-        this.emitter.on('MenuDropdownOpen', this.rootCloseListener);
-    },
-    mounted(){
-        document.addEventListener("click", this.clickOutListener)
-    },    
-    beforeUnmount() {
-        document.removeEventListener('click', this.clickOutListener);
-    },
-    methods: {
-        MinhaConta(){
-            this.$router.push({name: "perfil"})
-            this.close();
-        },
-        Painel(){
-            this.$router.push({name: "painel"})
-            this.close();
-        },
-        async logout(){
-            this.close();
+        localStorage.removeItem("token")
+        localStorage.removeItem("usuario")
+        localStorage.removeItem("_links")
 
-            let config = {
-                method: 'post',
-                url: 'https://apiminhamente.onrender.com/logout',
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-            
-            try {
-                await axios(config)
+        router.go(0)
+    } catch (error) {
+        console.log(error);
+    }
 
-                localStorage.removeItem("token")
-                localStorage.removeItem("usuario")
-                localStorage.removeItem("_links")
+}
 
-                this.$router.go(0)
-            } catch (erro) {
-                console.log(erro);
-            }
+function toggle(){
+    console.log();
+    isOpen.value = !isOpen.value
+}
 
-        },
-        toggle(){
-            this.isOpen = !this.isOpen
-        },
 
-        close(){
-            this.isOpen = false
-        },
-        clickOutListener(evt){
-            if (!this.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
-                this.close()
-            }
-        },      
-        rootCloseListener(vm) {
-            if (vm !== this) {
-                this.close();
-            }
-        }
+function close(){
+    isOpen.value = false
+}
+
+function clickOutPerfilDropdownListener(evt){
+    if (!instance.proxy.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+        close()
+    }
+}
+    
+function rootClosePerfilDropdownListener(vm) {
+    if (vm !== instance.proxy.$el) {
+        close();
     }
 }
 </script>
@@ -131,7 +141,7 @@ export default {
     width: 100%;
     height: 35px;
     cursor: pointer;
-    font-size: 2.6rem;
+    font-size: 18px;
     font-weight: 500;
     text-align: center;
     display: flex;

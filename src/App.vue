@@ -2,21 +2,20 @@
   <router-view/>
 </template>
 
-<script>
-export default {
-  created() {
-    this.updatePageTitle()
-  },
-  watch: {
-    '$route'(to, from) {
-      this.updatePageTitle()
-    }
-  },
-  methods: {
-    updatePageTitle() {
-      const pageTitle = this.$route.meta.title
-      document.title = pageTitle || 'MinhaMente'
-    }
+<script setup>
+import { watch } from "vue";
+import { useRoute } from "vue-router";
+
+  const route = useRoute()
+  
+  updatePageTitle()
+
+  watch(route, (to, from) => {
+    updatePageTitle()
+  }, {deep: true})
+
+  function updatePageTitle() {
+    const pageTitle = route.meta.title
+    document.title = pageTitle || 'MinhaMente'
   }
-}
 </script>

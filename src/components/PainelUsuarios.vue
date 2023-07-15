@@ -1,17 +1,17 @@
 <template>
     <div id="PainelUsuarios">
-        <div class="table w-full p-5">
+        <div class="table w-full p-2">
             <table class="w-full border">
                 <thead>
                     <tr class="bg-gray-50 border-b">
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Avatar</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Nome</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Sobrenome</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Email</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Função</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de criação</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Data de edição</th>
-                        <th class="w-32 p-5 text-2xl font-bold text-gray-500">Ações</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Avatar</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Nome</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Sobrenome</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Email</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Função</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Data de criação</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Data de edição</th>
+                        <th class="w-32 p-2 text-lg font-bold text-gray-500">Ações</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -40,12 +40,12 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDataCriacao @ordenar="ordenar"/>
+                                <DataCriacao @ordenar="ordenar"/>
                             </div>
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">
-                                <AppDropdownEdit @maisRecente="EditMaisRecente" @maisAntigo="EditMaisAntiga"/>
+                                <DropdownEdit @maisRecente="EditMaisRecente" @maisAntigo="EditMaisAntiga"/>
                             </div>
                         </td>
                         <td class="p-2 font-bold text-lg text-black">-</td>
@@ -61,7 +61,7 @@
                         <td colspan="8">
                             <div class="spin-area">
                                 <div role="status">
-                                    <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg aria-hidden="true" class="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-yellow-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
                                         <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
                                     </svg>
@@ -109,7 +109,7 @@
                         </td>
                         <td class="p-2">
                             <div class="flex justify-center items-center">    
-                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xl px-5 py-5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="deletarUsuario(usuario)">Deletar</button>
+                                <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xl px-2 py-2 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" @click="deletarUsuario(usuario)">Deletar</button>
                             </div>
                         </td>
                     </tr>
@@ -129,316 +129,315 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
-import { LoginStore } from "@/stores/LoginStore.js";
-import AppDropdownEdit from "@/components/shared/AppDropdownEdit.vue";
-import AppDataCriacao from "@/components/shared/AppDataCriacao.vue";
-export default {
-    components: {
-        Multiselect,
-        AppDropdownEdit,
-        AppDataCriacao,
-    },
-    data() {
-        return {
-            funcao: undefined,
-            usuarios: [],
-            loading: false,
-            currentPage: 1,
-            PaginaAtual: 1,
-            ItensPorPagina: 20,
-            criacaoCrescente: true,
+import { ref, watch, computed, onMounted } from "vue";
+import { Login } from "@/stores/Login.js";
+import DropdownEdit from "@/components/shared/DataEdicao.vue";
+import DataCriacao from "@/components/shared/DataCriacao.vue";
+
+const storeLogin = Login()
+const email = ref()
+const nome = ref()
+const sobrenome = ref()
+const funcao = ref(undefined)
+const usuarios = ref([])
+const loading = ref(false)
+const currentPage = ref(1)
+const PaginaAtual = ref(1)
+const ItensPorPagina = ref(20)
+const criacaoCrescente = ref(true)
+const usuariosTotal = computed(() => {
+    return usuarios.value.length
+})
+
+const usuariosMostrar = computed(() => {
+    let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
+    let fim = inicio + ItensPorPagina.value
+    return usuarios.value.slice(inicio, fim)
+})
+
+watch(funcao, (novoRole, antigoRole) => {
+    if (novoRole == null || undefined) {
+        pegarUsuarios()
+        return
+    }
+    
+    if (novoRole != null || undefined) {
+        usuarioPeloRole(novoRole)
+        return
+    }
+})
+        
+onMounted(() => {
+    pegarUsuarios()
+})
+
+function paginar(pagina) {
+    paginaAtual.value = pagina
+}
+
+function formatarData(data) {
+    let opcoes = { month: 'long' };
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+    let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
+    
+    return dataFormatada
+}
+
+async function ordenar() {
+    if(!criacaoCrescente.value) {
+        const arrayOrdenado = [];
+
+        while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
+            let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+            for (let i = 1; i < usuarios.value.length; i++) { // Verificar cada item do array
+                // Procurando o index do item mais recente
+                if (usuarios.value[i].created_at > usuarios.value[MaisNovoIndex].created_at) {
+                    MaisNovoIndex = i;
+                }
+            }
+
+            arrayOrdenado.push(usuarios.value[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+            usuarios.value.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
         }
-    },
-    watch: {
-        funcao(novoRole, antigoRole) {
-            if (novoRole == null || undefined) {
-                this.pegarUsuarios()
-                return
+
+        usuarios.value = arrayOrdenado;
+        criacaoCrescente.value = true // definindo que tá em ordem crescente
+    } else {
+        const arrayOrdenado = [];
+
+        while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
+            let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+
+            for (let i = 1; i < usuarios.value.length; i++) { // Verificar cada item do array
+                // Procurando o index do item mais antigo
+                if (usuarios.value[i].created_at < usuarios.value[MaisAntigoIndex].created_at) {
+                    MaisAntigoIndex = i;
+                }
             }
-            
-            if (novoRole != null || undefined) {
-                this.usuarioPeloRole(novoRole)
-                return
+
+            arrayOrdenado.push(usuarios.value[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+            usuarios.value.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
+        }
+
+        usuarios.value = arrayOrdenado;
+        criacaoCrescente.value = false // definindo que tá em ordem decrescente
+    }
+}
+
+async function EditMaisRecente(){
+    const arrayOrdenado = [];
+
+    while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
+        let MaisNovoIndex = 0; // Index do item mais recente encontrado
+
+        for (let i = 1; i < usuarios.value.length; i++) { // Verificar cada item do array
+            // Procurando o index do item mais recente
+            if (usuarios.value[i].edited_at > usuarios.value[MaisNovoIndex].edited_at) {
+                MaisNovoIndex = i;
             }
         }
-    },
-    mounted(){
-        this.pegarUsuarios()
-    },
-    computed: {
-        usuariosTotal() {
-            return this.usuarios.length
-        },
-        usuariosMostrar() {
-            let inicio = (this.PaginaAtual - 1) * this.ItensPorPagina
-            let fim = inicio + this.ItensPorPagina
-            return this.usuarios.slice(inicio, fim)
-        },
-    },
-    methods: {
-        paginar(pagina) {
-            this.paginaAtual = pagina
-        },
-        formatarData(data) {
-            let opcoes = { month: 'long' };
-            let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
-            let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
-            
-            return dataFormatada
-        },
-        async ordenar() {
-            if(!this.criacaoCrescente) {
-                const arrayOrdenado = [];
+        
+        arrayOrdenado.push(usuarios.value[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
+        usuarios.value.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
+    }
 
-                while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
-                    let MaisNovoIndex = 0; // Index do item mais recente encontrado
+    usuarios.value = arrayOrdenado;
+}
 
-                    for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
-                        // Procurando o index do item mais recente
-                        if (this.usuarios[i].created_at > this.usuarios[MaisNovoIndex].created_at) {
-                            MaisNovoIndex = i;
-                        }
-                    }
+async function EditMaisAntiga(){
+    const arrayOrdenado = [];
 
-                    arrayOrdenado.push(this.usuarios[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
-                    this.usuarios.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
-                }
+    while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
+        let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+
+        for (let i = 1; i < usuarios.value.length; i++) {
+            // Procurando o index do item mais antigo
+            if (usuarios.value[i].edited_at < usuarios.value[MaisAntigoIndex].edited_at) {
+                MaisAntigoIndex = i;
+            }
+        }
+
+        arrayOrdenado.push(usuarios.value[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
+        usuarios.value.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
+    }
+
+    usuarios.value = arrayOrdenado;
+}
+
+async function pegarUsuarios() {
+    loading.value = true
+    nome.value.value = ""
+    sobrenome.value.value = ""
+    email.value.value = ""
+    // this.funcao = ""
     
-                this.usuarios = arrayOrdenado;
-                this.criacaoCrescente = true // definindo que tá em ordem crescente
-            } else {
-                const arrayOrdenado = [];
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/usuarios',
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
+        }
+    };
 
-                while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
-                    let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
+    try {
+        let { data } = await axios(config)
+        usuarios.value = data.usuarios
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
 
-                    for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
-                        // Procurando o index do item mais antigo
-                        if (this.usuarios[i].created_at < this.usuarios[MaisAntigoIndex].created_at) {
-                            MaisAntigoIndex = i;
-                        }
-                    }
+async function usuarioPeloNome(event) {
+    loading.value = true
+    sobrenome.value.value = ""
+    email.value.value = ""
 
-                    arrayOrdenado.push(this.usuarios[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
-                    this.usuarios.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
-                }
+    if (nome.value.value.trim().length == 0 || nome.value.value == undefined) {
+        loading.value = false
+        pegarUsuarios()
+        return
+    }
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/usuario/nome/'+nome.value.value,
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
+        }
+    };
+
+    try {
+        let { data } = await axios(config)
+        usuarios.value = data.usuarios
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
+
+async function usuarioPeloSobrenome(event) {
+    loading.value = true
+    nome.value.value = ""
+    email.value.value = ""
+
+    if (sobrenome.value.value.trim().length == 0 || sobrenome.value.value == undefined) {
+        loading.value = false
+        pegarUsuarios()
+        return
+    }
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/usuario/sobrenome/'+sobrenome.value.value,
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
+        }
+    };
+
+    try {
+        let { data } = await axios(config)
+        usuarios.value = data.usuarios
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
+
+async function usuarioPeloEmail(event) {
+    loading.value = true
+    nome.value.value = ""
+    sobrenome.value.value = ""
+
+    if (email.value.value.trim().length == 0 || email.value.value == undefined) {
+        loading.value = false
+        pegarUsuarios()
+        return
+    }
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/usuario/email/'+email.value.value,
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
+        }
+    };
+
+    try {
+        let { data } = await axios(config)
+
+        if(data.usuario == undefined) {
+            usuarios.value = []
+            loading.value = false
+            return
+        }
+
+        usuarios.value = []
+        usuarios.value.push(data.usuario)
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
+
+async function usuarioPeloRole(role) {
+    loading.value = true
+    nome.value.value = ""
+    sobrenome.value.value = ""
+    email.value.value = ""
+
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/usuario/role/'+role,
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
+        }
+    };
     
-                this.usuarios = arrayOrdenado;
-                this.criacaoCrescente = false // definindo que tá em ordem decrescente
+    try {
+        let { data } = await axios(config)
+        usuarios.value = []
+        usuarios.value = data.usuarios
+        loading.value = false
+    } catch (error) {
+        console.log(error);
+        loading.value = false
+    }
+}
+
+async function deletarUsuario(usuario) {
+    let deletar = confirm("Você tem certeza que deseja deletar essa conta?")
+    if(deletar) {
+        let config = {
+            method: 'delete',
+            url: 'https://apiminhamente.onrender.com/usuario/'+usuario.id,
+            headers: {
+                'authorization': `Bearer ${storeLogin.token}`
             }
-        },
-        async EditMaisRecente(){
-            const arrayOrdenado = [];
+        };
 
-            while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
-                let MaisNovoIndex = 0; // Index do item mais recente encontrado
-
-                for (let i = 1; i < this.usuarios.length; i++) { // Verificar cada item do array
-                    // Procurando o index do item mais recente
-                    if (this.usuarios[i].edited_at > this.usuarios[MaisNovoIndex].edited_at) {
-                        MaisNovoIndex = i;
-                    }
-                }
-                
-                arrayOrdenado.push(this.usuarios[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
-                this.usuarios.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
-            }
-
-            this.usuarios = arrayOrdenado;
-        },
-        async EditMaisAntiga(){
-            const arrayOrdenado = [];
-
-            while (this.usuarios.length > 0) { // Enquanto o array ter pelo menos um item
-                let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
-
-                for (let i = 1; i < this.usuarios.length; i++) {
-                    // Procurando o index do item mais antigo
-                    if (this.usuarios[i].edited_at < this.usuarios[MaisAntigoIndex].edited_at) {
-                        MaisAntigoIndex = i;
-                    }
-                }
-
-                arrayOrdenado.push(this.usuarios[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
-                this.usuarios.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
-            }
-
-            this.usuarios = arrayOrdenado;
-        },
-        async pegarUsuarios() {
-            this.loading = true
-            this.$refs.nome.value = ""
-            this.$refs.sobrenome.value = ""
-            this.$refs.email.value = ""
-            // this.funcao = ""
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/usuarios',
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-
-            try {
-                let usuarios = await axios(config)
-                this.usuarios = usuarios.data.usuarios
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async usuarioPeloNome(nome) {
-            this.loading = true
-            this.$refs.sobrenome.value = ""
-            this.$refs.email.value = ""
-
-            if (nome.target.value.trim().length == 0 || nome.target.value == undefined) {
-                this.loading = false
-                this.pegarUsuarios()
-                return
-            }
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/usuario/nome/'+nome.target.value,
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-
-            try {
-                let usuarios = await axios(config)
-                this.usuarios = usuarios.data.usuarios
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async usuarioPeloSobrenome(sobrenome) {
-            this.loading = true
-            this.$refs.nome.value = ""
-            this.$refs.email.value = ""
-
-            if (sobrenome.target.value.trim().length == 0 || sobrenome.target.value == undefined) {
-                this.loading = false
-                this.pegarUsuarios()
-                return
-            }
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/usuario/sobrenome/'+sobrenome.target.value,
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-
-            try {
-                let usuarios = await axios(config)
-                this.usuarios = usuarios.data.usuarios
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async usuarioPeloEmail(email) {
-            this.loading = true
-            this.$refs.nome.value = ""
-            this.$refs.sobrenome.value = ""
-
-            if (email.target.value.trim().length == 0 || email.target.value == undefined) {
-                this.loading = false
-                this.pegarUsuarios()
-                return
-            }
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/usuario/email/'+email.target.value,
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-
-            try {
-                let usuarios = await axios(config)
-
-                if(usuarios.data.usuario == undefined) {
-                    this.usuarios = []
-                    this.loading = false
-                    return
-                }
-
-                this.usuarios = []
-                this.usuarios.push(usuarios.data.usuario)
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async usuarioPeloRole(role) {
-            this.loading = true
-            this.$refs.nome.value = ""
-            this.$refs.sobrenome.value = ""
-            this.$refs.email.value = ""
-
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/usuario/role/'+role,
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-            
-            try {
-                let usuarios = await axios(config)
-                this.usuarios = []
-                this.usuarios = usuarios.data.usuarios
-                this.loading = false
-            } catch (erro) {
-                console.log(erro);
-                this.loading = false
-            }
-        },
-        async deletarUsuario(usuario) {
-            let deletar = confirm("Você tem certeza que deseja deletar essa conta?")
-            if(deletar) {
-                let config = {
-                    method: 'delete',
-                    url: 'https://apiminhamente.onrender.com/usuario/'+usuario.id,
-                    headers: {
-                        'authorization': `Bearer ${LoginStore().token}`
-                    }
-                };
-    
-                try {
-                    await axios(config)
-                    this.usuarios.splice(usuario.id, 1)
-                } catch (erro) {   
-                    console.log(erro);
-                }
-            }
+        try {
+            await axios(config)
+            usuarios.value.splice(usuario.id, 1)
+        } catch (error) {   
+            console.log(error);
         }
     }
 }
 </script>
 <style scoped>
-button {
-    font-size: 1.6rem;
-}
-
 .input-pesquisar {
     width: 100%;
     outline: none;
-    font-size: 1.8rem;
+    font-size: 18px;
     border-bottom: 1px solid black;
 }
 
@@ -483,7 +482,7 @@ button {
     border: none;
     cursor: pointer;
     color: white;
-    font-size: 1.6rem;
+    font-size: 16px;
     border-radius: 5px;
     background-color: var(--azul);
 }

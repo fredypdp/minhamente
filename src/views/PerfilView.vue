@@ -1,12 +1,12 @@
 <template>
 <div id="perfil-view">
-    <AppNavBar/>
+    <NavBar/>
     <div class="container-box">
         <div class="perfil-container">
             <div class="cartao-usuario-mobile">
-                <img :src="LoginStoreUsar.usuario.avatar" draggable="false" class="foto-perfil">
-                <h1 class="nome-usuario">{{ LoginStoreUsar.usuario.nome }} {{ LoginStoreUsar.usuario.sobrenome }}</h1>
-                <span class="email-usuario">{{ LoginStoreUsar.usuario.email }}</span>
+                <img :src="storeLogin.usuario.avatar" draggable="false" class="foto-perfil">
+                <h1 class="nome-usuario">{{ storeLogin.usuario.nome }} {{ storeLogin.usuario.sobrenome }}</h1>
+                <span class="email-usuario">{{ storeLogin.usuario.email }}</span>
                 <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">Terminar sessão</button>
                 <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarConta">Eliminar conta</button>
                 <input type="hidden" name="id" value="" id="id">
@@ -19,9 +19,9 @@
             </div>
             <div class="cartao-area">
                 <div class="cartao-usuario">
-                    <img :src="LoginStoreUsar.usuario.avatar" draggable="false" class="foto-perfil">
-                    <h1 class="nome-usuario">{{ LoginStoreUsar.usuario.nome }} {{ LoginStoreUsar.usuario.sobrenome }}</h1>
-                    <span class="email-usuario">{{ LoginStoreUsar.usuario.email }}</span>
+                    <img :src="storeLogin.usuario.avatar" draggable="false" class="foto-perfil">
+                    <h1 class="nome-usuario">{{ storeLogin.usuario.nome }} {{ storeLogin.usuario.sobrenome }}</h1>
+                    <span class="email-usuario">{{ storeLogin.usuario.email }}</span>
                     <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">
                         <div role="status" v-if="loadingLogout">
                             <svg aria-hidden="true" class="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-white" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,104 +53,98 @@
 </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
-import { LoginStore } from "@/stores/LoginStore.js";
+import { ref, onBeforeMount } from "vue";
+import { Login } from "@/stores/Login.js";
+import { useRouter } from "vue-router";
 import ContaEditar from "@/components/ContaEditar.vue";
-import AppNavBar from "@/components/shared/AppNavBar.vue";
-export default {
-    components: {
-        AppNavBar,
-        ContaEditar,
-    },
-    data(){
-        return {
-            loadingLogout: false,
-            botaoSairDesativado: false,
-            botaoDeletarDesativado: false,
-            loadingEliminarConta: false,
-            responseErro: "",
-            responseSucesso: "",
-            LoginStoreUsar: LoginStore(),
+import NavBar from "@/components/shared/NavBar.vue";
+
+const router = useRouter()
+
+onBeforeMount(() => {
+    if(storeLogin.usuario == undefined){
+        router.push({name: "home"})
+        return
+    }
+})
+
+const storeLogin = Login()
+
+document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
+
+const loadingLogout = ref(false)
+const botaoSairDesativado = ref(false)
+const botaoDeletarDesativado = ref(false)
+const loadingEliminarConta = ref(false)
+const responseErro = ref("")
+const responseSucesso = ref("")
+
+async function logout(){
+    loadingLogout.value = true
+    botaoSairDesativado.value = true
+    document.getElementById("response-erro").style.display = "none"
+
+    let config = {
+        method: 'post',
+        url: 'https://apiminhamente.onrender.com/logout',
+        headers: {
+            'authorization': `Bearer ${LoginStore().token}`
         }
-    },
-    beforeCreate() {
-        document.title = `${LoginStore().usuario.nome} ${LoginStore().usuario.sobrenome} - MinhaMente`
-    },
-    methods: {
-        async logout(){
-            this.loadingLogout = true
-            this.botaoSairDesativado = true
-            document.getElementById("response-erro").style.display = "none"
+    };
 
-            let config = {
-                method: 'post',
-                url: 'https://apiminhamente.onrender.com/logout',
-                headers: {
-                    'authorization': `Bearer ${LoginStore().token}`
-                }
-            };
-    
-            try {
-                await axios(config)
+    try {
+        await axios(config)
 
-                localStorage.removeItem("token")
-                localStorage.removeItem("usuario")
-                localStorage.removeItem("_links")
+        localStorage.removeItem("token")
+        localStorage.removeItem("usuario")
+        localStorage.removeItem("_links")
 
-                this.loadingLogout = false
-                this.botaoSairDesativado = false
-                this.$router.go(0)
-            } catch (erro) {
-                console.log(erro);
-                
-                this.responseErro = erro.response.data.erro
-                document.getElementById("response-erro").style.display = "flex"
-                
-                this.loadingLogout = false
-                this.botaoSairDesativado = false
-            }
-        },
-        async eliminarContaEmail(){
-            let eliminar = confirm("Enviar email de deleção de conta?")
-            
-            if(eliminar) {
-                this.loadingEliminarConta = true
-                this.botaoDeletarDesativado = true
-                document.getElementById("response-erro").style.display = "none"
-
-                let config = {
-                    method: 'post',
-                    url: `https://apiminhamente.onrender.com/usuario/${LoginStore().usuario.id}/${LoginStore().usuario.email}`,
-                    headers: {
-                        'authorization': `Bearer ${LoginStore().token}`
-                    }
-                };
-
-                try {
-                    let sucesso = await axios(config)
-                    this.responseSucesso = sucesso.data
-                    document.getElementById("response-sucesso").style.display = "flex"
-                    this.loadingEliminarConta = false
-                    this.botaoDeletarDesativado = false
-                } catch (erro) {
-                    console.log(erro);
-                    this.loadingEliminarConta = false
-                    this.botaoDeletarDesativado = false
-                    
-                    this.responseErro = erro.response.data.erro
-                    document.getElementById("response-erro").style.display = "flex"
-                }
-            }
-        }
-    },
-    beforeRouteEnter(to, from, next){
-        if(LoginStore().usuario == undefined){
-            next({name: "home"})
-            return
-        }
+        loadingLogout.value = false
+        botaoSairDesativado.value = false
+        router.value.go(0)
+    } catch (error) {
+        console.log(error);
         
-        next()
+        responseErro.value = error.response.data.erro
+        document.getElementById("response-erro").style.display = "flex"
+        
+        loadingLogout.value = false
+        botaoSairDesativado.value = false
+    }
+}
+
+async function eliminarContaEmail(){
+    let eliminar = confirm("Enviar email de deleção de conta?")
+    
+    if(eliminar) {
+        loadingEliminarConta.value = true
+        botaoDeletarDesativado.value = true
+        document.getElementById("response-erro").style.display = "none"
+
+        let config = {
+            method: 'post',
+            url: `https://apiminhamente.onrender.com/usuario/${LoginStore().usuario.id}/${LoginStore().usuario.email}`,
+            headers: {
+                'authorization': `Bearer ${LoginStore().token}`
+            }
+        };
+
+        try {
+            let sucesso = await axios(config)
+            responseSucesso.value = sucesso.data
+            document.getElementById("response-sucesso").style.display = "flex"
+            loadingEliminarConta.value = false
+            botaoDeletarDesativado.value = false
+        } catch (error) {
+            console.log(erro);
+            loadingEliminarConta.value = false
+            botaoDeletarDesativado.value = false
+            
+            responseErro.value = error.response.data.erro
+            document.getElementById("response-erro").style.display = "flex"
+        }
     }
 }
 </script>
@@ -226,14 +220,14 @@ export default {
 
 .nome-usuario {
     color: black;
-    font-size: 3.2rem;
+    font-size: 30px;
     font-weight: 700;
     margin-bottom: 20px;
 }
 
 .email-usuario {
     color: black;
-    font-size: 2.4rem;
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 90px;   
 }
@@ -243,7 +237,7 @@ export default {
     padding: 5px;
     outline: none;
     color: white;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 700;
     border-radius: 5px;
     background-color: var(--azul);
@@ -259,7 +253,7 @@ export default {
     outline: none;
     color: white;
     margin-top: 10px;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 700;
     border-radius: 5px;
     background-color: red;

@@ -1,92 +1,102 @@
 <template>
-    <div>
-        <AppNavBar/>
-        <div class="container-box">
-            <div class="painel">
-                <div class="painel-titulo">
-                    <h1 class="titulo" v-if="isPainel">Painel</h1>
-                    <h1 class="titulo" v-if="!isPainel">Painel: {{nomePagina}}</h1>
-                </div>
-                <section class="painel-menu">
-                    <div class="painel-menu-items">
-                        <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelApontamentos'}" exact>
-                                <span class="painel-menu-item-titulo">Apontamentos</span>
-                            </router-link>
-                        </div>
-                        <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelAssuntos'}" exact>
-                                <span class="painel-menu-item-titulo">Assuntos</span>
-                            </router-link>
-                        </div>
-                        <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelTemas'}" exact>
-                                <span class="painel-menu-item-titulo">Temas</span>
-                            </router-link>
-                        </div>
-                        <div class="painel-menu-item">
-                            <router-link :to="{name: 'PainelUsuarios'}" exact>
-                                <span class="painel-menu-item-titulo">Usuários</span>
-                            </router-link>
-                        </div>
-                    </div>
-                    <div class="painel-menu-table">
-                        <router-view/>
-                    </div>
-                </section>
+<div id="PainelView">
+    <NavBar/>
+    <div class="container-box">
+        <div class="painel">
+            <div class="painel-titulo">
+                <h1 class="titulo" v-if="isPainel">Painel</h1>
+                <h1 class="titulo" v-if="!isPainel">Painel: {{ nomePagina }}</h1>
             </div>
+            <section class="painel-menu">
+                <div class="painel-menu-items">
+                    <div class="painel-menu-item">
+                        <router-link :to="{name: 'PainelApontamentos'}" exact>
+                            <span class="painel-menu-item-titulo">Apontamentos</span>
+                        </router-link>
+                    </div>
+                    <div class="painel-menu-item">
+                        <router-link :to="{name: 'PainelAssuntos'}" exact>
+                            <span class="painel-menu-item-titulo">Assuntos</span>
+                        </router-link>
+                    </div>
+                    <div class="painel-menu-item">
+                        <router-link :to="{name: 'PainelTemas'}" exact>
+                            <span class="painel-menu-item-titulo">Temas</span>
+                        </router-link>
+                    </div>
+                    <div class="painel-menu-item">
+                        <router-link :to="{name: 'PainelUsuarios'}" exact>
+                            <span class="painel-menu-item-titulo">Usuários</span>
+                        </router-link>
+                    </div>
+                </div>
+                <div class="painel-menu-table">
+                    <router-view/>
+                </div>
+            </section>
         </div>
     </div>
+</div>
 </template>
 
-<script>
-import { LoginStore } from "@/stores/LoginStore.js";
-import AppNavBar from "@/components/shared/AppNavBar.vue";
-export default {
-    data(){
-        return {
-            PaginaAtual: "",
-            LoginStore: LoginStore(),
-        }
-    },
-    components: {
-        AppNavBar
-    },
-    created(){
-        this.PaginaAtual = this.$route.name
-    },
-    beforeRouteUpdate(to, from, next){ // Nome da página atual
-        this.PaginaAtual = to.name
-        next()
-    },
-    computed: {
-        isPainel(){
-            return this.PaginaAtual === "painel"
-        },
-        nomePagina(){
-            let pagina
-            switch (this.PaginaAtual) {
-                case "PainelTemas":
-                    pagina = "Temas"
-                    break;
-                case "PainelUsuarios":
-                    pagina = "Usuários"
-                    break;
-                case "PainelAssuntos":
-                    pagina = "Assuntos"
-                    break;
-                case "PainelApontamentos":
-                    pagina = "Apontamentos"
-                    break;
-                default:
-                    break;
-            }
-            return pagina
-        }
+<script setup>
+import { Login } from "@/stores/Login.js";
+import NavBar from "@/components/shared/NavBar.vue";
+import { ref, computed, onBeforeMount} from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRouter } from "vue-router";
+
+const route = useRoute()
+const router = useRouter()
+
+onBeforeMount(() => {
+    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
+        router.push({name: "home"})
+        return
     }
-}
+})
+
+const PaginaAtual = ref("")
+PaginaAtual.value = route.name
+const storeLogin = Login()
+const isPainel = computed(() => {
+    return PaginaAtual.value === "painel"
+})
+
+const nomePagina = computed(() => {
+    let pagina
+    switch (PaginaAtual.value) {
+        case "PainelTemas":
+            pagina = "Temas"
+            break;
+        case "PainelUsuarios":
+            pagina = "Usuários"
+            break;
+        case "PainelAssuntos":
+            pagina = "Assuntos"
+            break;
+        case "PainelApontamentos":
+            pagina = "Apontamentos"
+            break;
+        default:
+            break;
+    }
+
+    return pagina
+})
+
+onBeforeRouteUpdate(
+    (to, from, next) => { // Nome da página atual
+        PaginaAtual.value = to.name
+        next()
+    }
+)
 </script>
 <style scoped>
+#PainelView {
+    padding-bottom: 50px;
+}
+
 .painel {
     padding-top: 30px;
 }
@@ -101,7 +111,7 @@ export default {
 
 .titulo {
     color: black;
-    font-size: 2.6rem;
+    font-size: 26px;
     font-weight: 500;
 }
 .painel-menu-items {
@@ -134,6 +144,7 @@ export default {
 
 .painel-menu-item-titulo {
     color: black;
-    font-size: 2.6rem;
+    font-size: 26px;
+    font-weight: 500;
 }
 </style>

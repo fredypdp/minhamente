@@ -13,25 +13,20 @@
 </div>
 </template>
 
-<script>
-import { HomeStore } from "@/stores/HomeStore.js";
-export default {
-    props: {
-        assunto: {
-            type: Object,
-            require: true
-        }
-    },
-    data() {
-        return {
-            HomeStore: HomeStore(),
-        }
-    },
-    methods: {
-        async apontamentosDoAssunto() {
-            this.HomeStore.assuntoAtual = "todos"
-        }
+<script setup>
+import { Home } from "@/stores/Home.js";
+
+const props = defineProps({
+    assunto: {
+        type: Object,
+        require: true
     }
+})
+
+const storeHome = Home()
+        
+async function apontamentosDoAssunto() {
+    storeHome.assuntoAtual = "todos"
 }
 </script>
 
@@ -60,13 +55,13 @@ export default {
 
 .assunto span {
     color: white;
-    font-size: 2.4rem;
+    font-size: 24px;
     font-weight: 700;
 }
 
 .assunto-mobile span {
     overflow: hidden;
-    font-size: 1.6rem;
+    font-size: 18px;
     text-align: center;
     text-overflow: ellipsis;
     display: -webkit-box;

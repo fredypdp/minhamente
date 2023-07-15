@@ -11,24 +11,19 @@
     </div>
 </template>
 
-<script>
-export default {
-    data(){
-        return {
-            senha: "",
-            ocultarSenha: false,
-        }
-    },
-    watch: {
-        senha(nova, antiga) {
-            this.$emit("senha", nova)
-        }
-    },
-    methods: {
-        mostrarSenha() {
-            this.ocultarSenha = !this.ocultarSenha
-        }
-    }
+<script setup>
+import { ref, watch } from "vue";
+const senha = ref("")
+const ocultarSenha = ref(false)
+
+const emit = defineEmits(["senha"])
+
+watch(senha, (nova, antiga) => {
+    emit("senha", nova)
+})
+
+function mostrarSenha() {
+    ocultarSenha.value = !ocultarSenha.value
 }
 </script>
 
@@ -51,7 +46,7 @@ export default {
     padding: 5px;
     outline: none;
     color: black;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 500;
     border-radius: 5px 0px 0px 5px;
 }

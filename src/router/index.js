@@ -1,32 +1,31 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { LoginStore } from "@/stores/LoginStore.js";
+import { createRouter, createWebHistory } from "vue-router";
 
-import HomeView from '@/views/HomeView.vue'
-import PesquisaView from '@/views/PesquisaView.vue'
+const HomeView = () => import(/*webpackChunckName: "home"*/"@/views/HomeView.vue");
+const PesquisaView = () => import(/*webpackChunckName: "pesquisa"*/"@/views/PesquisaView.vue");
 // Conta
-import LoginView from '@/views/LoginView.vue'
-import CriarContaView from '@/views/CriarContaView.vue'
-import NovaSenhaView from '@/views/NovaSenhaView.vue'
-import DeletarContaView from '@/views/DeletarContaView.vue'
-import EsqueciSenhaView from '@/views/EsqueciSenhaView.vue'
+const LoginView = () => import(/*webpackChunckName: "conta"*/"@/views/LoginView.vue");
+const CriarContaView = () => import(/*webpackChunckName: "conta"*/"@/views/CriarContaView.vue");
+const NovaSenhaView = () => import(/*webpackChunckName: "conta"*/"@/views/NovaSenhaView.vue");
+const DeletarContaView = () => import(/*webpackChunckName: "conta"*/"@/views/DeletarContaView.vue");
+const EsqueciSenhaView = () => import(/*webpackChunckName: "conta"*/"@/views/EsqueciSenhaView.vue");
 // Perfil
-import PerfilView from '@/views/PerfilView.vue'
-import PainelView from '@/views/adm/PainelView.vue'
+const PerfilView = () => import(/*webpackChunckName: "perfil"*/"@/views/PerfilView.vue");
+const PainelView = () => import(/*webpackChunckName: "perfil"*/"@/views/adm/PainelView.vue");
 // Apontamento
-import ApontamentoView from '@/views/ApontamentoView.vue'
-import ApontamentoPublicarView from '@/views/adm/apontamentos/ApontamentoPublicarView.vue'
-import ApontamentoEditarView from '@/views/adm/apontamentos/ApontamentoEditarView.vue'
+const ApontamentoView = () => import(/*webpackChunckName: "apontamento"*/"@/views/ApontamentoView.vue");
+const ApontamentoPublicarView = () => import(/*webpackChunckName: "apontamento"*/"@/views/adm/apontamentos/ApontamentoPublicarView.vue");
+const ApontamentoEditarView = () => import(/*webpackChunckName: "apontamento"*/"@/views/adm/apontamentos/ApontamentoEditarView.vue");
 // Assunto
-import AssuntoCriarView from '@/views/adm/assuntos/AssuntoCriarView.vue'
-import AssuntoEditarView from '@/views/adm/assuntos/AssuntoEditarView.vue'
+const AssuntoCriarView = () => import(/*webpackChunckName: "assunto"*/"@/views/adm/assuntos/AssuntoCriarView.vue");
+const AssuntoEditarView = () => import(/*webpackChunckName: "assunto"*/"@/views/adm/assuntos/AssuntoEditarView.vue");
 // Tema
-import TemaCriarView from '@/views/adm/temas/TemaCriarView.vue'
-import TemaEditarView from '@/views/adm/temas/TemaEditarView.vue'
+const TemaCriarView = () => import(/*webpackChunckName: "tema"*/"@/views/adm/temas/TemaCriarView.vue");
+const TemaEditarView = () => import(/*webpackChunckName: "tema"*/"@/views/adm/temas/TemaEditarView.vue");
 // Painel
-import PainelTemas from '@/components/PainelTemas.vue'
-import PainelAssuntos from '@/components/PainelAssuntos.vue'
-import PainelUsuarios from '@/components/PainelUsuarios.vue'
-import PainelApontamentos from '@/components/PainelApontamentos.vue'
+const PainelTemas = () => import(/*webpackChunckName: "painel"*/"@/components/PainelTemas.vue");
+const PainelAssuntos = () => import(/*webpackChunckName: "painel"*/"@/components/PainelAssuntos.vue");
+const PainelUsuarios = () => import(/*webpackChunckName: "painel"*/"@/components/PainelUsuarios.vue");
+const PainelApontamentos = () => import(/*webpackChunckName: "painel"*/"@/components/PainelApontamentos.vue");
 
 const routes = [
   {
@@ -39,7 +38,7 @@ const routes = [
     name: "perfil",
     path: "/perfil",
     meta: {title: ''},
-    component: PerfilView,
+    component: PerfilView
   },
   {
     path: "/painel", // Adm
@@ -50,66 +49,34 @@ const routes = [
       {path: "usuarios", name: "PainelUsuarios", component: PainelUsuarios, meta: {title: 'Painel: Usuários - MinhaMente'}},
       {path: "apontamentos", name: "PainelApontamentos", component: PainelApontamentos, meta: {title: 'Painel: Apontamentos - MinhaMente'}},
       {path: "", name: "painel", component: PainelApontamentos, meta: {title: 'Painel - MinhaMente'}}
-    ],
-    beforeEnter(to, from, next) {
-      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
-        next({name: "home"})
-        return
-      }
-      
-      next()
-    },
+    ]
   },
   {
     path: "/ler/:id",
     meta: {title: ''},
     name: "ApontamentoLer",
-    component: ApontamentoView,
+    component: ApontamentoView
   },
   {
     path: "/apontamento", // Adm
     children: [
       {path: "publicar", name: "ApontamentoPublicar", component: ApontamentoPublicarView, meta: {title: 'Publicar Apontamento - MinhaMente'}},
       {path: "editar/:id", name: "ApontamentoEditar", component: ApontamentoEditarView, meta: {title: 'Editar Apontamento - MinhaMente'}},
-    ],
-    beforeEnter(to, from, next) {
-      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
-        next({name: "home"})
-        return
-      }
-      
-      next()
-    },
+    ]
   },
   {
     path: "/assunto", // Adm
     children: [
       {path: "criar", name: "AssuntoCriar", component: AssuntoCriarView, meta: {title: 'Criar assunto - MinhaMente'}},
       {path: "editar/:id", name: "AssuntoEditar", component: AssuntoEditarView, meta: {title: 'Editar assunto - MinhaMente'}},
-    ],
-    beforeEnter(to, from, next) {
-      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
-        next({name: "home"})
-        return
-      }
-      
-      next()
-    },
+    ]
   },
   {
     path: "/tema", // Adm
     children: [
         {path: "criar", name: "TemaCriar", component: TemaCriarView, meta: {title: 'Criar tema - MinhaMente'}},
         {path: "editar/:id", name: "TemaEditar", component: TemaEditarView, meta: {title: 'Editar tema - MinhaMente'}},
-    ],
-    beforeEnter(to, from, next) {
-      if(LoginStore().usuario == undefined || LoginStore().usuario.role != 0){
-        next({name: "home"})
-        return
-      }
-      
-      next()
-    },
+    ]
   },
   {
     path: "/auth",
@@ -131,7 +98,8 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {definirAssunto: false},
   },
   {
     path: "/:pathMatch(.*)*",

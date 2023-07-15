@@ -7,21 +7,23 @@
     </div>
 </template>
 
-<script>
-import { HomeStore } from "@/stores/HomeStore.js";
-export default {
-    props: {
-        assunto: {
-            type: Object,
-            require: true
-        }
-    },
-    methods: {
-        async apontamentosDoAssunto(assunto) {
-            HomeStore().assuntoAtual = assunto._id
-            this.$router.push({name: "home"})
-        }
+<script setup>
+import { useRouter } from "vue-router";
+import { Home } from "@/stores/Home.js";
+
+const storeHome = Home()
+const router = useRouter()
+
+const props = defineProps({
+    assunto: {
+        type: Object,
+        require: true
     }
+})
+
+function apontamentosDoAssunto(assunto) {
+    storeHome.definirAssunto(assunto)
+    router.push({name: "home", meta: { assunto, definirAssunto: true }})
 }
 </script>
 
@@ -58,7 +60,7 @@ export default {
 }
 
 .assunto-nome {
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 700;
 }
 .assunto-nome {

@@ -4,36 +4,38 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios"
-import { LoginStore } from "@/stores/LoginStore.js";
-export default {
-    data(){
-        return {
-            erro: undefined
+import { Login } from "@/stores/Login.js";
+import { useRoute, useRouter } from "vue-router";
+
+const erro = undefined
+const storeLogin = Login()
+const route = useRoute()
+const router = useRouter()
+
+deletarConta()
+
+async function deletarConta() {
+    let config = {
+        method: 'delete',
+        url: `https://apiminhamente.onrender.com/deletarconta/${route.params.token}`,
+        headers: {
+            'authorization': `Bearer ${storeLogin.token}`
         }
-    },
-    async beforeRouteEnter(to, from, next) {
-        let config = {
-            method: 'delete',
-            url: `https://apiminhamente.onrender.com/deletarconta/${to.params.token}`,
-            headers: {
-                'authorization': `Bearer ${LoginStore().token}`
-            }
-        };
+    };
 
-        try {
-            await axios(config)
+    try {
+        await axios(config)
 
-            localStorage.removeItem("token")
-            localStorage.removeItem("usuario")
-            localStorage.removeItem("_links")
+        localStorage.removeItem("token")
+        localStorage.removeItem("usuario")
+        localStorage.removeItem("_links")
 
-            next({name: "home"})
-        } catch (erro) {
-            console.log(erro)
-            next(vm => vm.erro.erro.response.data.erro)
-        }
+        router.push({name: "home"})
+    } catch (error) {
+        console.log(error)
+        erro = error.response.data.erro
     }
 }
 </script>

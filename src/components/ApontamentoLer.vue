@@ -5,103 +5,99 @@
                 <span class="apontamento-titulo">{{ apontamento.titulo }}</span>
             </div>
             <div class="apontamento-data-area">
-                <span class="apontamento-data">Criado em: {{ formatarData(apontamento.created_at) }}</span>
-                <span class="apontamento-data" v-if="apontamento.edited_at != undefined">Editado em: {{ formatarData(apontamento.edited_at) }}</span>
+                <span class="apontamento-data" v-if="apontamento.created_at">Criado em: {{ formatarData(apontamento.created_at) }}</span>
+                <span class="apontamento-data" v-if="apontamento.edited_at">Editado em: {{ formatarData(apontamento.edited_at) }}</span>
             </div>
             <div class="apontamento-conteudo-area" v-html="apontamento.conteudo"></div>
         </div>
         <span id="erro">{{ erro }}</span>
-        <div class="botoes" v-if="LoginStore.usuario != undefined && LoginStore.usuario.role == 0">
+        <div class="botoes" v-if="storeLogin.usuario != undefined && storeLogin.usuario.role == 0">
             <BotaoApagar :botaoDesativado="botaoDesativado" :loading="loadingApagar" @click="deletar(apontamento)"/>
             <BotaoEditar :loading="loadingEditar" @click="editar(apontamento)"/>
         </div>
     </section>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
-import { LoginStore } from "@/stores/LoginStore.js";
+import { Login } from "@/stores/Login.js";
+import { ref, reactive, onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import BotaoApagar from "@/components/shared/BotaoApagar.vue";
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
-export default {
-    components:{
-        BotaoApagar,
-        BotaoEditar
-    },
-    data() {
-        return {
-            apontamento: {},
-            LoginStore: LoginStore(),
-            loadingApagar: false,
-            loadingEditar: false,
-            botaoDesativado: false,
-        }
-    },
-    beforeMount() {
-        this.pegarApontamento()
-    },
-    methods: {
-        formatarData(data) {
-            if (data == undefined) {
-                return
-            }
 
-            let opcoes = { month: 'long' };
-            let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
-            let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
-            
-            return dataFormatada
-        },
-        async pegarApontamento() {
-            let config = {
-                method: 'get',
-                url: 'https://apiminhamente.onrender.com/apontamento/'+this.$route.params.id
-            };
+const route = useRoute()
+const router = useRouter()
+let apontamento = ref({})
+const storeLogin = Login()
+const loadingApagar = ref(false)
+const loadingEditar = ref(false)
+const botaoDesativado = ref(false)
 
-            try {
-                let apontamento = await axios(config)
-                
-                if(apontamento.data.apontamento != undefined) {
-                    this.apontamento = apontamento.data.apontamento
-                    document.title = `${apontamento.data.apontamento.titulo} - MinhaMente`
-                }
-            } catch (erro) {
-                console.log(erro);
-                this.$router.push({name: "home"})
-            }
-        },
-        async editar(apontamento) {
-            this.loadingEditar = true
-            this.$router.push({name: "ApontamentoEditar", params: {id: apontamento.id}})
-        },
-        async deletar(apontamento) {
-            let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
-            
-            if(deletar) {
-                this.loadingApagar = true
-                this.botaoDesativado = true
-                
-                let config = {
-                    method: 'delete',
-                    url: 'https://apiminhamente.onrender.com/apontamento/'+apontamento.id,
-                    headers: {
-                        'authorization': `Bearer ${LoginStore().token}`
-                    }
-                };
+onBeforeMount(async () => {
+    await pegarApontamento()
+})
+
+function formatarData(data) {
+    if (data == undefined) {
+        return
+    }
+
+    let opcoes = { month: 'long' };
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+    let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
     
-                try {
-                    await axios(config)
-                    this.loadingApagar = false
-                    this.botaoDesativado = false
-                    this.$router.push({name: "home"})
-                } catch (erro) {   
-                    console.log(erro);
-                    this.loadingApagar = false
-                    this.botaoDesativado = false
-                }
+    return dataFormatada
+}
+
+async function pegarApontamento() {
+    let config = {
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/apontamento/'+route.params.id
+    };
+
+    try {
+        let { data } = await axios(config)
+
+        apontamento.value = data.apontamento
+        document.title = `${data.apontamento.titulo} - MinhaMente`
+    } catch (error) {
+        console.log(error);
+        router.push({name: "home"})
+    }
+}
+
+async function editar(apontamento) {
+    loadingEditar.value = true
+    router.push({name: "ApontamentoEditar", params: {id: apontamento.id}})
+}
+
+async function deletar(apontamento) {
+    let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
+    
+    if(deletar) {
+        loadingApagar.value = true
+        botaoDesativado.value = true
+        
+        let config = {
+            method: 'delete',
+            url: 'https://apiminhamente.onrender.com/apontamento/'+apontamento.id,
+            headers: {
+                'authorization': `Bearer ${storeLogin.token}`
             }
-        },
-    },
+        };
+
+        try {
+            await axios(config)
+            loadingApagar.value = false
+            botaoDesativado.value = false
+            router.push({name: "home"})
+        } catch (error) {   
+            console.log(error);
+            loadingApagar.value = false
+            botaoDesativado.value = false
+        }
+    }
 }
 </script>
 
@@ -130,7 +126,7 @@ section {
 
 .apontamento-titulo {
     color: black;
-    font-size: 2.4rem;
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -143,7 +139,7 @@ section {
 
 .apontamento-data {
     color: black;
-    font-size: 1.6rem;
+    font-size: 16px;
     font-weight: 500;
 }
 

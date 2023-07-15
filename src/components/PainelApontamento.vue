@@ -15,15 +15,13 @@
     </div>
 </template>
 
-<script>
-export default {
-    props: {
-        apontamento: {
-            type: Object,
-            require: true
-        }
+<script setup>
+const props = defineProps({
+    apontamento: {
+        type: Object,
+        require: true
     }
-}
+})
 </script>
 
 <style scoped>
@@ -65,7 +63,7 @@ export default {
 
 .apontamento-titulo {
     color: black;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 500;
 }
 

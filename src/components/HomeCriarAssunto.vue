@@ -8,25 +8,20 @@
 </div>
 </template>
 
-<script>
-import { HomeStore } from "@/stores/HomeStore.js";
-export default {
-    props: {
-        assunto: {
-            type: Object,
-            require: true
-        }
-    },
-    data() {
-        return {
-            HomeStore: HomeStore(),
-        }
-    },
-    methods: {
-        async criarAssunto() {
-            this.$router.push({name: "AssuntoCriar"})
-        }
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter()
+
+const props = defineProps({
+    assunto: {
+        type: Object,
+        require: true
     }
+})
+
+async function criarAssunto() {
+    router.push({name: "AssuntoCriar"})
 }
 </script>
 

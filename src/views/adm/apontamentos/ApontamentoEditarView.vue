@@ -1,26 +1,32 @@
 <template>
     <div>
-        <AppNavBar/>
+        <NavBar/>
         <div class="container-box">
             <div class="editar-container">
-                <AppLateralBar/>
+                <LateralBar/>
                 <ApontamentoEditar/>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import AppNavBar from "@/components/shared/AppNavBar.vue";
-import AppLateralBar from "@/components/shared/AppLateralBar.vue";
+<script setup>
+import NavBar from "@/components/shared/NavBar.vue";
+import LateralBar from "@/components/shared/LateralBar.vue";
 import ApontamentoEditar from "@/components/ApontamentoEditar.vue";
-export default {
-    components: {
-        AppNavBar,
-        AppLateralBar,
-        ApontamentoEditar
+import { onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+import { Login } from "@/stores/Login.js";
+
+const storeLogin = Login()
+const router = useRouter()
+
+onBeforeMount(() => {
+    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
+        router.push({name: "home"})
+        return
     }
-}
+})
 </script>
 
 <style scoped>
