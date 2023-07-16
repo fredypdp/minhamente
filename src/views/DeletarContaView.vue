@@ -9,7 +9,7 @@ import axios from "axios"
 import { Login } from "@/stores/Login.js";
 import { useRoute, useRouter } from "vue-router";
 
-const erro = undefined
+let erro = undefined
 const storeLogin = Login()
 const route = useRoute()
 const router = useRouter()
