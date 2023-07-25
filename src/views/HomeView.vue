@@ -84,7 +84,7 @@ const PaginaAtual = ref(1)
 const currentPage = ref(1)
 const ItensPorPagina = ref(20)
 const temasLista = ref([])
-const TemaSelecionado = ref("")
+let TemaSelecionado = ref("")
 const criacaoCrescente = ref(false)
 const apontamentosSkeleton = ref(false)
 const ApontamentosMostrar = computed(() => {
@@ -113,6 +113,8 @@ onMounted(() => {
 })
 
 watch(() => storeHome.assuntoAtual, (novaAssunto, antigaAssunto) => {
+    TemaSelecionado.value = ""
+
     if (novaAssunto != undefined && novaAssunto != "todos") {
       pegarApontamentosDoAssunto(novaAssunto)
       pegarTemasDoAssunto(novaAssunto)
@@ -125,16 +127,18 @@ watch(() => storeHome.assuntoAtual, (novaAssunto, antigaAssunto) => {
   }
 )
 
-watch(TemaSelecionado.value, async (novo, antigo) => {
-    if(novo == undefined) {
+watch(TemaSelecionado, async (novo, antigo) => {    
+    if(novo == undefined || novo == null) {
       if (storeHome.assuntoAtual != undefined && storeHome.assuntoAtual != "todos") {
         pegarApontamentosDoAssunto(storeHome.assuntoAtual)
         pegarTemasDoAssunto(storeHome.assuntoAtual)
       } else {
         pegarApontamentos()
       }
+
+      return
     }
-    
+
     apontamentosSkeleton.value = true
 
     let config = {
@@ -144,6 +148,7 @@ watch(TemaSelecionado.value, async (novo, antigo) => {
 
     try {
       let { data } = await axios(config)
+      console.log(data);
       apontamentos.value = data.tema.apontamentos.filter(apontamento => apontamento.visibilidade == true)
       apontamentosSkeleton.value = false
     } catch (error) {

@@ -1,7 +1,7 @@
 <template>
 <div id="perfil-view">
     <NavBar/>
-    <div class="container-box">
+    <div class="container-box" v-if="storeLogin.usuario != undefined">
         <div class="perfil-container">
             <div class="cartao-usuario-mobile">
                 <img :src="storeLogin.usuario.avatar" draggable="false" class="foto-perfil">
@@ -13,6 +13,8 @@
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="email-erro">Não existe uma conta com esse email</span>
+                <span id="response-sucesso">{{ responseSucesso}}</span>
+                <span id="response-erro">{{ responseErro }}</span>
             </div>
             <div class="editar">
                 <ContaEditar/>
@@ -55,13 +57,14 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, onMounted } from "vue";
 import { Login } from "@/stores/Login.js";
 import { useRouter } from "vue-router";
 import ContaEditar from "@/components/ContaEditar.vue";
 import NavBar from "@/components/shared/NavBar.vue";
 
 const router = useRouter()
+const storeLogin = Login()
 
 onBeforeMount(() => {
     if(storeLogin.usuario == undefined){
@@ -70,9 +73,9 @@ onBeforeMount(() => {
     }
 })
 
-const storeLogin = Login()
-
-document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
+if(storeLogin.usuario != undefined){
+    document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
+}
 
 const loadingLogout = ref(false)
 const botaoSairDesativado = ref(false)
@@ -90,7 +93,7 @@ async function logout(){
         method: 'post',
         url: 'https://apiminhamente.onrender.com/logout',
         headers: {
-            'authorization': `Bearer ${LoginStore().token}`
+            'authorization': `Bearer ${storeLogin.token}`
         }
     };
 
@@ -125,9 +128,9 @@ async function eliminarContaEmail(){
 
         let config = {
             method: 'post',
-            url: `https://apiminhamente.onrender.com/usuario/${LoginStore().usuario.id}/${LoginStore().usuario.email}`,
+            url: `https://apiminhamente.onrender.com/usuario/${storeLogin.usuario.id}/${storeLogin.usuario.email}`,
             headers: {
-                'authorization': `Bearer ${LoginStore().token}`
+                'authorization': `Bearer ${storeLogin.token}`
             }
         };
 

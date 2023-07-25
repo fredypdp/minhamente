@@ -37,7 +37,7 @@ const routes = [
   {
     name: "perfil",
     path: "/perfil",
-    meta: {title: ''},
+    meta: {title: 'Minha Conta'},
     component: PerfilView
   },
   {
