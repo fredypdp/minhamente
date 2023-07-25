@@ -34,18 +34,11 @@
 </template>
 
 <script setup>
+import { ref} from "vue";
 import axios from "axios";
-import { ref, onBeforeMount} from "vue";
+import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
 import NavBar from "@/components/shared/NavBar.vue";
-import { useRouter, onBeforeRouteLeave } from "vue-router";
-
-onBeforeMount(() => {
-    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
-        router.push({name: "home"})
-        return
-    }
-})
 
 const router = useRouter()
 const storeLogin = Login()
@@ -56,20 +49,6 @@ const iconeUrl = ref(undefined)
 const iconeRef = ref()
 const loading = ref(false)
 const botaoDesativado = ref(false)
-
-onBeforeRouteLeave((to, from, next) => {
-    if (nome.value.length > 0 || icone.value != undefined) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
-})
 
 function Showicone(){
     const img = iconeRef.value.files[0]
@@ -106,6 +85,14 @@ async function criar(){
 }
 
 function cancelar() {
+    if (nome.value.length > 0 || icone.value != undefined) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+    
     router.push({name: "home"})
 }
 </script>

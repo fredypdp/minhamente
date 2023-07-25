@@ -62,7 +62,7 @@ import axios from "axios";
 import { Login } from "@/stores/Login.js";
 import TinyMCE from '@tinymce/tinymce-vue';
 import Multiselect from '@vueform/multiselect';
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted , onBeforeMount, watch} from "vue";
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
 import BotaoCancelar from "@/components/shared/BotaoCancelar.vue";
@@ -83,20 +83,6 @@ const TemasSelecionados = ref([])
 const AssuntosSelecionados = ref([])
 const temasLista = ref([])
 const assuntosLista = ref([])
-
-onBeforeRouteLeave((to, from, next) => {
-    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
-})
 
 onBeforeMount(async () => {
 
@@ -228,6 +214,14 @@ async function pegarAssuntos() {
 }
 
 function cancelar() {
+    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+
     router.push({name: "home"})
 }
 </script>

@@ -50,7 +50,7 @@
 
 <script setup>
 import axios from "axios";
-import { useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
 import { ref, watch, onMounted } from "vue";
 import Multiselect from '@vueform/multiselect'
@@ -73,20 +73,6 @@ const TemasSelecionados = ref([])
 const AssuntosSelecionados = ref([])
 const temasLista = ref([])
 const assuntosLista = ref([])
-
-onBeforeRouteLeave((to, from, next) => {
-    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
-})
 
 onMounted(() => {
     pegarAssuntos()
@@ -181,6 +167,14 @@ async function pegarAssuntos() {
 }
 
 function cancelar() {
+    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+
     router.push({name: "home"})
 }
 </script>

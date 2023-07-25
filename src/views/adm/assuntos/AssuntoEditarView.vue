@@ -37,15 +37,8 @@
 import axios from "axios";
 import { ref, onBeforeMount } from "vue";
 import { Login } from "@/stores/Login.js";
+import { useRoute, useRouter } from "vue-router";
 import NavBar from "@/components/shared/NavBar.vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
-
-onBeforeMount(() => {
-    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
-        router.push({name: "home"})
-        return
-    }
-})
 
 const route = useRoute()
 const router = useRouter()
@@ -57,20 +50,6 @@ const nome = ref("")
 const icone = ref(undefined)
 const iconeUrl = ref("")
 const iconeRef = ref()
-
-onBeforeRouteLeave((to, from, next) => {
-    if (nome.value.length > 0 || icone.value != undefined) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
-})
 
 onBeforeMount(async () => {
     let config = {
@@ -133,6 +112,14 @@ async function editar(){
 }
 
 function cancelar() {
+    if (nome.value.length > 0 || icone.value != undefined) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+    
     router.push({name: "home"})
 }
 </script>

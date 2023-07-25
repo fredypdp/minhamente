@@ -28,16 +28,10 @@
 import axios from "axios";
 import { ref, onBeforeMount } from "vue";
 import { Login } from "@/stores/Login.js";
-import Multiselect from '@vueform/multiselect';
 import NavBar from "@/components/shared/NavBar.vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 onBeforeMount(async () => {
-    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
-        router.push({name: "home"})
-        return
-    }
-
     let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/tema/'+route.params.id
@@ -56,20 +50,6 @@ onBeforeMount(async () => {
         console.log(error);
         router.go(-1)
     }
-})
-
-onBeforeRouteLeave((to, from, next) => {
-    if (titulo.value.length > 0 || AssuntoSelecionado.value.length > 0) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
 })
 
 const route = useRoute()
@@ -121,6 +101,14 @@ async function editar(){
 }
 
 function cancelar() {
+    if (titulo.value.length > 0 || AssuntoSelecionado.value.length > 0) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+    
     router.push({name: "home"})
 }
 </script>

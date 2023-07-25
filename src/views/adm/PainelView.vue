@@ -40,25 +40,14 @@
 </template>
 
 <script setup>
-import { Login } from "@/stores/Login.js";
+import { ref, computed } from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
-import { ref, computed, onBeforeMount} from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
-import { useRouter } from "vue-router";
 
 const route = useRoute()
-const router = useRouter()
-
-onBeforeMount(() => {
-    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
-        router.push({name: "home"})
-        return
-    }
-})
 
 const PaginaAtual = ref("")
 PaginaAtual.value = route.name
-const storeLogin = Login()
 const isPainel = computed(() => {
     return PaginaAtual.value === "painel"
 })

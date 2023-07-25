@@ -36,18 +36,11 @@
 
 <script setup>
 import axios from "axios";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
 import Multiselect from "@vueform/multiselect";
-import { ref, onMounted, onBeforeMount} from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
-import { useRouter, onBeforeRouteLeave } from "vue-router";
-
-onBeforeMount(() => {
-    if(storeLogin.usuario == undefined || storeLogin.usuario.role != 0){
-        router.push({name: "home"})
-        return
-    }
-})
 
 const storeLogin = Login()
 const router = useRouter()
@@ -60,20 +53,6 @@ const assuntosLista = ref([])
 
 onMounted(() => pegarAssuntos())
 
-onBeforeRouteLeave((to, from, next) => {
-    if (titulo.value.length > 0 || AssuntoSelecionado.value.length > 0) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            next()
-        }
-        
-        return
-    }
-
-    next()
-})
-
 async function criar(){
     loading.value = true
     botaoDesativado.value = true
@@ -83,7 +62,7 @@ async function criar(){
         method: 'post',
         url: 'https://apiminhamente.onrender.com/tema',
         headers: {
-            'authorization': `Bearer ${LoginStore().token}`
+            'authorization': `Bearer ${storeLogin.token}`
         },
         data: {
             titulo: titulo.value,
@@ -125,6 +104,14 @@ async function pegarAssuntos() {
 }
 
 function cancelar() {
+    if (titulo.value.length > 0 || AssuntoSelecionado.value.length > 0) {
+        let confirmar = confirm("Deseja realmente saír?")
+    
+        if(confirmar) {
+            router.push({name: "home"})
+        }
+    }
+    
     router.push({name: "home"})
 }
 </script>

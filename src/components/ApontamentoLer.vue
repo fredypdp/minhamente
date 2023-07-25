@@ -21,7 +21,7 @@
 <script setup>
 import axios from "axios";
 import { Login } from "@/stores/Login.js";
-import { ref, reactive, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BotaoApagar from "@/components/shared/BotaoApagar.vue";
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
@@ -45,9 +45,17 @@ function formatarData(data) {
 
     let opcoes = { month: 'long' };
     let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
-    let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${new Date(data).getHours()}:${new Date(data).getMinutes()}`
+    let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${formatarNumero(new Date(data).getHours())}:${formatarNumero(new Date(data).getMinutes())}`
     
     return dataFormatada
+}
+
+function formatarNumero(numero) {
+    if (numero < 10) {
+        return "0"+numero
+    }
+
+    return numero
 }
 
 async function pegarApontamento() {

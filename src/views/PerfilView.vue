@@ -57,7 +57,7 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onBeforeMount } from "vue";
+import { ref } from "vue";
 import { Login } from "@/stores/Login.js";
 import { useRouter } from "vue-router";
 import ContaEditar from "@/components/ContaEditar.vue";
@@ -66,16 +66,7 @@ import NavBar from "@/components/shared/NavBar.vue";
 const router = useRouter()
 const storeLogin = Login()
 
-onBeforeMount(() => {
-    if(storeLogin.usuario == undefined){
-        router.push({name: "home"})
-        return
-    }
-})
-
-if(storeLogin.usuario != undefined){
-    document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
-}
+document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
 
 const loadingLogout = ref(false)
 const botaoSairDesativado = ref(false)
@@ -141,7 +132,7 @@ async function eliminarContaEmail(){
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false
         } catch (error) {
-            console.log(erro);
+            console.log(error);
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false
             
