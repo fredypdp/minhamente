@@ -13,7 +13,7 @@
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="email-erro">Não existe uma conta com esse email</span>
-                <span id="response-sucesso">{{ responseSucesso}}</span>
+                <span id="response-sucesso">{{ responseSucesso }}</span>
                 <span id="response-erro">{{ responseErro }}</span>
             </div>
             <div class="editar">
@@ -46,7 +46,7 @@
                     </button>
                     <input type="hidden" name="id" value="" id="id">
                     <input type="hidden" name="email" value="" id="del-email">
-                    <span id="response-sucesso">{{ responseSucesso}}</span>
+                    <span id="response-sucesso">{{ responseSucesso }}</span>
                     <span id="response-erro">{{ responseErro }}</span>
                 </div>
             </div>
@@ -57,7 +57,7 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onBeforeMount, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { Login } from "@/stores/Login.js";
 import { useRouter } from "vue-router";
 import ContaEditar from "@/components/ContaEditar.vue";
@@ -81,8 +81,8 @@ const loadingLogout = ref(false)
 const botaoSairDesativado = ref(false)
 const botaoDeletarDesativado = ref(false)
 const loadingEliminarConta = ref(false)
-const responseErro = ref("")
-const responseSucesso = ref("")
+let responseErro = ref("")
+let responseSucesso = ref("")
 
 async function logout(){
     loadingLogout.value = true
