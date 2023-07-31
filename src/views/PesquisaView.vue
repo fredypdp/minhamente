@@ -47,7 +47,7 @@ import { useRoute, useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
 import NavBar from '@/components/shared/NavBar.vue'
 import DataCriacao from "@/components/shared/DataCriacao.vue";
-import ApontamentosList from '@/components/shared/ApontamentosList.vue';
+import ApontamentosList from '@/components/Apontamento/ApontamentosList.vue';
 
 const route = useRoute()
 const router = useRouter()
