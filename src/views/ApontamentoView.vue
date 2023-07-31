@@ -14,7 +14,7 @@
 import { onBeforeMount } from "vue";
 import { Home } from "@/stores/Home.js";
 import NavBar from "@/components/shared/NavBar.vue";
-import LateralBar from "@/components/shared/LateralBar.vue";
+import LateralBar from "@/components/Assunto/LateralBar.vue";
 import ApontamentoLer from "@/components/Apontamento/ApontamentoLer.vue";
 
 const storeHome = Home()

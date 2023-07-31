@@ -8,7 +8,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import Apontamento from "@/components/Apontamento.vue";
+import Apontamento from "@/components/Apontamento/Apontamento.vue";
 const props = defineProps({
     FlexColumn: Boolean,
     apontamentos: {

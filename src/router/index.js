@@ -23,10 +23,10 @@ const AssuntoEditarView = () => import(/*webpackChunckName: "assunto"*/"@/views/
 const TemaCriarView = () => import(/*webpackChunckName: "tema"*/"@/views/adm/temas/TemaCriarView.vue");
 const TemaEditarView = () => import(/*webpackChunckName: "tema"*/"@/views/adm/temas/TemaEditarView.vue");
 // Painel
-const PainelTemas = () => import(/*webpackChunckName: "painel"*/"@/components/PainelTemas.vue");
-const PainelAssuntos = () => import(/*webpackChunckName: "painel"*/"@/components/PainelAssuntos.vue");
-const PainelUsuarios = () => import(/*webpackChunckName: "painel"*/"@/components/PainelUsuarios.vue");
-const PainelApontamentos = () => import(/*webpackChunckName: "painel"*/"@/components/PainelApontamentos.vue");
+const PainelTemas = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelTemas.vue");
+const PainelAssuntos = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelAssuntos.vue");
+const PainelUsuarios = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelUsuarios.vue");
+const PainelApontamentos = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelApontamentos.vue");
 
 function deslogado(to, from, next) {
   if (usuario != null || undefined) {

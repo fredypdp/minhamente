@@ -20,8 +20,8 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Login } from "@/stores/Login.js";
 import { reactive } from "vue";
-import HomeAssunto from "@/components/HomeAssunto.vue";
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
+import HomeAssunto from "@/components/Home/HomeAssunto.vue";
 import HomeCriarAssunto from "@/components/Home/HomeCriarAssunto.vue";
 import HomeTodosAssuntos from "@/components/Home/HomeTodosAssuntos.vue";
 

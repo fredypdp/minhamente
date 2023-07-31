@@ -6,7 +6,7 @@
 
 <script setup>
 import { computed } from "vue";
-import ApontamentoSkeleton from "@/components/ApontamentoSkeleton.vue";
+import ApontamentoSkeleton from "@/components/Apontamento/ApontamentoSkeleton.vue";
 const props = defineProps({
     FlexColumn: Boolean,
 })

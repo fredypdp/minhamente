@@ -16,7 +16,7 @@
 <script setup>
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
-import LateralBarAssunto from "@/components/shared/LateralBarAssunto.vue";
+import LateralBarAssunto from "@/components/Assunto/LateralBarAssunto.vue";
 
 const loading = ref(false)
 const assuntos = ref([])

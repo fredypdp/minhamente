@@ -61,10 +61,10 @@ import { Login } from "@/stores/Login.js";
 import { useRoute } from "vue-router";
 import { ref, watch, computed, onMounted, onBeforeMount} from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
-import HomeAssuntosBar from "@/components/HomeAssuntosBar.vue";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
-import ApontamentosList from "@/components/shared/ApontamentosList.vue";
-import ApontamentosListSkeleton from "@/components/shared/ApontamentosListSkeleton.vue";
+import HomeAssuntosBar from "@/components/Home/HomeAssuntosBar.vue";
+import ApontamentosList from "@/components/Apontamento/ApontamentosList.vue";
+import ApontamentosListSkeleton from "@/components/Apontamento/ApontamentosListSkeleton.vue";
 
 const route = useRoute()
 
