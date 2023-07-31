@@ -22,8 +22,8 @@ import { Login } from "@/stores/Login.js";
 import { reactive } from "vue";
 import HomeAssunto from "@/components/HomeAssunto.vue";
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
-import HomeCriarAssunto from "@/components/HomeCriarAssunto.vue";
-import HomeTodosAssuntos from "@/components/HomeTodosAssuntos.vue";
+import HomeCriarAssunto from "@/components/Home/HomeCriarAssunto.vue";
+import HomeTodosAssuntos from "@/components/Home/HomeTodosAssuntos.vue";
 
 const props = defineProps({
     assuntos: {

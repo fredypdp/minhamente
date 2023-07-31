@@ -136,9 +136,9 @@ import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
-import PainelApontamento from "@/components/PainelApontamento.vue";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
+import PainelApontamento from "@/components/Painel/PainelApontamento.vue";
 
 const storeLogin = Login()
 const router = useRouter()

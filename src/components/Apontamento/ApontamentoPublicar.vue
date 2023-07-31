@@ -5,7 +5,16 @@
             <input type="text" name="titulo" id="titulo" placeholder="Título do apontamento" autocomplete="off" autofocus v-model="titulo">
             <label for="apontamento-conteudo">Conteúdo:</label>
             <div class="apontamento-conteudo-area">
-                <textarea id="apontamento-conteudo"></textarea>
+                <TinyMCE
+                    v-model="conteudo"
+                    api-key="w8mi5xtp813615niwmrswpjffnbzalbn1oi1dfjrhc827fdf"
+                    :init="{
+                        min_height: 500,
+                        language: 'pt_BR',
+                        placeholder: 'Escreva os apontamentos aqui',
+                        plugins: 'advlist autolink link image lists preview searchreplace wordcount insertdatetime media save table emoticons code help print hr paste autoresize',
+                    }"
+                />
             </div>
             <span id="erro">{{ erro }}</span>
             <div class="botoes-area">
@@ -52,6 +61,7 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login.js";
+import TinyMCE from '@tinymce/tinymce-vue';
 import { ref, watch, onMounted } from "vue";
 import Multiselect from '@vueform/multiselect'
 import BotaoPublicar from "@/components/shared/BotaoPublicar.vue";

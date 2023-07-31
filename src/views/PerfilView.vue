@@ -58,10 +58,10 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
-import { Login } from "@/stores/Login.js";
 import { useRouter } from "vue-router";
-import ContaEditar from "@/components/ContaEditar.vue";
+import { Login } from "@/stores/Login.js";
 import NavBar from "@/components/shared/NavBar.vue";
+import ContaEditar from "@/components/Conta/ContaEditar.vue";
 
 const router = useRouter()
 const storeLogin = Login()

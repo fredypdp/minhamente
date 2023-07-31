@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import ContaCriar from "@/components/ContaCriar.vue";
+import ContaCriar from "@/components/Conta/ContaCriar.vue";
 </script>
 
 <style scoped>

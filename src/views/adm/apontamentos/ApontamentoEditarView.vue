@@ -13,7 +13,7 @@
 <script setup>
 import NavBar from "@/components/shared/NavBar.vue";
 import LateralBar from "@/components/shared/LateralBar.vue";
-import ApontamentoEditar from "@/components/ApontamentoEditar.vue";
+import ApontamentoEditar from "@/components/Apontamento/ApontamentoEditar.vue";
 </script>
 
 <style scoped>

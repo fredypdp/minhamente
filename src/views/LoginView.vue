@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import ContaLogin from "@/components/ContaLogin.vue";
+import ContaLogin from "@/components/Conta/ContaLogin.vue";
 </script>
 
 <style scoped>

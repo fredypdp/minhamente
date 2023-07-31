@@ -28,8 +28,8 @@
 import axios from "axios";
 import { ref, onBeforeMount } from "vue";
 import { Login } from "@/stores/Login.js";
-import NavBar from "@/components/shared/NavBar.vue";
 import { useRoute, useRouter } from "vue-router";
+import NavBar from "@/components/shared/NavBar.vue";
 
 onBeforeMount(async () => {
     let config = {
