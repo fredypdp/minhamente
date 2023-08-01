@@ -2,7 +2,7 @@
 <div class="criar-assunto-area" @click="criarAssunto">
     <div class="assunto">
         <div class="icone-area">
-            <img src="../assets/img/plus-svgrepo-com.svg" alt="Criar assunto" class="icone">
+            <img src="../../assets/img/plus-svgrepo-com.svg" alt="Criar assunto" class="icone">
         </div>
     </div>
 </div>
