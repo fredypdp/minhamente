@@ -97,7 +97,7 @@ async function logout(){
 
         loadingLogout.value = false
         botaoSairDesativado.value = false
-        router.value.go(0)
+        router.go(0)
     } catch (error) {
         console.log(error);
         
