@@ -13,8 +13,8 @@
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="email-erro">Não existe uma conta com esse email</span>
-                <span id="response-sucesso">{{ responseSucesso }}</span>
-                <span id="response-erro">{{ responseErro }}</span>
+                <span v-if="MostarResponseSucesso" class="response-sucesso">{{ responseSucesso }}</span>
+                <span v-if="MostarResponseErro" class="response-erro">{{ responseErro }}</span>
             </div>
             <div class="editar">
                 <ContaEditar/>
@@ -46,8 +46,8 @@
                     </button>
                     <input type="hidden" name="id" value="" id="id">
                     <input type="hidden" name="email" value="" id="del-email">
-                    <span id="response-sucesso">{{ responseSucesso }}</span>
-                    <span id="response-erro">{{ responseErro }}</span>
+                    <span v-if="MostarResponseSucesso" class="response-sucesso">{{ responseSucesso }}</span>
+                    <span v-if="MostarResponseErro" class="response-erro">{{ responseErro }}</span>
                 </div>
             </div>
         </div>
@@ -74,6 +74,8 @@ const botaoDeletarDesativado = ref(false)
 const loadingEliminarConta = ref(false)
 let responseErro = ref("")
 let responseSucesso = ref("")
+let MostarResponseErro = ref(false)
+let MostarResponseSucesso = ref(false)
 
 async function logout(){
     loadingLogout.value = true
@@ -102,7 +104,7 @@ async function logout(){
         console.log(error);
         
         responseErro.value = error.response.data.erro
-        document.getElementById("response-erro").style.display = "flex"
+        MostarResponseErro.value = true
         
         loadingLogout.value = false
         botaoSairDesativado.value = false
@@ -128,7 +130,7 @@ async function eliminarContaEmail(){
         try {
             let sucesso = await axios(config)
             responseSucesso.value = sucesso.data
-            document.getElementById("response-sucesso").style.display = "flex"
+            MostarResponseSucesso.value = true
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false
         } catch (error) {
@@ -137,7 +139,7 @@ async function eliminarContaEmail(){
             botaoDeletarDesativado.value = false
             
             responseErro.value = error.response.data.erro
-            document.getElementById("response-erro").style.display = "flex"
+            MostarResponseErro.value = true
         }
     }
 }
@@ -148,13 +150,13 @@ async function eliminarContaEmail(){
     padding-bottom: 50px;
 }
 
-#response-sucesso {
+.response-sucesso {
     display: none;
     color: green;
     margin-top: 5px;
 }
 
-#response-erro {
+.response-erro {
     display: none;
     color: red;
     margin-top: 5px;
