@@ -159,7 +159,7 @@ watch(TemaSelecionado, async (novo, antigo) => {
 )
 
 function paginar(pagina){
-  paginaAtual.value = pagina
+  PaginaAtual.value = pagina
 }
 
 async function ordenar() {
