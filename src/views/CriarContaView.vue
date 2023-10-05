@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ContaCriar from "@/components/Conta/ContaCriar.vue";
 </script>
 

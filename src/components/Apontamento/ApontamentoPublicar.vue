@@ -57,10 +57,10 @@
     </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login";
 import TinyMCE from '@tinymce/tinymce-vue';
 import { ref, watch, onMounted } from "vue";
 import Multiselect from '@vueform/multiselect'

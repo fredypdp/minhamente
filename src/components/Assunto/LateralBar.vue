@@ -13,7 +13,7 @@
     </aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 import LateralBarAssunto from "@/components/Assunto/LateralBarAssunto.vue";

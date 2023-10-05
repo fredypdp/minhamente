@@ -39,7 +39,7 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";

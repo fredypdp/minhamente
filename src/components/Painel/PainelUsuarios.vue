@@ -129,11 +129,11 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 

@@ -10,7 +10,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import NavBar from "@/components/shared/NavBar.vue";
 import LateralBar from "@/components/Assunto/LateralBar.vue";
 import ApontamentoPublicar from "@/components/Apontamento/ApontamentoPublicar.vue";

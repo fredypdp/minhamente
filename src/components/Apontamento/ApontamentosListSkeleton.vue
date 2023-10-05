@@ -4,7 +4,7 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import ApontamentoSkeleton from "@/components/Apontamento/ApontamentoSkeleton.vue";
 const props = defineProps({

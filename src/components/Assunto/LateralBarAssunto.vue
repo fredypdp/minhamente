@@ -7,9 +7,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from "vue-router";
-import { Home } from "@/stores/Home.js";
+import { Home } from "@/stores/Home";
 
 const storeHome = Home()
 const router = useRouter()

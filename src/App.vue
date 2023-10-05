@@ -2,7 +2,7 @@
   <router-view/>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -16,6 +16,11 @@ import { useRoute } from "vue-router";
 
   function updatePageTitle() {
     const pageTitle = route.meta.title
-    document.title = pageTitle || 'MinhaMente'
+    
+    if (typeof pageTitle === 'string') {
+      document.title = pageTitle || 'MinhaMente'
+    } else {
+      document.title = 'MinhaMente'
+    }
   }
 </script>

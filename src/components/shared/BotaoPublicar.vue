@@ -11,7 +11,7 @@
     </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
     botaoDesativado: false,
     loading: {

@@ -13,8 +13,8 @@
 </div>
 </template>
 
-<script setup>
-import { Home } from "@/stores/Home.js";
+<script setup lang="ts">
+import { Home } from "@/stores/Home.ts";
 
 const props = defineProps({
     assunto: {

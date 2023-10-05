@@ -135,7 +135,7 @@ import axios from "axios";
 import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login.ts";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 import PainelApontamento from "@/components/Painel/PainelApontamento.vue";

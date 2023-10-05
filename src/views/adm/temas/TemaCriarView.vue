@@ -34,11 +34,11 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login.ts";
 import Multiselect from "@vueform/multiselect";
 import NavBar from "@/components/shared/NavBar.vue";
 

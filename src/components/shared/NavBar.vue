@@ -38,9 +38,9 @@
         </header>
     </div>
 </template>
-<script setup>
-import { Home } from "@/stores/Home.js";
-import { Login } from "@/stores/Login.js";
+<script setup lang="ts">
+import { Home } from "@/stores/Home";
+import { Login } from "@/stores/Login";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import PerfilDropdown from "./PerfilDropdown.vue";

@@ -12,19 +12,19 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import Emitter from "../../Emitter.js";
 import { ref, watch, onMounted, onBeforeUnmount, inject, getCurrentInstance } from "vue";
 
 const instance = getCurrentInstance()
-const emitter = inject('emitter')
 const isOpen = ref(false)
 
-emitter.on('dropdownOpen', rootCloseDropdownVisibilidadeListener);
+Emitter.on('dropdownOpen', rootCloseDropdownVisibilidadeListener);
 const emit = defineEmits(["publico", "privado"])
 
 watch(isOpen, (value) => {
     if (value) {
-        emitter.emit('dropdownOpen', instance.proxy.$el);
+        Emitter.emit('dropdownOpen', instance.proxy.$el);
     }
 })
 

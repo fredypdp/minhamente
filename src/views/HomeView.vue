@@ -52,12 +52,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // @ is an alias to /src
 import axios from "axios";
 import Multiselect from "@vueform/multiselect";
-import { Home } from "@/stores/Home.js";
-import { Login } from "@/stores/Login.js";
+import { Home } from "@/stores/Home.ts";
+import { Login } from "@/stores/Login.ts";
 import { useRoute } from "vue-router";
 import { ref, watch, computed, onMounted, onBeforeMount} from "vue";
 import NavBar from "@/components/shared/NavBar.vue";

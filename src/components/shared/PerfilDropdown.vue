@@ -19,24 +19,24 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
+import Emitter from "../../Emitter.js";
 import { ref, watch, inject, onMounted, onBeforeUnmount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login";
 
 const instance = getCurrentInstance()
 
 const storeLogin = Login()
 const router = useRouter()
-const emitter = inject("emitter")
 const isOpen = ref(false)
 
-emitter.on('MenuDropdownOpen', rootClosePerfilDropdownListener);
+Emitter.on('MenuDropdownOpen', rootClosePerfilDropdownListener);
 
 watch(isOpen, (value) => {
     if (value) {
-        emitter.emit('MenuDropdownOpen', instance.proxy.$el);
+        Emitter.emit('MenuDropdownOpen', instance.proxy.$el);
     }
 })
 

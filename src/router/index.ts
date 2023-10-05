@@ -1,5 +1,9 @@
-let usuario = JSON.parse(localStorage.getItem("usuario"))
+import type { Usuario } from "../types/types";
 import { createRouter, createWebHistory } from "vue-router";
+import type { RouteRecordRaw, NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+
+
+let usuario: Usuario | null = localStorage.getItem("usuario") ? JSON.parse(localStorage.getItem("usuario")!) : null;
 
 const HomeView = () => import(/*webpackChunckName: "home"*/"@/views/HomeView.vue");
 const PesquisaView = () => import(/*webpackChunckName: "pesquisa"*/"@/views/PesquisaView.vue");
@@ -28,39 +32,37 @@ const PainelAssuntos = () => import(/*webpackChunckName: "painel"*/"@/components
 const PainelUsuarios = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelUsuarios.vue");
 const PainelApontamentos = () => import(/*webpackChunckName: "painel"*/"@/components/Painel/PainelApontamentos.vue");
 
-function deslogado(to, from, next) {
-  if (usuario != null || undefined) {
-    next({name: "home"})
-    return
+function deslogado(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
+  if (usuario !== null) {
+    next({ name: "home" });
+    return;
   }
-
-  next()
+  next();
 }
 
-function logado(to, from, next) {
-  if (usuario == null || undefined) {
-    next({name: "home"})
-    return
+function logado(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
+  if (usuario === null) {
+    next({ name: "home" });
+    return;
   }
-
-  next()
+  next();
 }
 
-function logadoAdm(to, from, next) {
-  if (usuario == null || undefined) {
-    next({name: "home"})
-    return
+function logadoAdm(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
+  if (usuario === null) {
+    next({ name: "home" });
+    return;
   }
   
-  if (usuario.role != 0) {
-    next({name: "home"})
-    return
+  if (usuario.role !== 0) {
+    next({ name: "home" });
+    return;
   }
 
-  next()
+  next();
 }
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     name: "pesquisa",
     meta: {title: ''},

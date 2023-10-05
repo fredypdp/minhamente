@@ -18,9 +18,9 @@
     </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login";
 import { ref, onBeforeMount, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BotaoApagar from "@/components/shared/BotaoApagar.vue";

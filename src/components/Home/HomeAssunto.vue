@@ -1,4 +1,4 @@
-<template>
+<template></template>
 <div>
     <div class="assunto-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto">
@@ -16,8 +16,8 @@
 </div>
 </template>
 
-<script setup>
-import { Home } from "@/stores/Home.js";
+<script setup lang="ts">
+import { Home } from "@/stores/Home";
 
 const props = defineProps({
     assunto: {

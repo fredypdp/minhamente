@@ -16,9 +16,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import 'vue3-carousel/dist/carousel.css'
-import { Login } from "@/stores/Login.js";
+import { Login } from "@/stores/Login";
 import { reactive } from "vue";
 import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import HomeAssunto from "@/components/Home/HomeAssunto.vue";
