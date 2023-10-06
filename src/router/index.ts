@@ -150,7 +150,9 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'home',
     component: HomeView,
-    meta: {definirAssunto: false},
+    meta: {
+      definirAssunto: false
+    },
   },
   {
     path: "/:pathMatch(.*)*",

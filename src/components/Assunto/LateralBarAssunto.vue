@@ -1,5 +1,5 @@
 <template>
-    <div class="assunto" @click="apontamentosDoAssunto(assunto)">
+    <div class="assunto" v-if="assunto" @click="apontamentosDoAssunto(assunto)">
         <div class="icone-area">
             <img :src="assunto.icone" draggable="false" alt="Ícone do assunto" class="icone">
         </div>
@@ -8,22 +8,23 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
 import { Home } from "@/stores/Home";
+import type { Assunto } from "@/types/types";
+import { useRouter } from "vue-router";
 
 const storeHome = Home()
 const router = useRouter()
 
 const props = defineProps({
     assunto: {
-        type: Object,
+        type: Object as () => Assunto,
         require: true
     }
 })
 
-function apontamentosDoAssunto(assunto) {
+function apontamentosDoAssunto(assunto?: Assunto) {
     storeHome.definirAssunto(assunto)
-    router.push({name: "home", meta: { assunto, definirAssunto: true }})
+    router.push({name: "home", meta: { assunto, definirAssunto: true }} as any)
 }
 </script>
 

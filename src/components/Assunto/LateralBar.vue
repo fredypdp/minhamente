@@ -16,20 +16,21 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
+import type { Assunto } from "@/types/types";
 import LateralBarAssunto from "@/components/Assunto/LateralBarAssunto.vue";
 
-const loading = ref(false)
-const assuntos = ref([])
+const loading = ref<boolean>(false)
+const assuntos = ref<Assunto[]>([])
 
 const DezAssuntos = computed(() => {
     return assuntos.value.slice(0, 10)
 })
 
-onMounted(() => {
+onMounted((): void => {
     pegarAssuntos()
 })
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     loading.value = true
 
     let config = {
