@@ -38,6 +38,7 @@
         </form>
     </div>
 </template>
+
 <script setup lang="ts">
 import axios from "axios";
 import { ref } from "vue";
@@ -47,49 +48,51 @@ import SenhaInput from "@/components/shared/SenhaInput.vue";
 
 const router = useRouter()
 const storeLogin = Login()
-const sucessoEsqueciSenha = ref("")
-const erroEsqueciSenha = ref("")
-const erroEditar = ref("")
-const avatar = ref(undefined)
-const avatarUrl = ref("")
-const avatarRef = ref()
-const nome = ref("")
-const sobrenome = ref("")
-const email = ref("")
-const senha = ref("")
-const loading = ref(false)
-const botaoDesativado = ref(false)
 
-function definirSenha(novaSenha) {
+const sucessoEsqueciSenha = ref<string>("")
+const erroEsqueciSenha = ref<string>("")
+const erroEditar = ref<string>("")
+const avatar = ref<any>(undefined)
+const avatarUrl = ref<string>("")
+const avatarRef = ref<any>()
+const nome = ref<string>("")
+const sobrenome = ref<string>("")
+const email = ref<string>("")
+const senha = ref<string>("")
+const loading = ref<boolean>(false)
+const botaoDesativado = ref<boolean>(false)
+
+function definirSenha(novaSenha: string): void {
     senha.value = novaSenha
 }
 
-function ShowAvatar(){
+function ShowAvatar(): void {
     const img = avatarRef.value.files[0]
     avatar.value = img;
     avatarUrl.value = URL.createObjectURL(img);
 }
 
-async function editar(){
+async function editar(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erroEditar").style.display = "none"
+    document.getElementById("erroEditar")!.style.display = "none"
 
     const formData = new FormData();
-    let id = storeLogin.usuario.id
+    let id
+    if (storeLogin.usuario) id = storeLogin.usuario.id
     let avatarValue = avatar.value
     let nomeValue = nome.value
     let sobrenomeValue = sobrenome.value
     let emailValue = email.value
     let senhaValue = senha.value
 
-    formData.append('id', id);
+    if(id) formData.append('id', id);
 
     if (avatarValue != undefined) {
         formData.append('avatar', avatarValue);
     }
     
-    if (nomeValue != undefined && nome.trim().length > 0) {
+    if (nomeValue != undefined && nome.toString().trim().length > 0) {
         formData.append('nome', nomeValue);
     }
     
@@ -107,7 +110,7 @@ async function editar(){
     
     try {
         // Editando
-        let usuarioEditado = await axios.put("https://apiminhamente.onrender.com/usuario", formData, {headers: {
+        let usuarioEditado: any = await axios.put("https://apiminhamente.onrender.com/usuario", formData, {headers: {
             'authorization': `Bearer ${storeLogin.token}`
         }})
         
@@ -124,34 +127,34 @@ async function editar(){
         loading.value = false
         botaoDesativado.value = false
         router.go(0)
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        document.getElementById("erroEditar")!.style.display = "flex"
     }
 }
 
-async function login(email, senha) {
+async function login(email: string, senha: string): Promise<void> {
     try {
         let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: email, senha: senha})
                             
         localStorage.setItem("token", JSON.stringify(data.token))
         localStorage.setItem("usuario", JSON.stringify(data.usuario))
         localStorage.setItem("_links", JSON.stringify(data._links))
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        document.getElementById("erroEditar")!.style.display = "flex"
     }
 }
 
-async function logout() {
+async function logout(): Promise<void> {
     try {
         await axios({
             method: 'post',
@@ -164,31 +167,33 @@ async function logout() {
         localStorage.removeItem("token")
         localStorage.removeItem("usuario")
         localStorage.removeItem("_links")
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        document.getElementById("erroEditar")!.style.display = "flex"
     }
 }
 
-async function esqueciSenha() {
-    try {
-        let config = {
-            method: 'post',
-            url: `https://apiminhamente.onrender.com/recuperarsenha/${storeLogin.usuario.email}`
-        };
-
-        let sucesso = await axios(config)
-        sucessoEsqueciSenha.value = sucesso.data
-        document.getElementById("sucessoEsqueciSenha").style.display = "flex"
-    } catch (error) {
-        console.log(error);
-        
-        erroEsqueciSenha.value = error.response.data.erro
-        document.getElementById("erroEsqueciSenha").style.display = "flex"
+async function esqueciSenha(): Promise<void> {
+    if (storeLogin.usuario) {
+        try {
+            let config = {
+                method: 'post',
+                url: `https://apiminhamente.onrender.com/recuperarsenha/${storeLogin.usuario.email}`
+            };
+    
+            let sucesso = await axios(config)
+            sucessoEsqueciSenha.value = sucesso.data
+            document.getElementById("sucessoEsqueciSenha")!.style.display = "flex"
+        } catch (error: any) {
+            console.log(error);
+            
+            erroEsqueciSenha.value = error.response.data.erro
+            document.getElementById("erroEsqueciSenha")!.style.display = "flex"
+        }
     }
 }
 </script>

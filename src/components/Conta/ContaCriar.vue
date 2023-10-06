@@ -36,6 +36,7 @@
         </form>
     </div>
 </template>
+
 <script setup lang="ts">
 import axios from "axios";
 import { ref } from "vue";
@@ -43,31 +44,32 @@ import { useRouter } from "vue-router";
 import SenhaInput from "@/components/shared/SenhaInput.vue";
 
 const router = useRouter()
-const erro = ref("")
-const avatarUrl = ref("")
-const avatarRef = ref()
-const avatar = ref(undefined)
-const nome = ref("")
-const sobrenome = ref("")
-const email = ref("")
-const senha = ref("")
-const loading = ref(false)
+
+const erro = ref<string>("")
+const avatarUrl = ref<string>("")
+const avatarRef = ref<any>()
+const avatar = ref<any>(undefined)
+const nome = ref<string>("")
+const sobrenome = ref<string>("")
+const email = ref<string>("")
+const senha = ref<string>("")
+const loading = ref<boolean>(false)
 const botaoDesativado = ref(false)
 
-function definirSenha(novaSenha) {
+function definirSenha(novaSenha: string) {
     senha.value = novaSenha
 }
 
-function ShowAvatar(){
+function ShowAvatar(): void {
     const img = avatarRef.value.files[0]
     avatar.value = img;
     avatarUrl.value = URL.createObjectURL(img);
 }
 
-async function criar(){
+async function criar(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
     const formData = new FormData();
     let nomeValue = nome.value
@@ -91,30 +93,30 @@ async function criar(){
         loading.value = false
         botaoDesativado.value = false
         router.go(0)
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 
-async function login(email, senha) {
+async function login(email: string, senha: string): Promise<any> {
     try {
         let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: email, senha: senha})
                             
         localStorage.setItem("token", JSON.stringify(data.token))
         localStorage.setItem("usuario", JSON.stringify(data.usuario))
         localStorage.setItem("_links", JSON.stringify(data._links))
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
-        erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        erro.value = error.response.data.erro
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 </script>

@@ -32,20 +32,20 @@ import { useRouter } from "vue-router";
 import SenhaInput from "@/components/shared/SenhaInput.vue";
 
 const router = useRouter()
-const erro = ref(undefined);
-const email = ref(undefined);
-const senha = ref(undefined);
-const loading = ref(false);
-const botaoDesativado = ref(false);
+const erro = ref<string | undefined>(undefined);
+const email = ref<string | undefined>(undefined);
+const senha = ref<string | undefined>(undefined);
+const loading = ref<boolean>(false);
+const botaoDesativado = ref<boolean>(false);
 
-function definirSenha(novaSenha) {
+function definirSenha(novaSenha: string) {
     senha.value = novaSenha
 }
 
 async function login() {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
     let config = {
         method: 'post',
@@ -67,10 +67,10 @@ async function login() {
         loading.value = false
         botaoDesativado.value = false
         router.go(0)
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
         
         loading.value = false
         botaoDesativado.value = false
