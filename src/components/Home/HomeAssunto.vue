@@ -18,17 +18,18 @@
 
 <script setup lang="ts">
 import { Home } from "@/stores/Home";
+import type { Assunto } from "@/types/types";
 
 const props = defineProps({
     assunto: {
-        type: Object,
+        type: Object as () => Assunto,
         require: true
     }
 })
 
 const storeHome = Home()
 
-function apontamentosDoAssunto(assunto) {
+function apontamentosDoAssunto(assunto: Assunto) {
     storeHome.definirAssunto(assunto)
 }
 </script>

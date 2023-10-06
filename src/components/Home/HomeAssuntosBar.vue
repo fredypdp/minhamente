@@ -24,10 +24,11 @@ import { Carousel, Slide, Navigation } from 'vue3-carousel';
 import HomeAssunto from "@/components/Home/HomeAssunto.vue";
 import HomeCriarAssunto from "@/components/Home/HomeCriarAssunto.vue";
 import HomeTodosAssuntos from "@/components/Home/HomeTodosAssuntos.vue";
+import type { Assunto } from "@/types/types";
 
 const props = defineProps({
     assuntos: {
-        type: Array,
+        type: Array as () => Assunto[],
     }
 })
 

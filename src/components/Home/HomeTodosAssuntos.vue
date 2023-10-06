@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { Home } from "@/stores/Home.ts";
+import { Home } from "@/stores/Home";
 
 const props = defineProps({
     assunto: {

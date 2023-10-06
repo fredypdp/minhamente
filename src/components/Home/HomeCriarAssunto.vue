@@ -10,12 +10,13 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import type { Assunto } from "@/types/types";
 
 const router = useRouter()
 
 const props = defineProps({
     assunto: {
-        type: Object,
+        type: Object as () => Assunto,
         require: true
     }
 })
