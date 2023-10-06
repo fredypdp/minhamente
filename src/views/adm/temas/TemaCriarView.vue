@@ -38,25 +38,29 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import Multiselect from "@vueform/multiselect";
+import type { Assunto } from "@/types/types";
 import NavBar from "@/components/shared/NavBar.vue";
 
 const storeLogin = Login()
 const router = useRouter()
-const erro = ref("")
-const loading = ref(false)
-const botaoDesativado = ref(false)
-const titulo = ref("")
-const AssuntoSelecionado = ref("")
-const assuntosLista = ref([])
+
+const erro = ref<string>("")
+const loading = ref<boolean>(false)
+const botaoDesativado = ref<boolean>(false)
+const titulo = ref<string>("")
+const AssuntoSelecionado = ref<string>("")
+
+type AssuntoSel = {value: string, label: string};
+const assuntosLista = ref<AssuntoSel[]>([]);
 
 onMounted(() => pegarAssuntos())
 
 async function criar(){
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
     let config = {
         method: 'post',
@@ -76,13 +80,13 @@ async function criar(){
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "PainelTemas"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 
@@ -95,7 +99,7 @@ async function pegarAssuntos() {
     try {
         let { data } = await axios(config)
 
-        data.assuntos.forEach( assunto => {
+        data.assuntos.forEach( (assunto: Assunto) => {
             assuntosLista.value.push({value: assunto._id, label: assunto.nome})
         })
     } catch (error) {

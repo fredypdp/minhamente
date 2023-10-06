@@ -6,10 +6,11 @@
 
 <script setup lang="ts">
 import axios from "axios"
-import { Login } from "@/stores/Login.ts";
+import { ref } from "vue";
+import { Login } from "@/stores/Login";
 import { useRoute, useRouter } from "vue-router";
 
-let erro = undefined
+let erro = ref<string | undefined>(undefined)
 const storeLogin = Login()
 const route = useRoute()
 const router = useRouter()
@@ -33,9 +34,9 @@ async function deletarConta() {
         localStorage.removeItem("_links")
 
         router.push({name: "home"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error)
-        erro = error.response.data.erro
+        erro.value = error.response.data.erro
     }
 }
 </script>

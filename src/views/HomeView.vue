@@ -56,8 +56,8 @@
 // @ is an alias to /src
 import axios from "axios";
 import Multiselect from "@vueform/multiselect";
-import { Home } from "@/stores/Home.ts";
-import { Login } from "@/stores/Login.ts";
+import { Home } from "@/stores/Home";
+import { Login } from "@/stores/Login";
 import { useRoute } from "vue-router";
 import { ref, watch, computed, onMounted, onBeforeMount} from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
@@ -65,37 +65,38 @@ import DataCriacao from "@/components/shared/DataCriacao.vue";
 import HomeAssuntosBar from "@/components/Home/HomeAssuntosBar.vue";
 import ApontamentosList from "@/components/Apontamento/ApontamentosList.vue";
 import ApontamentosListSkeleton from "@/components/Apontamento/ApontamentosListSkeleton.vue";
+import type { Assunto, Apontamento, Tema } from "@/types/types";
 
 const route = useRoute()
 
 onBeforeMount(() => {
   if(route.meta.definirAssunto) {
-    storeHome.assuntoAtual = route.meta.assunto
+    storeHome.assuntoAtual = route.meta.assunto as string
   }
 })
 
 const storeHome = Home()
 const storeLogin = Login()
-const loading = ref(false)
-const assuntos = ref([])
-const assuntoPagina = ref("")
-const apontamentos = ref([])
-const PaginaAtual = ref(1)
-const currentPage = ref(1)
-const ItensPorPagina = ref(20)
-const temasLista = ref([])
-let TemaSelecionado = ref("")
-const criacaoCrescente = ref(false)
-const apontamentosSkeleton = ref(false)
+
+const loading = ref<boolean>(false)
+const assuntos = ref<Assunto[] & string[]>([])
+const assuntoPagina = ref<string>("")
+const apontamentos = ref<Apontamento[]>([])
+const PaginaAtual = ref<number>(1)
+const currentPage = ref<number>(1)
+const ItensPorPagina = ref<number>(20)
+let TemaSelecionado = ref<string>("")
+const criacaoCrescente = ref<boolean>(false)
+const apontamentosSkeleton = ref<boolean>(false)
+const apontamentosTotal = computed(() => apontamentos.value.length)
 const ApontamentosMostrar = computed(() => {
   let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
   let fim = inicio + ItensPorPagina.value
   return apontamentos.value.slice(inicio, fim)
 })
 
-const apontamentosTotal = computed(() => {
-  return apontamentos.value.length
-})
+type TemaSel = { value: string; label: string;};
+const temasLista = ref<TemaSel[]>([]);
 
 onMounted(() => {
   pegarAssuntos()
@@ -149,7 +150,7 @@ watch(TemaSelecionado, async (novo, antigo) => {
     try {
       let { data } = await axios(config)
       console.log(data);
-      apontamentos.value = data.tema.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+      apontamentos.value = data.tema.apontamentos.filter((apontamento: Apontamento) => apontamento.visibilidade == true)
       apontamentosSkeleton.value = false
     } catch (error) {
       console.log(error);
@@ -158,7 +159,7 @@ watch(TemaSelecionado, async (novo, antigo) => {
   }
 )
 
-function paginar(pagina){
+function paginar(pagina: number): void {
   PaginaAtual.value = pagina
 }
 
@@ -204,28 +205,28 @@ async function ordenar() {
   }
 }
 
-async function pegarAssuntos() {
-loading.value = true
+async function pegarAssuntos(): Promise<void> {
+  loading.value = true
 
-let config = {
-    method: 'get',
-    url: 'https://apiminhamente.onrender.com/assuntos'
-};
+  let config = {
+      method: 'get',
+      url: 'https://apiminhamente.onrender.com/assuntos'
+  };
 
-try {
-  let { data } = await axios(config)
-    
-  assuntos.value.push("Usado pra preencher o primeiro index (Todos os assuntos)")
-  data.assuntos.forEach( assunto => assuntos.value.push(assunto))
-  assuntos.value.push("Usado pra preencher o último index (Criar assunto)")
-  loading.value = false
-} catch (error) {
-  console.log(error);
-  loading.value = false
+  try {
+    let { data } = await axios(config)
+      
+    assuntos.value.push("Usado pra preencher o primeiro index (Todos os assuntos)")
+    data.assuntos.forEach( (assunto: Assunto) => assuntos.value.push(assunto))
+    assuntos.value.push("Usado pra preencher o último index (Criar assunto)")
+    loading.value = false
+  } catch (error) {
+    console.log(error);
+    loading.value = false
+  }
 }
-}
 
-async function pegarApontamentos() {
+async function pegarApontamentos(): Promise<void> {
   apontamentosSkeleton.value = true
 
   let config = {
@@ -243,7 +244,7 @@ async function pegarApontamentos() {
     } 
       
     if(storeLogin.usuario == undefined || storeLogin.usuario.role == 1){
-      apontamentos.value = data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
+      apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => apontamento.visibilidade == true)
       apontamentosSkeleton.value = false
       return
     }
@@ -253,7 +254,7 @@ async function pegarApontamentos() {
   }
 }
 
-async function pegarApontamentosDoAssunto(assunto) {
+async function pegarApontamentosDoAssunto(assunto: string): Promise<void> {
   apontamentosSkeleton.value = true
   
   let config = {
@@ -265,7 +266,7 @@ async function pegarApontamentosDoAssunto(assunto) {
     let { data } = await axios(config)
 
     if(storeLogin.usuario != undefined && storeLogin.usuario.role == 0) {
-      apontamentos.value = data.assunto.apontamentos.sort( (a,b) => {
+      apontamentos.value = data.assunto.apontamentos.sort( (a: Apontamento, b: Apontamento) => {
         if(a.created_at < b.created_at) {
           return 1
         }
@@ -280,7 +281,7 @@ async function pegarApontamentosDoAssunto(assunto) {
     } 
     
     if(storeLogin.usuario == undefined || storeLogin.usuario.role == 1){
-      apontamentos.value = data.assunto.apontamentos.filter(apontamento => apontamento.visibilidade == true).sort( (a,b) => {
+      apontamentos.value = data.assunto.apontamentos.filter((apontamento: Apontamento) => apontamento.visibilidade == true).sort( (a: Apontamento, b: Apontamento) => {
         if(a.created_at < b.created_at) {
           return 1
         }
@@ -300,7 +301,7 @@ async function pegarApontamentosDoAssunto(assunto) {
   }
 }
 
-async function pegarTemasDoAssunto(assunto) {
+async function pegarTemasDoAssunto(assunto: string): Promise<void> {
   apontamentosSkeleton.value = true
   
   let config = {
@@ -312,7 +313,7 @@ async function pegarTemasDoAssunto(assunto) {
     let { data } = await axios(config)
     temasLista.value = []
 
-    data.assunto.temas.forEach( tema => temasLista.value.push({value: tema._id, label: tema.titulo}))
+    data.assunto.temas.forEach( (tema: Tema) => temasLista.value.push({value: tema._id, label: tema.titulo}))
     apontamentosSkeleton.value = false
   } catch (error) {
     console.log(error);

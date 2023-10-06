@@ -43,11 +43,12 @@
 import { ref, computed } from "vue";
 import NavBar from "@/components/shared/NavBar.vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import type { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 
 const route = useRoute()
 
-const PaginaAtual = ref("")
-PaginaAtual.value = route.name
+const PaginaAtual = ref<string>("")
+PaginaAtual.value = route.name as string
 const isPainel = computed(() => {
     return PaginaAtual.value === "painel"
 })
@@ -75,9 +76,12 @@ const nomePagina = computed(() => {
 })
 
 onBeforeRouteUpdate(
-    (to, from, next) => { // Nome da página atual
-        PaginaAtual.value = to.name
-        next()
+    (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+        if (PaginaAtual) {
+            // Nome da página atual
+            PaginaAtual.value = to.name as string
+            next()
+        }
     }
 )
 </script>

@@ -37,36 +37,37 @@
 import { ref} from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import NavBar from "@/components/shared/NavBar.vue";
 
 const router = useRouter()
 const storeLogin = Login()
-const erro = ref("")
-const nome = ref("")
-const icone = ref(undefined)
-const iconeUrl = ref(undefined)
+
+const erro = ref<string>("")
+const nome = ref<string>("")
+const icone = ref<string | undefined>(undefined)
+const iconeUrl = ref<string | undefined>(undefined)
 const iconeRef = ref()
 const loading = ref(false)
 const botaoDesativado = ref(false)
 
-function Showicone(){
+function Showicone(): void {
     const img = iconeRef.value.files[0]
     icone.value = img;
     iconeUrl.value = URL.createObjectURL(img);
 }
 
-async function criar(){
+async function criar(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
     const formData = new FormData();
     let nomeUsar = nome.value
     let iconeUsar = icone.value
 
     formData.append('nome', nomeUsar);
-    formData.append('icone', iconeUsar);
+    if (iconeUsar) formData.append('icone', iconeUsar);
 
     try {
         let assunto = await axios.post('https://apiminhamente.onrender.com/assunto', formData, {headers: {'authorization': `Bearer ${storeLogin.token}`}})
@@ -74,17 +75,17 @@ async function criar(){
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "PainelAssuntos"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(erro);
         loading.value = false
         botaoDesativado.value = false
 		
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 
-function cancelar() {
+function cancelar(): void {
     if (nome.value.length > 0 || icone.value != undefined) {
         let confirmar = confirm("Deseja realmente saír?")
     

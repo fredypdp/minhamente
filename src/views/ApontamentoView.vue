@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { onBeforeMount } from "vue";
-import { Home } from "@/stores/Home.ts";
+import { Home } from "@/stores/Home";
 import NavBar from "@/components/shared/NavBar.vue";
 import LateralBar from "@/components/Assunto/LateralBar.vue";
 import ApontamentoLer from "@/components/Apontamento/ApontamentoLer.vue";

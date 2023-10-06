@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, onBeforeMount } from "vue";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import { useRoute, useRouter } from "vue-router";
 import NavBar from "@/components/shared/NavBar.vue";
 
@@ -41,7 +41,7 @@ onBeforeMount(async () => {
         let tema = await axios(config)
 
         if(tema == undefined) {
-            route.push({name: "PainelTemas"})
+            router.push({name: "PainelTemas"})
             return
         }
 
@@ -55,14 +55,15 @@ onBeforeMount(async () => {
 const route = useRoute()
 const router = useRouter()
 const storeLogin = Login()
-const erro = ref("")
-const loading = ref(false)
-const botaoDesativado = ref(false)
-const titulo = ref("")
+
+const erro = ref<string>("")
+const loading = ref<boolean>(false)
+const botaoDesativado = ref<boolean>(false)
+const titulo = ref<string>("")
     
-async function editar(){
+async function editar() {
     loading.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
     let id = route.params.id
     let tituloUsar
@@ -90,18 +91,18 @@ async function editar(){
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "PainelTemas"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 
 function cancelar() {
-    if (titulo.value.length > 0 || AssuntoSelecionado.value.length > 0) {
+    if (titulo.value.length) {
         let confirmar = confirm("Deseja realmente saír?")
     
         if(confirmar) {

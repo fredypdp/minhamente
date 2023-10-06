@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref } from "vue";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import { useRoute, useRouter } from "vue-router";
 import SenhaInput from "@/components/shared/SenhaInput.vue";
 
@@ -34,19 +34,19 @@ const storeLogin = Login()
 const route = useRoute()
 const router = useRouter()
 
-const loading = ref(false)
-const senha = ref(undefined)
-const botaoDesativado = ref(false)
-const responseErro = ref(undefined)
+const loading = ref<boolean>(false)
+const senha = ref<string | undefined>(undefined)
+const botaoDesativado = ref<boolean>(false)
+const responseErro = ref<string | undefined>(undefined)
 
-function definirSenha(novaSenha) {
+function definirSenha(novaSenha: string): void {
     senha.value = novaSenha
 }
 
-async function mudarSenha() {
+async function mudarSenha(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("response-erro").style.display = "none"
+    document.getElementById("response-erro")!.style.display = "none"
     
     let config = {
         method: 'post',
@@ -72,34 +72,34 @@ async function mudarSenha() {
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "home"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
         
         responseErro.value = error.response.data.erro
-        document.getElementById("response-erro").style.display = "flex"
+        document.getElementById("response-erro")!.style.display = "flex"
     }
 }
 
-async function login(email, senha) {
+async function login(email: any, senha: any): Promise<void> {
     try {
         let { data } = await axios.post("https://apiminhamente.onrender.com/login", {email: email, senha: senha})
                             
         localStorage.setItem("token", JSON.stringify(data.token))
         localStorage.setItem("usuario", JSON.stringify(data.usuario))
         localStorage.setItem("_links", JSON.stringify(data._links))
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
-        erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        responseErro.value = error.response.data.erro
+        document.getElementById("response-erro")!.style.display = "flex"
     }
 }
 
-async function logout() {
+async function logout(): Promise<void> {
     try {
         await axios({
             method: 'post',
@@ -112,13 +112,13 @@ async function logout() {
         localStorage.removeItem("token")
         localStorage.removeItem("usuario")
         localStorage.removeItem("_links")
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
-        erroEditar.value = error.response.data.erro
-        document.getElementById("erroEditar").style.display = "flex"
+        responseErro.value = error.response.data.erro
+        document.getElementById("response-erro")!.style.display = "flex"
     }
 }
 </script>

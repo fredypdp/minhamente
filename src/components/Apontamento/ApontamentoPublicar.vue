@@ -80,18 +80,12 @@ const titulo = ref<string>("")
 const conteudo = ref<string>("")
 const miniatura = ref<string | undefined>(undefined);
 const visibilidade = ref<boolean | undefined>(undefined);
-    const TemasSelecionados = ref<Tema[]>([]);
+const TemasSelecionados = ref<Tema[]>([]);
 const AssuntosSelecionados = ref<Assunto[]>([]);
 
-type TemaSel = {
-  value: string;
-  label: string;
-};
+type TemaSel = {value: string, label: string};
 
-type AssuntoSel = {
-    value: string,
-    label: string
-};
+type AssuntoSel = {value: string, label: string};
 
 const temasLista = ref<TemaSel[]>([]);
 const assuntosLista = ref<AssuntoSel[]>([]);

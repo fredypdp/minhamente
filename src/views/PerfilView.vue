@@ -8,7 +8,7 @@
                 <h1 class="nome-usuario">{{ storeLogin.usuario.nome }} {{ storeLogin.usuario.sobrenome }}</h1>
                 <span class="email-usuario">{{ storeLogin.usuario.email }}</span>
                 <button class="botao-sair" :disabled="botaoSairDesativado" type="button" @click="logout">Terminar sessão</button>
-                <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarConta">Eliminar conta</button>
+                <button class="botao-deletar-conta" :disabled="botaoDeletarDesativado" type="button" @click="eliminarContaEmail">Eliminar conta</button>
                 <input type="hidden" name="id" value="" id="id">
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
@@ -59,28 +59,28 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import NavBar from "@/components/shared/NavBar.vue";
 import ContaEditar from "@/components/Conta/ContaEditar.vue";
 
 const router = useRouter()
 const storeLogin = Login()
 
-document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
+if (storeLogin.usuario) document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
 
-const loadingLogout = ref(false)
-const botaoSairDesativado = ref(false)
-const botaoDeletarDesativado = ref(false)
-const loadingEliminarConta = ref(false)
-let responseErro = ref("")
-let responseSucesso = ref("")
-let MostarResponseErro = ref(false)
-let MostarResponseSucesso = ref(false)
+const loadingLogout = ref<boolean>(false)
+const botaoSairDesativado = ref<boolean>(false)
+const botaoDeletarDesativado = ref<boolean>(false)
+const loadingEliminarConta = ref<boolean>(false)
+let responseErro = ref<string>("")
+let responseSucesso = ref<string>("")
+let MostarResponseErro = ref<boolean>(false)
+let MostarResponseSucesso = ref<boolean>(false)
 
 async function logout(){
     loadingLogout.value = true
     botaoSairDesativado.value = true
-    document.getElementById("response-erro").style.display = "none"
+    document.getElementById("response-erro")!.style.display = "none"
 
     let config = {
         method: 'post',
@@ -100,7 +100,7 @@ async function logout(){
         loadingLogout.value = false
         botaoSairDesativado.value = false
         router.go(0)
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         
         responseErro.value = error.response.data.erro
@@ -111,13 +111,13 @@ async function logout(){
     }
 }
 
-async function eliminarContaEmail(){
+async function eliminarContaEmail(): Promise<void> {
     let eliminar = confirm("Enviar email de deleção de conta?")
     
-    if(eliminar) {
+    if(eliminar && storeLogin.usuario) {
         loadingEliminarConta.value = true
         botaoDeletarDesativado.value = true
-        document.getElementById("response-erro").style.display = "none"
+        document.getElementById("response-erro")!.style.display = "none"
 
         let config = {
             method: 'post',
@@ -133,7 +133,7 @@ async function eliminarContaEmail(){
             MostarResponseSucesso.value = true
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false

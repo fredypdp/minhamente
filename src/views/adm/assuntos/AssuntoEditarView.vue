@@ -36,19 +36,20 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, onBeforeMount } from "vue";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
 import { useRoute, useRouter } from "vue-router";
 import NavBar from "@/components/shared/NavBar.vue";
 
 const route = useRoute()
 const router = useRouter()
 const storeLogin = Login()
-const erro = ref("")
-const loading = ref(false)
-const botaoDesativado = ref(false)
-const nome = ref("")
-const icone = ref(undefined)
-const iconeUrl = ref("")
+
+const erro = ref<string>("")
+const loading = ref<boolean>(false)
+const botaoDesativado = ref<boolean>(false)
+const nome = ref<string>("")
+const icone = ref<undefined>(undefined)
+const iconeUrl = ref<string>("")
 const iconeRef = ref()
 
 onBeforeMount(async () => {
@@ -68,18 +69,18 @@ onBeforeMount(async () => {
     }
 })
 
-function Showicone(){
+function Showicone(): void {
     const img = iconeRef.value.files[0]
     icone.value = img;
     iconeUrl.value = URL.createObjectURL(img);
 }
 
-async function editar(){
+async function editar(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
 
-    let id = route.params.id
+    let id = route.params.id as string
 
     const formData = new FormData();
     let nomeUsar = nome.value
@@ -101,17 +102,17 @@ async function editar(){
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "PainelAssuntos"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
         
         loading.value = false
         botaoDesativado.value = false
     }
 }
 
-function cancelar() {
+function cancelar(): void {
     if (nome.value.length > 0 || icone.value != undefined) {
         let confirmar = confirm("Deseja realmente saír?")
     

@@ -32,16 +32,16 @@
 import axios from "axios";
 import { ref } from "vue";
 
-const loading = ref(false)
-const email = ref("")
-const botaoDesativado = ref(false)
-const erroEsqueciSenha = ref("")
-const sucessoEsqueciSenha = ref("")
+const loading = ref<boolean>(false)
+const email = ref<string>("")
+const botaoDesativado = ref<boolean>(false)
+const erroEsqueciSenha = ref<string>("")
+const sucessoEsqueciSenha = ref<string>("")
 
 async function esqueciSenha() {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erroEsqueciSenha").style.display = "none"
+    document.getElementById("erroEsqueciSenha")!.style.display = "none"
 
     try {
         let config = {
@@ -51,16 +51,16 @@ async function esqueciSenha() {
 
         let sucesso = await axios(config)
         sucessoEsqueciSenha.value = sucesso.data
-        document.getElementById("sucessoEsqueciSenha").style.display = "flex"
+        document.getElementById("sucessoEsqueciSenha")!.style.display = "flex"
         loading.value = false
         botaoDesativado.value = false
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
 
         erroEsqueciSenha.value = error.response.data.erro
-        document.getElementById("erroEsqueciSenha").style.display = "flex"
+        document.getElementById("erroEsqueciSenha")!.style.display = "flex"
     }
 }
 </script>
