@@ -1,5 +1,5 @@
 <template>
-<div class="apontamentos" :style="{'flex-direction': Column}">
+<div class="apontamentos" :style="(flexDirectionStyle as StyleValue)">
     <ApontamentoSkeleton v-for="(numero, index) in numeros" :key="index"/>
 </div>
 </template>
@@ -7,6 +7,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import ApontamentoSkeleton from "@/components/Apontamento/ApontamentoSkeleton.vue";
+import type { StyleValue } from "vue";
+
 const props = defineProps({
     FlexColumn: Boolean,
 })
@@ -19,10 +21,11 @@ const numeros = computed(() => {
     return numerosArray;
 })
 
-const column = computed(() => {
-    return props.FlexColumn ? "column" : "row"
-})
+const flexDirectionStyle = computed(() => {
+    return { flexDirection: props.FlexColumn ? "column" : "row" };
+});
 </script>
+
 <style src="@vueform/multiselect/themes/default.css"></style> // Estilo do multiselect
 <style scoped>
 .apontamentos {

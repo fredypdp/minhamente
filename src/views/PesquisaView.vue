@@ -42,127 +42,130 @@
 
 <script setup lang="ts">
 import axios from "axios";
+import type { Apontamento } from "@/types/types";
 import { ref, computed, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Login } from "@/stores/Login.ts";
-import NavBar from '@/components/shared/NavBar.vue'
+import { Login } from "@/stores/Login";
+import NavBar from "@/components/shared/NavBar.vue";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
-import ApontamentosList from '@/components/Apontamento/ApontamentosList.vue';
+import ApontamentosList from "@/components/Apontamento/ApontamentosList.vue";
+import type { RouteLocationNormalizedLoaded } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const storeLogin = Login()
+const route = useRoute();
+const router = useRouter();
+const storeLogin = Login();
 
-const loading = ref(false)
-const apontamentos = ref([])
-const PaginaAtual = ref(1)
-const currentPage = ref(1)
-const ItensPorPagina = ref(20)
-const criacaoCrescente = ref(false)
+const loading = ref<boolean>(false);
+const apontamentos = ref<Apontamento[]>([]);
+const PaginaAtual = ref<number>(1);
+const currentPage = ref<number>(1);
+const ItensPorPagina = ref<number>(20);
+const criacaoCrescente = ref<boolean>(false);
 
-const apontamentosTotal = computed(() => apontamentos.value.length)
-const ApontamentosMostrar = computed(() => {
-  let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
-  let fim = inicio + ItensPorPagina.value
-  return apontamentos.value.slice(inicio, fim)
-})
+const apontamentosTotal = computed((): number => apontamentos.value.length);
+const ApontamentosMostrar = computed((): Apontamento[] => {
+  const inicio = (PaginaAtual.value - 1) * ItensPorPagina.value;
+  const fim = inicio + ItensPorPagina.value;
+  return apontamentos.value.slice(inicio, fim);
+});
 
 onMounted(() => {
-  pesquisarApontamentos()
-})
+  pesquisarApontamentos();
+});
 
-watch(route, (to, from) => {
-  if(to.query.pesquisa == undefined) {
-    router.push({name: "home"})
-    return
-  }
-
-  if(to.query.pesquisa != undefined && to.query.pesquisa.trim() == 0) {
-    router.push({name: "home"})
-    return
-  }
-
-  document.title = `${to.query.pesquisa} - MinhaMente`
-  pesquisarApontamentos()
-}, {deep: true})
-
-function paginar(pagina){
-  PaginaAtual.value = pagina
-}
-
-async function ordenar() {
-    if(!criacaoCrescente.value) {
-        const arrayOrdenado = [];
-
-        while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
-            let MaisNovoIndex = 0; // Index do item mais recente encontrado
-
-            for (let i = 1; i < apontamentos.value.length; i++) { // Verificar cada item do array
-                // Procurando o index do item mais recente
-                if (apontamentos.value[i].created_at < apontamentos.value[MaisNovoIndex].created_at) {
-                    MaisNovoIndex = i;
-                }
-            }
-
-            arrayOrdenado.push(apontamentos.value[MaisNovoIndex]); // Adicionar o item encontrado ao novo array
-            apontamentos.value.splice(MaisNovoIndex, 1); // Deletar o item encontrado do array antigo
-        }
-
-        apontamentos.value = arrayOrdenado;
-        criacaoCrescente.value = true // definindo que tá em ordem crescente
-    } else {
-        const arrayOrdenado = [];
-
-        while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
-            let MaisAntigoIndex = 0; // Index do item mais antigo encontrado
-
-            for (let i = 1; i < apontamentos.value.length; i++) { // Verificar cada item do array
-                // Procurando o index do item mais antigo
-                if (apontamentos.value[i].created_at > apontamentos.value[MaisAntigoIndex].created_at) {
-                    MaisAntigoIndex = i;
-                }
-            }
-
-            arrayOrdenado.push(apontamentos.value[MaisAntigoIndex]); // Adicionar o item encontrado ao novo array
-            apontamentos.value.splice(MaisAntigoIndex, 1); // Deletar o item encontrado do array antigo
-        }
-
-        apontamentos.value = arrayOrdenado;
-        criacaoCrescente.value = false // definindo que tá em ordem decrescente
+watch(route, (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => {
+  if (typeof to.query.pesquisa === 'string') {
+    if (to.query.pesquisa.trim() === "") {
+      router.push({ name: "home" });
+      return;
     }
+
+    document.title = `${to.query.pesquisa} - MinhaMente`;
+    pesquisarApontamentos();
+  } else {
+    router.push({ name: "home" });
+  }
+}, { deep: true });
+
+function paginar(pagina: number): void {
+  PaginaAtual.value = pagina;
 }
 
-async function pesquisarApontamentos() {
-  loading.value = true
-  
-  let config = {
+async function ordenar(): Promise<void> {
+  if (!criacaoCrescente.value) {
+    const arrayOrdenado: Apontamento[] = [];
+
+    while (apontamentos.value.length > 0) {
+      let MaisNovoIndex = 0;
+
+      for (let i = 1; i < apontamentos.value.length; i++) {
+        if (apontamentos.value[i].created_at < apontamentos.value[MaisNovoIndex].created_at) {
+          MaisNovoIndex = i;
+        }
+      }
+
+      arrayOrdenado.push(apontamentos.value[MaisNovoIndex]);
+      apontamentos.value.splice(MaisNovoIndex, 1);
+    }
+
+    apontamentos.value = arrayOrdenado;
+    criacaoCrescente.value = true;
+  } else {
+    const arrayOrdenado: Apontamento[] = [];
+
+    while (apontamentos.value.length > 0) {
+      let MaisAntigoIndex = 0;
+
+      for (let i = 1; i < apontamentos.value.length; i++) {
+        if (apontamentos.value[i].created_at > apontamentos.value[MaisAntigoIndex].created_at) {
+          MaisAntigoIndex = i;
+        }
+      }
+
+      arrayOrdenado.push(apontamentos.value[MaisAntigoIndex]);
+      apontamentos.value.splice(MaisAntigoIndex, 1);
+    }
+
+    apontamentos.value = arrayOrdenado;
+    criacaoCrescente.value = false;
+  }
+}
+
+async function pesquisarApontamentos(): Promise<void> {
+  loading.value = true;
+
+  const config = {
     method: 'get',
     url: 'https://apiminhamente.onrender.com/results',
     params: {
       pesquisa: route.query.pesquisa
     }
   };
-  
+
   try {
-      let { data } = await axios(config)
+    const { data } = await axios(config);
+
+    if (storeLogin.usuario != undefined && storeLogin.usuario.role == 0) {
+      apontamentos.value = data.apontamentos;
+      loading.value = false;
+      return;
+    }
+
+    if (storeLogin.usuario == undefined || storeLogin.usuario.role == 1) {
+      apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => { 
+        apontamento.visibilidade == true;
+      })
       
-      if(storeLogin.usuario != undefined && storeLogin.usuario.role == 0) {
-        apontamentos.value = data.apontamentos
-        loading.value = false
-        return
-      } 
-      
-      if(storeLogin.usuario == undefined || storeLogin.usuario.role == 1){
-        apontamentos.value = data.apontamentos.filter(apontamento => apontamento.visibilidade == true)
-        loading.value = false
-        return
-      }
+      loading.value = false;
+      return;
+    }
   } catch (error) {
     console.log(error);
-    loading.value = false
+    loading.value = false;
   }
 }
 </script>
+
 
 <style scoped>
 #PesquisaView {

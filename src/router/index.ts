@@ -1,9 +1,9 @@
-import type { Usuario } from "../types/types";
+import type { Usuario2 } from "@/types/types";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw, NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 
 
-let usuario: Usuario | null = localStorage.getItem("usuario") ? JSON.parse(localStorage.getItem("usuario")!) : null;
+let usuario: Usuario2["usuario"] | null = localStorage.getItem("usuario") ? JSON.parse(localStorage.getItem("usuario")!) : null;
 
 const HomeView = () => import(/*webpackChunckName: "home"*/"@/views/HomeView.vue");
 const PesquisaView = () => import(/*webpackChunckName: "pesquisa"*/"@/views/PesquisaView.vue");

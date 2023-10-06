@@ -1,7 +1,7 @@
 <template>
 <slot>
     <div class="apontamento-container">
-        <div class="apontamento">
+        <div class="apontamento" v-if="apontamento">
             <div class="miniatura-area">
                 <router-link :to="{name: 'ApontamentoLer', params: {id: apontamento.id}}">
                     <img :src="apontamento.miniatura" class="apontamento-miniatura">
@@ -18,9 +18,11 @@
 </template>
 
 <script setup lang="ts">
+import type { Apontamento } from "@/types/types";
+
 const props = defineProps({
     apontamento: {
-        type: Object,
+        type: Object as () => Apontamento,
         require: true
     }
 })

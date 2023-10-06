@@ -56,175 +56,196 @@
         </form>
     </section>
 </template>
-
+  
 <script setup lang="ts">
 import axios from "axios";
 import { Login } from "@/stores/Login";
 import TinyMCE from '@tinymce/tinymce-vue';
 import Multiselect from '@vueform/multiselect';
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted , onBeforeMount, watch} from "vue";
+import type { Assunto, Tema } from "@/types/types";
+import { ref, onMounted, onBeforeMount, watch } from "vue";
 import BotaoEditar from "@/components/shared/BotaoEditar.vue";
 import BotaoCancelar from "@/components/shared/BotaoCancelar.vue";
 import BotaoMiniatura from "@/components/shared/BotaoMiniatura.vue";
 import DropdownVisibilidade from "@/components/shared/DropdownVisibilidade.vue";
 
-const route = useRoute()
-const router = useRouter()
-const storeLogin = Login()
-const loading = ref(false)
-const erro = ref("")
-const botaoDesativado = ref(false)
-const titulo = ref("")
-const conteudo = ref("")
-const miniatura = ref(undefined)
-const visibilidade = ref(undefined)
-const TemasSelecionados = ref([])
-const AssuntosSelecionados = ref([])
-const temasLista = ref([])
-const assuntosLista = ref([])
+const route = useRoute();
+const router = useRouter();
+const storeLogin = Login();
+
+const loading = ref<boolean>(false);
+const erro = ref<string>("");
+const botaoDesativado = ref<boolean>(false);
+const titulo = ref<string>("");
+const conteudo = ref<string>("");
+const miniatura = ref<string | undefined>(undefined);
+const visibilidade = ref<boolean | undefined>(undefined);
+const TemasSelecionados = ref<Tema[]>([]);
+const AssuntosSelecionados = ref<Assunto[]>([]);
+
+type TemaSel = {
+  value: string;
+  label: string;
+};
+
+type AssuntoSel = {
+    value: string,
+    label: string
+};
+
+const temasLista = ref<TemaSel[]>([]);
+const assuntosLista = ref<AssuntoSel[]>([]);
 
 onBeforeMount(async () => {
-
     let config = {
         method: 'get',
-        url: 'https://apiminhamente.onrender.com/apontamento/'+route.params.id
+        url: 'https://apiminhamente.onrender.com/apontamento/' + route.params.id,
     };
 
     try {
-        let { data } = await axios(config)
-        
-        titulo.value = data.apontamento.titulo
-        conteudo.value = data.apontamento.conteudo
-        miniatura.value = data.apontamento.miniatura
-        visibilidade.value = data.apontamento.visibilidade
+        let { data } = await axios(config);
+
+        titulo.value = data.apontamento.titulo;
+        conteudo.value = data.apontamento.conteudo;
+        miniatura.value = data.apontamento.miniatura;
+        visibilidade.value = data.apontamento.visibilidade;
     } catch (error) {
         console.log(error);
-        route.go(-1)
+        router.go(-1);
     }
-})
+});
 
 onMounted(() => {
-    pegarAssuntos()
-})
+    pegarAssuntos();
+});
 
 watch(AssuntosSelecionados, (novos, antigos) => {
-    temasLista.value = []
-    TemasSelecionados.value = []
+    temasLista.value = [];
+    TemasSelecionados.value = [];
 
-    if(novos == undefined) {
-        return
+    if (novos == undefined) {
+        return;
     }
-    
-    novos.forEach( async assunto => {
 
+    novos.forEach(async (assunto) => {
         let config = {
-            method: 'get',
-            url: 'https://apiminhamente.onrender.com/assunto/'+assunto
+        method: 'get',
+        url: 'https://apiminhamente.onrender.com/assunto/' + assunto,
         };
 
         try {
-            let { data } = await axios(config)
-            // temasLista.value = []
-            data.assunto.temas.forEach( tema => temasLista.value.push({value: tema._id, label: tema.titulo}))
+        let { data } = await axios(config);
+        data.assunto.temas.forEach((tema: Tema) =>
+            temasLista.value.push({ value: tema._id, label: tema.titulo })
+        );
         } catch (error) {
-            console.log(error);
+        console.log(error);
         }
-    })
-})
+    });
+});
 
 function visibilidadePublico() {
-    visibilidade.value = true
+    visibilidade.value = true;
 }
 
 function visibilidadePrivado() {
-    visibilidade.value = false
+    visibilidade.value = false;
 }
 
-async function editar() {
-    loading.value = true
-    botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+async function editar(): Promise<void> {
+    loading.value = true;
+    botaoDesativado.value = true;
+    document.getElementById("erro")!.style.display = "none";
 
     const formData = new FormData();
-    let tituloValue = titulo.value
-    let conteudoValue = conteudo.value
-    let assuntos = AssuntosSelecionados.value
-    let temas = TemasSelecionados.value
-    let visibilidadeValue = visibilidade.value
-    let miniaturaValue = miniatura.value
-    
-    formData.append('id', route.params.id);
+    let tituloValue = titulo.value;
+    let conteudoValue = conteudo.value;
+    let assuntos = AssuntosSelecionados.value;
+    let temas = TemasSelecionados.value;
+    let visibilidadeValue = visibilidade.value;
+    let miniaturaValue = miniatura.value;
 
-    if(tituloValue != undefined && tituloValue.trim().length > 0) {
+    formData.append('id', route.params.id.toString());
+
+    if (tituloValue != undefined && tituloValue.trim().length > 0) {
         formData.append('titulo', tituloValue);
     }
 
-    if(conteudoValue != undefined && conteudoValue.trim().length > 0) {
+    if (conteudoValue != undefined && conteudoValue.trim().length > 0) {
         formData.append('conteudo', conteudoValue);
     }
-    
-    if(assuntos != undefined && assuntos.length != 0) {
-        formData.append("assuntos", JSON.stringify(assuntos))
+
+    if (assuntos != undefined && assuntos.length != 0) {
+        formData.append("assuntos", JSON.stringify(assuntos));
     }
 
-    if(temas != undefined && temas.length != 0) {
+    if (temas != undefined && temas.length != 0) {
         formData.append("temas", JSON.stringify(temas));
     }
 
-    if(visibilidadeValue != undefined) {
-        formData.append('visibilidade', visibilidadeValue);
+    if (visibilidadeValue != undefined) {
+        formData.append('visibilidade', visibilidadeValue.toString());
     }
-    
-    if(miniaturaValue != undefined) {
+
+    if (miniaturaValue != undefined) {
         formData.append('miniatura', miniaturaValue);
     }
-    
+
     try {
-        let apontamento = await axios.put("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${storeLogin.token}`}})
-        
-        loading.value = false
-        botaoDesativado.value = false
-        router.push({name: "home"})
-    } catch (error) {
+        let apontamento = await axios.put(
+        "https://apiminhamente.onrender.com/apontamento",
+        formData,
+        { headers: { 'authorization': `Bearer ${storeLogin.token}` } }
+        );
+
+        loading.value = false;
+        botaoDesativado.value = false;
+        router.push({ name: "home" });
+    } catch (error: any) {
         console.log(error);
-        loading.value = false
-        botaoDesativado.value = false
-        
-        erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        loading.value = false;
+        botaoDesativado.value = false;
+
+        erro.value = error.response.data.erro;
+        document.getElementById("erro")!.style.display = "flex";
     }
 }
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     let config = {
         method: 'get',
-        url: 'https://apiminhamente.onrender.com/assuntos'
+        url: 'https://apiminhamente.onrender.com/assuntos',
     };
 
     try {
-        let { data } = await axios(config)
+        let { data } = await axios(config);
 
-        data.assuntos.forEach( assunto => {
-            assuntosLista.value.push({value: assunto._id, label: assunto.nome})
-        })
+        data.assuntos.forEach((assunto: Assunto) => {
+        assuntosLista.value.push({ value: assunto._id, label: assunto.nome });
+        });
     } catch (error) {
         console.log(error);
     }
 }
 
-function cancelar() {
-    if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
-        let confirmar = confirm("Deseja realmente saír?")
-    
-        if(confirmar) {
-            router.push({name: "home"})
+function cancelar(): void {
+    if (titulo.value.length > 0 || conteudo.value.length > 0 ||
+        miniatura.value != undefined || visibilidade.value != undefined
+        || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0
+    ) {
+        let confirmar = confirm("Deseja realmente sair?");
+
+        if (confirmar) {
+            router.push({ name: "home" });
         }
     }
 
-    router.push({name: "home"})
+    router.push({ name: "home" });
 }
 </script>
+  
+
 <style scoped>
 #erro {
     display: none;

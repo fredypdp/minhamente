@@ -6,21 +6,21 @@
 import { watch } from "vue";
 import { useRoute } from "vue-router";
 
-  const route = useRoute()
-  
+const route = useRoute()
+
+updatePageTitle()
+
+watch(route, (to, from) => {
   updatePageTitle()
+}, {deep: true})
 
-  watch(route, (to, from) => {
-    updatePageTitle()
-  }, {deep: true})
-
-  function updatePageTitle() {
-    const pageTitle = route.meta.title
-    
-    if (typeof pageTitle === 'string') {
-      document.title = pageTitle || 'MinhaMente'
-    } else {
-      document.title = 'MinhaMente'
-    }
+function updatePageTitle() {
+  const pageTitle = route.meta.title
+  
+  if (typeof pageTitle === 'string') {
+    document.title = pageTitle || 'MinhaMente'
+  } else {
+    document.title = 'MinhaMente'
   }
+}
 </script>

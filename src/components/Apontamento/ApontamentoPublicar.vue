@@ -63,7 +63,8 @@ import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login";
 import TinyMCE from '@tinymce/tinymce-vue';
 import { ref, watch, onMounted } from "vue";
-import Multiselect from '@vueform/multiselect'
+import Multiselect from '@vueform/multiselect';
+import type { Assunto, Tema } from "@/types/types";
 import BotaoPublicar from "@/components/shared/BotaoPublicar.vue";
 import BotaoCancelar from "@/components/shared/BotaoCancelar.vue";
 import BotaoMiniatura from "@/components/shared/BotaoMiniatura.vue";
@@ -72,17 +73,28 @@ import DropdownVisibilidade from "@/components/shared/DropdownVisibilidade.vue";
 const router = useRouter()
 const storeLogin = Login()
 
-const erro = ref("")
-const loading = ref(false)
-const botaoDesativado = ref(false)
-const titulo = ref("")
-const conteudo = ref("")
-const miniatura = ref(undefined)
-const visibilidade = ref(undefined)
-const TemasSelecionados = ref([])
-const AssuntosSelecionados = ref([])
-const temasLista = ref([])
-const assuntosLista = ref([])
+const erro = ref<string>("")
+const loading = ref<boolean>(false)
+const botaoDesativado = ref<boolean>(false)
+const titulo = ref<string>("")
+const conteudo = ref<string>("")
+const miniatura = ref<string | undefined>(undefined);
+const visibilidade = ref<boolean | undefined>(undefined);
+    const TemasSelecionados = ref<Tema[]>([]);
+const AssuntosSelecionados = ref<Assunto[]>([]);
+
+type TemaSel = {
+  value: string;
+  label: string;
+};
+
+type AssuntoSel = {
+    value: string,
+    label: string
+};
+
+const temasLista = ref<TemaSel[]>([]);
+const assuntosLista = ref<AssuntoSel[]>([]);
 
 onMounted(() => {
     pegarAssuntos()
@@ -106,25 +118,25 @@ watch(AssuntosSelecionados, (novos, antigos) => {
         try {
             let { data } = await axios(config)
             // temasLista.value = []
-            data.assunto.temas.forEach( tema => temasLista.value.push({value: tema._id, label: tema.titulo}))
+            data.assunto.temas.forEach( (tema: Tema) => temasLista.value.push({value: tema._id, label: tema.titulo}))
         } catch (error) {
             console.log(error);
         }
     })
 })
 
-function visibilidadePublico() {
+function visibilidadePublico(): void {
     visibilidade.value = true
 }
 
-function visibilidadePrivado() {
+function visibilidadePrivado(): void {
     visibilidade.value = false
 }
 
-async function publicar() {
+async function publicar(): Promise<void> {
     loading.value = true
     botaoDesativado.value = true
-    document.getElementById("erro").style.display = "none"
+    document.getElementById("erro")!.style.display = "none"
     
     const formData = new FormData();
     let tituloValue = titulo.value
@@ -140,8 +152,9 @@ async function publicar() {
     if(temas.length != 0) {
         formData.append("temas", JSON.stringify(temas));
     }
-    formData.append('visibilidade', visibilidadeValue);
-    formData.append('miniatura', miniaturaValue);
+
+    formData.append('visibilidade', String(visibilidadeValue));
+    formData.append('miniatura', String(miniaturaValue));
     
     try {
         let apontamento = await axios.post("https://apiminhamente.onrender.com/apontamento", formData, {headers: {'authorization': `Bearer ${storeLogin.token}`}})
@@ -149,17 +162,17 @@ async function publicar() {
         loading.value = false
         botaoDesativado.value = false
         router.push({name: "home"})
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
         loading.value = false
         botaoDesativado.value = false
         
         erro.value = error.response.data.erro
-        document.getElementById("erro").style.display = "flex"
+        document.getElementById("erro")!.style.display = "flex"
     }
 }
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/assuntos'
@@ -168,7 +181,7 @@ async function pegarAssuntos() {
     try {
         let { data } = await axios(config)
 
-        data.assuntos.forEach( assunto => {
+        data.assuntos.forEach( (assunto: Assunto) => {
             assuntosLista.value.push({value: assunto._id, label: assunto.nome})
         })
     } catch (error) {
@@ -176,7 +189,7 @@ async function pegarAssuntos() {
     }
 }
 
-function cancelar() {
+function cancelar(): void {
     if (titulo.value.length > 0 || conteudo.value.length > 0 || miniatura.value != undefined || visibilidade.value != undefined || TemasSelecionados.value.length > 0 || AssuntosSelecionados.value.length > 0) {
         let confirmar = confirm("Deseja realmente saír?")
     
@@ -188,6 +201,7 @@ function cancelar() {
     router.push({name: "home"})
 }
 </script>
+
 <style scoped>
 #erro {
     display: none;
