@@ -125,28 +125,30 @@ import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login";
+import type { Tema, Assunto } from "@/types/types";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 
 const storeLogin = Login()
 const router = useRouter()
+
 const titulo = ref()
-const temas = ref([])
-const loading = ref(false)
-const currentPage = ref(1)
-const PaginaAtual = ref(1)
-const ItensPorPagina = ref(20)
-const criacaoCrescente = ref(false)
+const temas = ref<Tema[]>([])
+const loading = ref<boolean>(false)
+const currentPage = ref<number>(1)
+const PaginaAtual = ref<number>(1)
+const ItensPorPagina = ref<number>(20)
+const criacaoCrescente = ref<boolean>(false)
 const AssuntoSelecionado = ref("")
-const assuntosLista = ref([])
-const temasTotal = computed(() => {
-    return temas.value.length
-})
+const temasTotal = computed(() => temas.value.length)
 const temasMostrar = computed(() => {
     let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
     let fim = inicio + ItensPorPagina.value
     return temas.value.slice(inicio, fim)
 })
+
+type AssuntoListaType = {value: number | string, label: string}
+const assuntosLista = ref<AssuntoListaType[]>([])
         
 onMounted(() => {
     pegarTemas()
@@ -176,19 +178,18 @@ watch(AssuntoSelecionado, async (novo, antigo) => {
     }
 })
 
-function paginar(pagina) {
-    paginaAtual.value = pagina
+function paginar(pagina: number): void {
+    PaginaAtual.value = pagina
 }
 
-function formatarData(data) {
-    let opcoes = { month: 'long' };
-    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+function formatarData(data: string): string {
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(new Date(data));
     let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${formatarNumero(new Date(data).getHours())}:${formatarNumero(new Date(data).getMinutes())}`
     
     return dataFormatada
 }
 
-function formatarNumero(numero) {
+function formatarNumero(numero: number): string | number {
     if (numero < 10) {
         return "0"+numero
     }
@@ -196,7 +197,7 @@ function formatarNumero(numero) {
     return numero
 }
 
-async function ordenar() {
+async function ordenar(): Promise<void> {
     if(!criacaoCrescente.value) {
         const arrayOrdenado = [];
 
@@ -238,7 +239,7 @@ async function ordenar() {
     }
 }
 
-async function EditMaisRecente(){
+async function EditMaisRecente(): Promise<void> {
     const arrayOrdenado = [];
 
     while (temas.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -258,7 +259,7 @@ async function EditMaisRecente(){
     temas.value = arrayOrdenado;
 }
 
-async function EditMaisAntiga(){
+async function EditMaisAntiga(): Promise<void> {
     const arrayOrdenado = [];
 
     while (temas.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -278,7 +279,7 @@ async function EditMaisAntiga(){
     temas.value = arrayOrdenado;
 }
 
-async function pegarTemas() {
+async function pegarTemas(): Promise<void> {
     loading.value = true
     titulo.value.value = ""
 
@@ -297,7 +298,7 @@ async function pegarTemas() {
     }
 }
 
-async function temaPeloTitulo(event){
+async function temaPeloTitulo(): Promise<void> {
     loading.value = true
     if (titulo.value.value.trim().length == 0 || titulo.value.value == undefined) {
         loading.value = false
@@ -328,7 +329,7 @@ async function temaPeloTitulo(event){
     }
 }
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/assuntos'
@@ -337,7 +338,7 @@ async function pegarAssuntos() {
     try {
         let { data } = await axios(config)
 
-        data.assuntos.forEach( assunto => {
+        data.assuntos.forEach( (assunto: Assunto) => {
             assuntosLista.value.push({value: assunto._id, label: assunto.nome})
         })
     } catch (error) {
@@ -345,11 +346,11 @@ async function pegarAssuntos() {
     }
 }
 
-async function editar(tema) {
+async function editar(tema: Tema): Promise<void> {
     router.push({name: "TemaEditar", params: {id: tema._id}})
 }
 
-async function deletar(tema) {
+async function deletar(tema: Tema): Promise<void> {
     let deletar = confirm("Você tem certeza que deseja deletar esse tema?")
 
     if(deletar) {
@@ -363,7 +364,7 @@ async function deletar(tema) {
 
         try {
             await axios(config)
-            temas.value.splice(tema._id, 1)
+            temas.value.splice(tema._id as any, 1)
         } catch (error) {   
             console.log(error);
         }

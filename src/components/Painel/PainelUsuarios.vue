@@ -134,24 +134,23 @@ import axios from "axios";
 import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
 import { Login } from "@/stores/Login";
+import type { Usuario } from "@/types/types";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 
 const storeLogin = Login()
+
 const email = ref()
 const nome = ref()
 const sobrenome = ref()
 const funcao = ref(undefined)
-const usuarios = ref([])
-const loading = ref(false)
-const currentPage = ref(1)
-const PaginaAtual = ref(1)
-const ItensPorPagina = ref(20)
-const criacaoCrescente = ref(true)
-const usuariosTotal = computed(() => {
-    return usuarios.value.length
-})
-
+const usuarios = ref<Usuario[]>([])
+const loading = ref<boolean>(false)
+const currentPage = ref<number>(1)
+const PaginaAtual = ref<number>(1)
+const ItensPorPagina = ref<number>(20)
+const criacaoCrescente = ref<boolean>(true)
+const usuariosTotal = computed(() => usuarios.value.length)
 const usuariosMostrar = computed(() => {
     let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
     let fim = inicio + ItensPorPagina.value
@@ -174,19 +173,18 @@ onMounted(() => {
     pegarUsuarios()
 })
 
-function paginar(pagina) {
-    paginaAtual.value = pagina
+function paginar(pagina: number): void {
+    PaginaAtual.value = pagina
 }
 
-function formatarData(data) {
-    let opcoes = { month: 'long' };
-    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+function formatarData(data: string): string {
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(new Date(data));
     let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${formatarNumero(new Date(data).getHours())}:${formatarNumero(new Date(data).getMinutes())}`
     
     return dataFormatada
 }
 
-function formatarNumero(numero) {
+function formatarNumero(numero: number): string | number {
     if (numero < 10) {
         return "0"+numero
     }
@@ -194,7 +192,7 @@ function formatarNumero(numero) {
     return numero
 }
 
-async function ordenar() {
+async function ordenar(): Promise<void> {
     if(!criacaoCrescente.value) {
         const arrayOrdenado = [];
 
@@ -236,7 +234,7 @@ async function ordenar() {
     }
 }
 
-async function EditMaisRecente(){
+async function EditMaisRecente(): Promise<void> {
     const arrayOrdenado = [];
 
     while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -256,7 +254,7 @@ async function EditMaisRecente(){
     usuarios.value = arrayOrdenado;
 }
 
-async function EditMaisAntiga(){
+async function EditMaisAntiga(): Promise<void> {
     const arrayOrdenado = [];
 
     while (usuarios.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -276,7 +274,7 @@ async function EditMaisAntiga(){
     usuarios.value = arrayOrdenado;
 }
 
-async function pegarUsuarios() {
+async function pegarUsuarios(): Promise<void> {
     loading.value = true
     nome.value.value = ""
     sobrenome.value.value = ""
@@ -301,7 +299,7 @@ async function pegarUsuarios() {
     }
 }
 
-async function usuarioPeloNome(event) {
+async function usuarioPeloNome(): Promise<void> {
     loading.value = true
     sobrenome.value.value = ""
     email.value.value = ""
@@ -330,7 +328,7 @@ async function usuarioPeloNome(event) {
     }
 }
 
-async function usuarioPeloSobrenome(event) {
+async function usuarioPeloSobrenome(): Promise<void> {
     loading.value = true
     nome.value.value = ""
     email.value.value = ""
@@ -359,7 +357,7 @@ async function usuarioPeloSobrenome(event) {
     }
 }
 
-async function usuarioPeloEmail(event) {
+async function usuarioPeloEmail(): Promise<void> {
     loading.value = true
     nome.value.value = ""
     sobrenome.value.value = ""
@@ -396,7 +394,7 @@ async function usuarioPeloEmail(event) {
     }
 }
 
-async function usuarioPeloRole(role) {
+async function usuarioPeloRole(role: number): Promise<void> {
     loading.value = true
     nome.value.value = ""
     sobrenome.value.value = ""
@@ -421,7 +419,7 @@ async function usuarioPeloRole(role) {
     }
 }
 
-async function deletarUsuario(usuario) {
+async function deletarUsuario(usuario: Usuario): Promise<void> {
     let deletar = confirm("Você tem certeza que deseja deletar essa conta?")
     if(deletar) {
         let config = {
@@ -434,7 +432,7 @@ async function deletarUsuario(usuario) {
 
         try {
             await axios(config)
-            usuarios.value.splice(usuario.id, 1)
+            usuarios.value.splice(usuario.id as any, 1)
         } catch (error) {   
             console.log(error);
         }

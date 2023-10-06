@@ -115,21 +115,21 @@ import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login";
+import type { Assunto } from "@/types/types";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 
 const storeLogin = Login()
 const router = useRouter()
+
 const nome = ref()
-const assuntos = ref([])
-const loading = ref(false)
-const currentPage = ref(1)
-const PaginaAtual = ref(1)
-const ItensPorPagina = ref(20)
-const criacaoCrescente = ref(false)
-const assuntosTotal = computed(() => {
-    return assuntos.value.length
-})
+const assuntos = ref<Assunto[]>([])
+const loading = ref<boolean>(false)
+const currentPage = ref<number>(1)
+const PaginaAtual = ref<number>(1)
+const ItensPorPagina = ref<number>(20)
+const criacaoCrescente = ref<boolean>(false)
+const assuntosTotal = computed(() => assuntos.value.length)
 const assuntosMostrar = computed(() => {
     let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
     let fim = inicio + ItensPorPagina.value
@@ -140,19 +140,18 @@ onMounted(() => {
     pegarAssuntos()
 })
 
-function paginar(pagina) {
-    paginaAtual.value = pagina
+function paginar(pagina: number): void {
+    PaginaAtual.value = pagina
 }
 
-function formatarData(data) {
-    let opcoes = { month: 'long' };
-    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+function formatarData(data:string):string {
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(new Date(data));
     let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${formatarNumero(new Date(data).getHours())}:${formatarNumero(new Date(data).getMinutes())}`
     
     return dataFormatada
 }
 
-function formatarNumero(numero) {
+function formatarNumero(numero: number): string | number {
     if (numero < 10) {
         return "0"+numero
     }
@@ -160,7 +159,7 @@ function formatarNumero(numero) {
     return numero
 }
 
-async function ordenar() {
+async function ordenar(): Promise<void> {
     if(!criacaoCrescente.value) {
         const arrayOrdenado = [];
 
@@ -202,7 +201,7 @@ async function ordenar() {
     }
 }
 
-async function EditMaisRecente(){
+async function EditMaisRecente(): Promise<void> {
     const arrayOrdenado = [];
 
     while (assuntos.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -222,7 +221,7 @@ async function EditMaisRecente(){
     assuntos.value = arrayOrdenado;
 }
 
-async function EditMaisAntiga(){
+async function EditMaisAntiga(): Promise<void> {
     const arrayOrdenado = [];
 
     while (assuntos.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -242,7 +241,7 @@ async function EditMaisAntiga(){
     assuntos.value = arrayOrdenado;
 }
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     loading.value = true
     nome.value.value = ""
 
@@ -262,7 +261,7 @@ async function pegarAssuntos() {
     }
 }
 
-async function assuntoPeloNome(event) {
+async function assuntoPeloNome(): Promise<void> {
     loading.value = true
     if (nome.value.value.trim().length == 0 || nome.value.value == undefined) {
         loading.value = false
@@ -293,11 +292,11 @@ async function assuntoPeloNome(event) {
     }
 }
 
-async function editar(assunto) {
+async function editar(assunto: Assunto): Promise<void> {
     router.push({name: "AssuntoEditar", params: {id: assunto._id}})
 }
 
-async function deletar(assunto) {
+async function deletar(assunto: Assunto): Promise<void> {
     let deletar = confirm("Você tem certeza que deseja deletar esse assunto?")
 
     if(deletar) {
@@ -311,7 +310,7 @@ async function deletar(assunto) {
 
         try {
             await axios(config)
-            assuntos.value.splice(assunto._id, 1)
+            assuntos.value.splice(assunto._id as any, 1)
         } catch (error) {   
             console.log(error);
         }

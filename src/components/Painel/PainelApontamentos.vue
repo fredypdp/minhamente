@@ -130,36 +130,38 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import axios from "axios";
 import Multiselect from '@vueform/multiselect'
 import { ref, watch, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { Login } from "@/stores/Login.ts";
+import { Login } from "@/stores/Login";
+import type { Apontamento, Assunto } from "@/types/types";
 import DataCriacao from "@/components/shared/DataCriacao.vue";
 import DropdownEdit from "@/components/shared/DataEdicao.vue";
 import PainelApontamento from "@/components/Painel/PainelApontamento.vue";
 
 const storeLogin = Login()
 const router = useRouter()
-const apontamentos = ref([])
-const loading = ref(false)
-const currentPage = ref(1)
-const PaginaAtual = ref(1)
-const ItensPorPagina = ref(20)
-const visibilidade = ref(Boolean)
-const assuntosLista = ref([])
-const AssuntoSelecionado = ref("")
-const criacaoCrescente = ref(false)
+
+const apontamentos = ref<Apontamento[]>([])
+const loading = ref<boolean>(false)
+const currentPage = ref<number>(1)
+const PaginaAtual = ref<number>(1)
+const ItensPorPagina = ref<number>(20)
+const visibilidade = ref<boolean | undefined>(undefined)
+const AssuntoSelecionado = ref<string | number>("")
+const criacaoCrescente = ref<boolean>(false)
 const titulo = ref()
-const apontamentosTotal = computed(() => {
-    return apontamentos.value.length
-})
+const apontamentosTotal = computed(() => apontamentos.value.length)
 const apontamentosMostrar = computed(() => {
     let inicio = (PaginaAtual.value - 1) * ItensPorPagina.value
     let fim = inicio + ItensPorPagina.value
     return apontamentos.value.slice(inicio, fim)
 })
+
+type AssuntoListaType = {value: number | string, label: string}
+const assuntosLista = ref<AssuntoListaType[]>([])
 
 onMounted(() => {
     pegarApontamentos()
@@ -207,19 +209,18 @@ watch(AssuntoSelecionado, async (novo, antigo) => {
     }
 })
     
-function paginar(pagina) {
-    paginaAtual.value = pagina
+function paginar(pagina: number): void {
+    PaginaAtual.value = pagina
 }
 
-function formatarData(data) {
-    let opcoes = { month: 'long' };
-    let mesFormatado = new Intl.DateTimeFormat('pt-BR', opcoes).format(new Date(data));
+function formatarData(data: string): string {
+    let mesFormatado = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(new Date(data));
     let dataFormatada = `${new Date(data).getDate()} de ${mesFormatado} de ${new Date(data).getFullYear()}, às ${formatarNumero(new Date(data).getHours())}:${new Date(data).getMinutes()}`
     
     return dataFormatada
 }
 
-function formatarNumero(numero) {
+function formatarNumero(numero: number): string | number {
     if (numero < 10) {
         return "0"+numero
     }
@@ -269,7 +270,7 @@ async function ordenar() {
     }
 }
 
-async function EditMaisRecente(){
+async function EditMaisRecente(): Promise<void> {
     const arrayOrdenado = [];
 
     while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -289,7 +290,7 @@ async function EditMaisRecente(){
     apontamentos.value = arrayOrdenado;
 }
 
-async function EditMaisAntiga(){
+async function EditMaisAntiga(): Promise<void>{
     const arrayOrdenado = [];
 
     while (apontamentos.value.length > 0) { // Enquanto o array ter pelo menos um item
@@ -309,7 +310,7 @@ async function EditMaisAntiga(){
     apontamentos.value = arrayOrdenado;
 }
 
-async function pegarApontamentos() {
+async function pegarApontamentos(): Promise<void> {
     loading.value = true
     titulo.value.value = ""
 
@@ -328,7 +329,7 @@ async function pegarApontamentos() {
     }
 }
 
-async function pegarApontamentosSemAssunto() {
+async function pegarApontamentosSemAssunto(): Promise<void> {
     loading.value = true
     titulo.value.value = ""
 
@@ -339,7 +340,7 @@ async function pegarApontamentosSemAssunto() {
 
     try {
         let { data } = await axios(config)
-        apontamentos.value = data.apontamentos.filter(apontamento => apontamento.assuntos.length == 0)
+        apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => apontamento.assuntos.length == 0)
         loading.value = false
     } catch (error) {
         console.log(error);
@@ -347,7 +348,7 @@ async function pegarApontamentosSemAssunto() {
     }
 }
 
-async function pesquisarApontamento(event){
+async function pesquisarApontamento(): Promise<void> {
     loading.value = true
     
     if (titulo.value.value.trim().length == 0 || titulo.value.value == undefined) {
@@ -382,7 +383,7 @@ async function pesquisarApontamento(event){
     }
 }
 
-async function pegarAssuntos() {
+async function pegarAssuntos(): Promise<void> {
     let config = {
         method: 'get',
         url: 'https://apiminhamente.onrender.com/assuntos'
@@ -392,7 +393,7 @@ async function pegarAssuntos() {
         let { data } = await axios(config)
         
         assuntosLista.value.push({value: 0, label: "Sem assunto"})
-        data.assuntos.forEach( assunto => {
+        data.assuntos.forEach( (assunto: Assunto) => {
             assuntosLista.value.push({value: assunto._id, label: assunto.nome})
         })
     } catch (error) {
@@ -400,11 +401,11 @@ async function pegarAssuntos() {
     }
 }
 
-async function editar(apontamento) {
+async function editar(apontamento: Apontamento): Promise<void> {
     router.push({name: "ApontamentoEditar", params: {id: apontamento.id}})
 }
 
-async function deletar(apontamento) {
+async function deletar(apontamento: Apontamento): Promise<void> {
     let deletar = confirm("Você tem certeza que deseja deletar esse apontamento?")
 
     if(deletar) {
@@ -418,13 +419,14 @@ async function deletar(apontamento) {
 
         try {
             await axios(config)
-            apontamentos.value.splice(apontamento.id, 1)
+            apontamentos.value.splice(apontamento.id as any, 1)
         } catch (error) {   
             console.log(error);
         }
     }
 }
 </script>
+
 <style scoped>
 .texto-limite {
     overflow: hidden;
