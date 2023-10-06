@@ -20,7 +20,7 @@ import { useRoute, useRouter } from "vue-router";
 const instance = getCurrentInstance()
 const route = useRoute()
 const router = useRouter()
-const pesquisa = route.query.pesquisa
+const pesquisa = route.query.pesquisa as string
 const abrirPesquisa = ref(false)
 const pesquisaRef = ref()
             
@@ -47,15 +47,15 @@ function toggle(){
 }
 
 function pesquisar() {
-    router.push({name: "pesquisa", query: {pesquisa: pesquisa.value}})
+    if (pesquisa) router.push({name: "pesquisa", query: {pesquisa: pesquisa}})
 }
 
 function close(){
     abrirPesquisa.value = false
 }
 
-function clickOutPesquisaMobileListener(evt){
-    if (!instance.proxy.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+function clickOutPesquisaMobileListener(evt: any){
+    if (!instance!.proxy!.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
         close()
     }
 }

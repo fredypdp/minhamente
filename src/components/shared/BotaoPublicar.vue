@@ -13,7 +13,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
-    botaoDesativado: false,
+    botaoDesativado: {
+        type: Boolean,
+        default: false
+    },
     loading: {
         type: Boolean,
         require: true,

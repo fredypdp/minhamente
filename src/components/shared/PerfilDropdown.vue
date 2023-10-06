@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="storeLogin.usuario">
     <div class="perfil-avatar-area" @click="toggle">
         <img :src="storeLogin.usuario.avatar" draggable="false" class="perfil-avatar">
     </div>
@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import Emitter from "../../Emitter.js";
 import { ref, watch, inject, onMounted, onBeforeUnmount, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
 import { Login } from "@/stores/Login";
@@ -30,13 +29,14 @@ const instance = getCurrentInstance()
 
 const storeLogin = Login()
 const router = useRouter()
-const isOpen = ref(false)
+const emitter: any = inject('emitter')
+const isOpen = ref<boolean>(false)
 
-Emitter.on('MenuDropdownOpen', rootClosePerfilDropdownListener);
+emitter.on('MenuDropdownOpen', rootClosePerfilDropdownListener);
 
 watch(isOpen, (value) => {
     if (value) {
-        Emitter.emit('MenuDropdownOpen', instance.proxy.$el);
+        emitter.emit('MenuDropdownOpen', instance!.proxy!.$el);
     }
 })
 
@@ -91,14 +91,14 @@ function close(){
     isOpen.value = false
 }
 
-function clickOutPerfilDropdownListener(evt){
-    if (!instance.proxy.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+function clickOutPerfilDropdownListener(evt: any){
+    if (!instance!.proxy!.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
         close()
     }
 }
     
-function rootClosePerfilDropdownListener(vm) {
-    if (vm !== instance.proxy.$el) {
+function rootClosePerfilDropdownListener(vm: any) {
+    if (vm !== instance!.proxy!.$el) {
         close();
     }
 }

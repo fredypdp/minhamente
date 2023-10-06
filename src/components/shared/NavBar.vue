@@ -48,7 +48,7 @@ import NavPesquisaMobile from "@/components/shared/NavPesquisaMobile.vue";
 
 const route = useRoute()
 const router = useRouter()
-const pesquisa = ref(route.query.pesquisa)
+const pesquisa = ref<string>(route.query.pesquisa as string)
 const storeHome = Home()
 const storeLogin = Login()
 
@@ -57,7 +57,7 @@ function pesquisar() {
         return
     }
 
-    if(pesquisa.value != undefined && pesquisa.value.trim() == 0) {
+    if(pesquisa.value != undefined && pesquisa.value.trim().length == 0) {
         return
     }
 

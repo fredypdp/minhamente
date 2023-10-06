@@ -13,18 +13,18 @@
 </template>
 
 <script setup lang="ts">
-import Emitter from "../../Emitter.js";
 import { ref, watch, onMounted, onBeforeUnmount, inject, getCurrentInstance } from "vue";
 
 const instance = getCurrentInstance()
+const emitter: any = inject('emitter')
 const isOpen = ref(false)
 
-Emitter.on('dropdownOpen', rootCloseDropdownVisibilidadeListener);
+emitter.on('dropdownOpen', rootCloseDropdownVisibilidadeListener);
 const emit = defineEmits(["publico", "privado"])
 
 watch(isOpen, (value) => {
     if (value) {
-        Emitter.emit('dropdownOpen', instance.proxy.$el);
+        emitter.emit('dropdownOpen', instance!.proxy!.$el);
     }
 })
 
@@ -44,14 +44,14 @@ function close(){
     isOpen.value = false
 }
 
-function clickOutDropdownVisibilidadeListener(evt){
-    if (!instance.proxy.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+function clickOutDropdownVisibilidadeListener(evt: any) {
+    if (!instance!.proxy!.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
         close()
     }
 }
 
-function rootCloseDropdownVisibilidadeListener(vm) {
-    if (vm !== instance.proxy.$el) {
+function rootCloseDropdownVisibilidadeListener(vm: any) {
+    if (vm !== instance!.proxy!.$el) {
         close();
     }
 }

@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-const senha = ref("")
-const ocultarSenha = ref(false)
+const senha = ref<string>("")
+const ocultarSenha = ref<boolean>(false)
 
 const emit = defineEmits(["senha"])
 

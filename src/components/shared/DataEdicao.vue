@@ -13,18 +13,18 @@
 </template>
 
 <script setup lang="ts">
-import Emitter from "../../Emitter.js";
 import { ref, watch, onMounted, onBeforeUnmount, inject, getCurrentInstance } from "vue";
 
 const instance = getCurrentInstance()
+const emitter: any = inject('emitter')
 const isOpen = ref(false)
 
-Emitter.on('dropdownOpen', rootCloseDataEdicaoListener);
+emitter.on('dropdownOpen', rootCloseDataEdicaoListener);
 const emit = defineEmits(["maisRecente", "maisAntigo"])
 
 watch(isOpen, (value) => {
         if (value) {
-            Emitter.emit('dropdownOpen', instance.proxy.$el);
+            emitter.emit('dropdownOpen', instance!.proxy!.$el);
         }
     }
 )
@@ -45,14 +45,14 @@ function close(){
     isOpen.value = false
 }
 
-function clickOutDataEdicaoListener(evt){
-    if (!instance.proxy.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
+function clickOutDataEdicaoListener(evt: any) {
+    if (!instance!.proxy!.$el.contains(evt.target)) { // Se clicar no mesmo elemento, não fechar, mas se sim, fechar
         close()
     }
 }
 
-function rootCloseDataEdicaoListener(vm) {
-    if (vm !== instance.proxy.$el) {
+function rootCloseDataEdicaoListener(vm: any) {
+    if (vm !== instance!.proxy!.$el) {
         close();
     }
 }
