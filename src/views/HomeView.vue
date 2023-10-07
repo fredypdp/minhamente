@@ -237,14 +237,17 @@ async function pegarApontamentos(): Promise<void> {
   try {
     let { data } = await axios(config)
     
-    if(storeLogin.usuario != undefined && storeLogin.usuario.role == 0) {
+    if(storeLogin.usuario && storeLogin.usuario.role == 0) {
       apontamentos.value = data.apontamentos
       apontamentosSkeleton.value = false
       return
     } 
       
     if(storeLogin.usuario == undefined || storeLogin.usuario.role == 1){
-      apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => apontamento.visibilidade == true)
+      apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => {
+        return apontamento.visibilidade == true
+      })
+
       apontamentosSkeleton.value = false
       return
     }

@@ -1,5 +1,5 @@
-<template></template>
-<div>
+<template>
+<div v-if="assunto">
     <div class="assunto-area" @click="apontamentosDoAssunto(assunto)">
         <div class="assunto">
             <div class="icone-area">
@@ -30,7 +30,7 @@ const props = defineProps({
 const storeHome = Home()
 
 function apontamentosDoAssunto(assunto: Assunto) {
-    storeHome.definirAssunto(assunto)
+    if (assunto) storeHome.definirAssunto(assunto)
 }
 </script>
 

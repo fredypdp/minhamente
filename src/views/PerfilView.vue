@@ -13,8 +13,8 @@
                 <input type="hidden" name="email" value="" id="del-email">
                 <span style="display: none;color: green; margin-bottom: 5px;" id="sucesso">Enviamos um email com o link de verificação para você</span>
                 <span style="display: none;color: red; margin-bottom: 5px;" id="email-erro">Não existe uma conta com esse email</span>
-                <span v-if="MostarResponseSucesso" class="response-sucesso">{{ responseSucesso }}</span>
-                <span v-if="MostarResponseErro" class="response-erro">{{ responseErro }}</span>
+                <span v-if="MostrarResponseSucesso" ref="rs" class="response-sucesso">{{ responseSucesso }}</span>
+                <span v-if="MostrarResponseErro" ref="re" class="response-erro">{{ responseErro }}</span>
             </div>
             <div class="editar">
                 <ContaEditar/>
@@ -46,8 +46,8 @@
                     </button>
                     <input type="hidden" name="id" value="" id="id">
                     <input type="hidden" name="email" value="" id="del-email">
-                    <span v-if="MostarResponseSucesso" class="response-sucesso">{{ responseSucesso }}</span>
-                    <span v-if="MostarResponseErro" class="response-erro">{{ responseErro }}</span>
+                    <span v-if="MostrarResponseSucesso" ref="rs" class="response-sucesso">{{ responseSucesso }}</span>
+                    <span v-if="MostrarResponseErro" ref="re" class="response-erro">{{ responseErro }}</span>
                 </div>
             </div>
         </div>
@@ -68,19 +68,22 @@ const storeLogin = Login()
 
 if (storeLogin.usuario) document.title = `${storeLogin.usuario.nome} ${storeLogin.usuario.sobrenome} - MinhaMente`
 
+let rs = ref()
+let re = ref()
 const loadingLogout = ref<boolean>(false)
 const botaoSairDesativado = ref<boolean>(false)
 const botaoDeletarDesativado = ref<boolean>(false)
 const loadingEliminarConta = ref<boolean>(false)
 let responseErro = ref<string>("")
 let responseSucesso = ref<string>("")
-let MostarResponseErro = ref<boolean>(false)
-let MostarResponseSucesso = ref<boolean>(false)
+let MostrarResponseErro = ref<boolean>(false)
+let MostrarResponseSucesso = ref<boolean>(false)
 
 async function logout(){
     loadingLogout.value = true
     botaoSairDesativado.value = true
-    document.getElementById("response-erro")!.style.display = "none"
+    MostrarResponseErro.value = false
+    MostrarResponseSucesso.value = false
 
     let config = {
         method: 'post',
@@ -104,7 +107,7 @@ async function logout(){
         console.log(error);
         
         responseErro.value = error.response.data.erro
-        MostarResponseErro.value = true
+        MostrarResponseErro.value = true
         
         loadingLogout.value = false
         botaoSairDesativado.value = false
@@ -117,7 +120,8 @@ async function eliminarContaEmail(): Promise<void> {
     if(eliminar && storeLogin.usuario) {
         loadingEliminarConta.value = true
         botaoDeletarDesativado.value = true
-        document.getElementById("response-erro")!.style.display = "none"
+        MostrarResponseErro.value = false
+        MostrarResponseSucesso.value = false
 
         let config = {
             method: 'post',
@@ -130,16 +134,16 @@ async function eliminarContaEmail(): Promise<void> {
         try {
             let sucesso = await axios(config)
             responseSucesso.value = sucesso.data
-            MostarResponseSucesso.value = true
+            MostrarResponseSucesso.value = true
             loadingEliminarConta.value = false
-            botaoDeletarDesativado.value = false
+            botaoDeletarDesativado.value = false            
         } catch (error: any) {
             console.log(error);
             loadingEliminarConta.value = false
             botaoDeletarDesativado.value = false
             
             responseErro.value = error.response.data.erro
-            MostarResponseErro.value = true
+            MostrarResponseErro.value = true
         }
     }
 }
@@ -151,13 +155,11 @@ async function eliminarContaEmail(): Promise<void> {
 }
 
 .response-sucesso {
-    display: none;
     color: green;
     margin-top: 5px;
 }
 
 .response-erro {
-    display: none;
     color: red;
     margin-top: 5px;
 }

@@ -20,7 +20,7 @@ import { useRoute, useRouter } from "vue-router";
 const instance = getCurrentInstance()
 const route = useRoute()
 const router = useRouter()
-const pesquisa = route.query.pesquisa as string
+const pesquisa = ref<string>(route.query.pesquisa as string)
 const abrirPesquisa = ref(false)
 const pesquisaRef = ref()
             
@@ -47,7 +47,15 @@ function toggle(){
 }
 
 function pesquisar() {
-    if (pesquisa) router.push({name: "pesquisa", query: {pesquisa: pesquisa}})
+    if(pesquisa.value == undefined) {
+        return
+    }
+
+    if(pesquisa.value != undefined && pesquisa.value.trim().length == 0) {
+        return
+    }
+
+    router.push({name: "pesquisa", query: {pesquisa: pesquisa.value}})
 }
 
 function close(){

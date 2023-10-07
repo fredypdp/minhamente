@@ -133,7 +133,7 @@ async function ordenar(): Promise<void> {
 
 async function pesquisarApontamentos(): Promise<void> {
   loading.value = true;
-
+  
   const config = {
     method: 'get',
     url: 'https://apiminhamente.onrender.com/results',
@@ -144,8 +144,8 @@ async function pesquisarApontamentos(): Promise<void> {
 
   try {
     const { data } = await axios(config);
-
-    if (storeLogin.usuario != undefined && storeLogin.usuario.role == 0) {
+    
+    if (storeLogin.usuario && storeLogin.usuario.role == 0) {
       apontamentos.value = data.apontamentos;
       loading.value = false;
       return;
@@ -153,12 +153,13 @@ async function pesquisarApontamentos(): Promise<void> {
 
     if (storeLogin.usuario == undefined || storeLogin.usuario.role == 1) {
       apontamentos.value = data.apontamentos.filter((apontamento: Apontamento) => { 
-        apontamento.visibilidade == true;
+        return apontamento.visibilidade == true;
       })
       
       loading.value = false;
       return;
     }
+
   } catch (error) {
     console.log(error);
     loading.value = false;
